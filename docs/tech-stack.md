@@ -103,12 +103,20 @@
 |---|---|---|
 | デプロイツール | **Kamal 2** | Rails 8公式・landbase合わせ |
 | 実行環境 | Docker コンテナ | Kamal前提 |
-| ホスティング | **未確定**（候補: 自社VPS / Hetzner / さくら） | landbaseと同居 or 別ホストかは要検討 |
+| ホスティング | **未確定**（後述の選択肢から決定） | |
 | Active Storage | ローカルディスク + 永続ボリューム | landbase踏襲。S3移行は v1以降 |
 
-> **要決定事項**: 本番ホスティング先。
-> 「他社が deploy しても動く」汎用化規律と、自社運用のシンプルさのどちらを優先するか。
-> 初期は自社1施設で動かすので、landbase の本番ホストに同居 or 別 VPS のどちらでも可。
+#### ホスティング候補と評価軸
+
+| 案 | 候補 | メリット | デメリット / リスク |
+|---|---|---|---|
+| **A. landbase 同居** | 既存 landbase 本番ホスト | デプロイパイプライン共通化、インフラコスト削減、運用知見の集約 | **landbase 障害時に税務系まで巻き込まれ、サービス影響範囲が広がる**。バックアップ・保存期間ポリシーが landbase の運用に引きずられる |
+| **B. 別 VPS（自社管理）** | Hetzner / さくらVPS / ConoHa | 障害ドメイン分離、税務データの保管ポリシーを独立に持てる、Kamal の知見をそのまま流用 | サーバ管理の負担が二重化、監視・バックアップを別途構築 |
+| **C. マネージド PaaS** | Fly.io / Render | OS管理不要、スケールが楽 | 月額が VPS より高め、Postgres マネージド前提でデータ持ち出し制約あり、Kamal の知見が活きない |
+
+> **判断軸**: 税務データは保存期間・バックアップ・分離性の要求が強い（[非機能要件 §3](./non-functional-requirements.md)）。
+> A は短期的には楽だが、**「税務データを landbase の障害ドメインに巻き込む」リスク**が長期で重い。
+> 現時点の有力案は **B（別 VPS）**。最終決定は v0実装着手前に行う。
 
 ---
 
@@ -208,15 +216,91 @@ okinawa-lodging-tax/
 
 ---
 
-## 5. 未確定事項（v0着手前に決めたい）
+## 5. 運用方針メモ
 
-- [ ] **本番ホスティング先**: landbase 同居 / 別 VPS / マネージド PaaS のいずれか
-- [ ] **バックアップ戦略の具体実装**: Postgres ダンプの保存先・頻度（[非機能要件](./non-functional-requirements.md) §4 で RPO 24h と決定済み、実装手段は未定）
-- [ ] **初期スタッフ作成 CLI のインターフェース**: `db:seed` か `bin/rails create_user` か
+### 5.1 バックアップ戦略
+
+[非機能要件 §4](./non-functional-requirements.md) で **RPO 24h / RTO 1h** と決定済み。これを満たす方針案:
+
+- **DBバックアップ**: 1日1回 `pg_dump` でフルバックアップを取得し、別ロケーションのオブジェクトストレージ（S3互換: AWS S3 / Cloudflare R2 等）に転送
+- **Active Storage**: 領収書PDF等のファイルも同じ S3互換ストレージへ日次同期
+- **暗号化**: 転送時 TLS、保管時はストレージ側の暗号化機能を有効化
+- **保管期間**: [非機能要件 §3](./non-functional-requirements.md) の「**業務上7年・システム上10年**」要件に揃える
+  - 直近1ヶ月: 日次世代（30本）
+  - 直近1年: 月次世代（12本）
+  - それ以降: 年次世代を 10年保持
+- **検証**: 月1回リストアテストを実施（手順は実装フェーズで整備）
+
+> **未確定事項**: 具体的なストレージ先（R2 / S3 / Backblaze B2 等）、世代管理ツール（[wal-g](https://github.com/wal-g/wal-g) / [pgBackRest](https://pgbackrest.org/) / 自前 cron）の選定。
+> v0着手前に確定する。
+
+### 5.2 初期スタッフ作成（1人目の作成方法）
+
+**基本線: `db:seed` を採用する**（landbase踏襲）
+
+landbase の `db/seeds.rb` は `find_or_create_by!` で**冪等**に書かれており、何度実行しても安全。本プロジェクトも同方式を採用する。
+
+```ruby
+# db/seeds.rb（イメージ）
+if Rails.env.production? && User.count.zero?
+  User.find_or_create_by!(email: ENV.fetch("INITIAL_ADMIN_EMAIL")) do |user|
+    user.name = ENV.fetch("INITIAL_ADMIN_NAME")
+    user.password = ENV.fetch("INITIAL_ADMIN_PASSWORD")
+  end
+end
+```
+
+**ポイント**:
+- 初期スタッフのメール・パスワードは環境変数経由で渡す（リポジトリにコミットしない）
+- `User.count.zero?` ガードで2回目以降は no-op（冪等性）
+- 2人目以降は1人目がログインしてユーザー管理画面から追加
+
+**将来の拡張余地**: 「複数施設へのロールアウト」や「他社オーナーへの配布」を見据えると、`bin/rails create_user EMAIL=... NAME=...` のような専用 idempotent rake タスクの方が**自動化スクリプトに組み込みやすい**。v1以降でデプロイ自動化を整備する際に併せて導入を検討する。
+
+### 5.3 監視・ロギング
+
+- **方針**: **landbase と同等構成を前提**とする。landbase 側で APM / エラー追跡 / ログ収集を導入したら、本プロジェクトも同じツール（Sentry / Datadog / OpenTelemetry 等）で揃える
+- **v0時点**: landbase が現状観測ツール未導入のため、本プロジェクトも以下のミニマム構成でスタート:
+  - Rails 標準ログ + `lograge` 程度で構造化
+  - エラー通知は最低限メール or Slack Webhook
+  - 監視閾値の具体値は [非機能要件 §7](./non-functional-requirements.md) 参照
+- **v1以降**: landbase 側で観測基盤が整備された段階で同期して導入。ログ集約・APM・メトリクスを揃える
+
+> **理由**: 観測ツールはチーム横断で揃えると運用負担が大きく下がる。先行して別ツールを入れると後で揃え直しになるため、landbase に追従する。
+
+### 5.4 マイグレーション戦略
+
+税務系システムはスキーマ変更がシビアになりがち（過去データの再計算可能性、監査証跡）。以下の思想で運用する:
+
+- **基本: forward-only migration**
+  - Rails 標準 `bin/rails db:migrate` を用い、リリース後の rollback は原則行わない
+  - 各 migration は landbase 規約通り `down` を実装し、開発環境での巻き戻しのみで使用
+- **破壊的変更（カラム削除・型変更等）の扱い**:
+  - **段階移行**: 「新カラム追加 → データ移行 → 旧カラム参照削除 → 旧カラム削除」を別リリースに分ける
+  - 過去の Stay の税額再計算が必要なケースは、税ルールの `version` フィールドで吸収する（[v0要件 §6](./v0-requirements.md#6-税計算ロジックプラグイン構造) 参照）
+  - スキーマレベルの大変更が必要な場合は **view 分離** や **履歴テーブル（paper_trail のバージョン）** で旧仕様の参照経路を残す
+- **税率・条例改定への対応**:
+  - スキーマ変更ではなく **`src/tax-rules/okinawa.ts` の `version` 更新**で吸収する
+  - 過去 Stay には保存時の `tax_rule_version` を残し、再計算時に当時のロジックを呼べるようにする
+- **マイグレーション要件**:
+  - landbase 規約通り `down` メソッド実装必須
+  - 全カラムに `comment:` 必須（税務監査時の自己説明性のため特に重要）
+  - インデックス追加は `algorithm: :concurrently` を活用（本番ロックを避ける）
+
+> 関連: [非機能要件 §3 保存期間](./non-functional-requirements.md) / [§5 改ざん耐性](./non-functional-requirements.md)
 
 ---
 
-## 6. 採用しないことを明示
+## 6. 未確定事項（v0着手前に決めたい）
+
+- [ ] **本番ホスティング先**: §1.8 のA / B / Cから決定（現状はB有力）
+- [ ] **バックアップ実装ツール**: §5.1 の wal-g / pgBackRest / 自前 cron から選定
+- [ ] **バックアップ保管先**: §5.1 の R2 / S3 / B2 等の選定
+- [ ] **`lograge` 等のログ整形 gem 採用可否**: §5.3
+
+---
+
+## 7. 採用しないことを明示
 
 - ❌ **WordPress / WP系プラグイン** — 全社方針として技術スタックから除外
 - ❌ **Sidekiq + Redis** — Solid Queue で十分
