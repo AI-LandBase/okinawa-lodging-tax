@@ -1,4 +1,19 @@
-# 宿泊税システム 要件定義（たたき台）
+# 宿泊税システム 要件定義（たたき台・アーカイブ）
+
+> ⚠️ **このドキュメントはアーカイブです。本プロジェクトの正は [`docs/v0-requirements.md`](../v0-requirements.md) です。**
+>
+> このドキュメントは初期検討時の **SaaS 前提のたたき台**で、現在の方針（1施設1インスタンス・自社民泊起点）とは前提が異なります。
+> 将来 SaaS 拡張を再検討する際の参考資料として残しています。
+>
+> 現在の方針については以下を参照してください:
+> - [`README.md`](../../README.md) — プロジェクト全体像
+> - [`docs/v0-requirements.md`](../v0-requirements.md) — v0 機能要件（正）
+> - [`docs/non-functional-requirements.md`](../non-functional-requirements.md) — 非機能要件
+> - [`docs/tech-stack.md`](../tech-stack.md) — 技術スタック選定
+
+---
+
+# 以下、初期検討時の SaaS 前提たたき台（参考）
 
 > 沖縄県宿泊税の税額算定・集計・帳簿保存・領収書発行・県提出用データ出力を行うSaaSの要件定義ドラフト。
 > Notion / md で共有 → 足りないところを肉付けしていく前提のたたき台。

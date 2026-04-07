@@ -50,7 +50,7 @@
 | 5 | [`docs/paper-ledger-template.md`](./docs/paper-ledger-template.md) | 紙台帳テンプレート（Stay と 1:1 対応） |
 | 6 | [`CONTRIBUTING.md`](./CONTRIBUTING.md) | 開発規約・コミット規約・PR フロー |
 
-> [`docs/requirements.md`](./docs/requirements.md) は SaaS拡張時の参考資料。**v0 のソースオブトゥルースは `v0-requirements.md`**。
+> [`docs/archive/requirements-saas-draft.md`](./docs/archive/requirements-saas-draft.md) は初期SaaS前提のたたき台（アーカイブ）。**v0 のソースオブトゥルースは `v0-requirements.md`**。
 
 ---
 
