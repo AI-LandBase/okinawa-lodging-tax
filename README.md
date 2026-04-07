@@ -21,15 +21,28 @@
 
 ## ステータス
 
-**v0要件定義フェーズ**。実装着手前。
+**v0 要件定義フェーズ完了**。実装着手前。次のステップは [次のステップ](#次のステップ) 参照。
 
 ## ドキュメント
 
 | ドキュメント | 内容 | 状態 |
 |---|---|---|
-| [docs/v0-requirements.md](./docs/v0-requirements.md) ⭐ | v0（民泊MVP版）要件定義 | 検討中 |
-| [docs/non-functional-requirements.md](./docs/non-functional-requirements.md) | 非機能要件（v0最低ライン） | 検討中 |
+| [docs/v0-requirements.md](./docs/v0-requirements.md) ⭐ | v0（民泊MVP版）要件定義 | 確定 |
+| [docs/non-functional-requirements.md](./docs/non-functional-requirements.md) | 非機能要件（v0最低ライン） | 確定 |
+| [docs/tech-stack.md](./docs/tech-stack.md) | 技術スタック選定（landbase踏襲） | 確定 |
+| [docs/paper-ledger-template.md](./docs/paper-ledger-template.md) | 紙台帳テンプレート（Stayと1:1対応） | 確定 |
 | [docs/requirements.md](./docs/requirements.md) | 将来のSaaS拡張時の参照用要件 | 参考 |
+
+## 次のステップ
+
+v0要件定義フェーズは一段落。実装フェーズへの移行に向けて、以下を順次着手予定:
+
+| # | タスク | 内容 |
+|---|---|---|
+| 1 | **Rails アプリの初期セットアップ** | `rails new` + landbase 同等の Gemfile・Docker Compose 構成。Devise / Solid Queue / RSpec / Tailwind+Hotwire を含む |
+| 2 | **GitHub Issue の整備** | landbase 規約に揃えた Issue テンプレートと、v0実装の初期 Issue 群を作成 |
+| 3 | **`CONTRIBUTING.md` / `CLAUDE.md` の本プロジェクト版作成** | landbase の規約をスリム化して移植 |
+| 4 | **沖縄県条例の確定情報を待つかの判断** | 暫定値で実装着手するか、確定後着手するか。詳細は [v0要件 §7 オープンクエスチョン](./docs/v0-requirements.md#7-オープンクエスチョンv0着手前に確定したい) |
 
 ## v0スコープ
 
@@ -67,4 +80,4 @@ v0時点から守る規律。これにより v0の小ささと将来の汎用化
 ## 技術スタック方針
 
 メインスタックは **Ruby on Rails**（独立Railsアプリとして構築）。
-詳細は技術スタック選定時に [docs/tech-stack.md](./docs/tech-stack.md)（予定）にまとめる。
+`landbase_ai_suite` の技術スタック・開発規約を踏襲する。詳細は [docs/tech-stack.md](./docs/tech-stack.md) 参照。
