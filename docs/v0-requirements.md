@@ -53,6 +53,44 @@ src/tax-rules/
 | 4 | 領収書PDF出力 | 1宿泊1枚。宿泊料金と宿泊税を分離表示 |
 | 5 | 月次データのエクスポート | 申告書転記用のCSV/PDF |
 
+#### 入力単位の方針
+
+v0では **「1予約 = 1 Stayレコード」** を正とする。
+
+- 1予約は1人または1グループの連続した宿泊を表す
+- 連泊は `nights` カラムに泊数を持ち、Stayは増やさない
+- 1予約で複数部屋を取るケースは v0では想定しない（民泊1棟貸し前提）
+  - もし発生したら「予約を分割して2レコード入力する」運用で吸収
+- **税計算上の単位**は「1人1泊」だが、これはレコード単位ではなく**計算ロジック内部で導出**する
+  - 例: `tax_amount = perNightTax × nights × num_taxable_guests`
+
+この方針により紙台帳も「1予約1行」で書ける。
+
+#### エクスポートフォーマットの方針
+
+v0時点では「申告書への手転記を楽にする」ことが目的。電子申告(eLTAX等)は v1以降。
+
+想定するCSVカラム例:
+
+| カラム | 内容例 |
+|---|---|
+| 宿泊日 | 2026-04-01 |
+| チェックアウト日 | 2026-04-03 |
+| 泊数 | 2 |
+| 代表者名 | 山田 太郎 |
+| 総人数 | 3 |
+| 課税対象人数 | 3 |
+| 免除人数 | 0 |
+| 1人1泊宿泊料金 | 8000 |
+| 課税対象合計 | 48000 |
+| 宿泊税額 | 960 |
+| チャネル | Airbnb |
+| 予約番号 | XYZ123 |
+| 備考 | (任意) |
+
+将来の自治体様式・eLTAX対応は **「Exporterプラグイン」として `src/exporters/` に追加**する想定。
+税ルール同様、v0では1個（汎用CSV）だけ実装し、構造だけ拡張可能にしておく。
+
 ### v0でやらないこと（明示）
 
 - ❌ 認証・ユーザー管理（自分しか触らない）
@@ -106,12 +144,20 @@ src/tax-rules/
 | taxable_amount | int | ✓ | 課税対象合計（計算結果） |
 | tax_amount | int | ✓ | 宿泊税額（計算結果） |
 | exemption_reason | string |  | 免除理由（任意） |
+| channel | string |  | 予約チャネル名（Airbnb / Booking / 自社 / 直接 等） |
+| external_reservation_id | string |  | チャネル側の予約ID（突合用） |
 | memo | text |  | 自由メモ |
 | status | enum | ✓ | active / cancelled |
 | created_at | datetime | ✓ |  |
 | updated_at | datetime | ✓ |  |
 
-整合チェック: `num_guests = num_taxable_guests + num_exempt_guests`
+**整合チェック**: `num_guests = num_taxable_guests + num_exempt_guests`
+
+**設計メモ**:
+- 1予約=1レコード。連泊は `nights` で表現（§2参照）
+- 複数部屋は v0非対応。発生時は予約を分割入力
+- `channel` / `external_reservation_id` は v0では入力欄を持つだけで分析機能は持たない。将来のOTA連携・突合の備え
+  - チャネル名はフリーテキストではなく、設定ファイルでプリセット定義したプルダウン入力にする想定（揺らぎ防止）
 
 ### Receipt（領収書）
 
@@ -142,21 +188,45 @@ src/tax-rules/
 
 ### config/facility.json（施設情報・コミット対象外）
 
+「コードに書かない・他人がdeployしても動く」ための設定の置き場所。
+v0では1ファイルに集約し、設定UIは持たない（直接編集）。
+
 ```json
 {
-  "name": "施設名",
-  "address": "沖縄県...",
-  "phone": "098-...",
-  "registration_number": "特別徴収義務者番号",
-  "tax_rule_id": "okinawa",
+  "facility": {
+    "name": "○○ゲストハウス",
+    "address": "沖縄県那覇市...",
+    "phone": "098-xxx-xxxx",
+    "operator_name": "事業者名（届出名義）",
+    "registration_number": "特別徴収義務者登録番号",
+    "host_license_number": "住宅宿泊事業届出番号"
+  },
+  "tax": {
+    "rule_id": "okinawa",
+    "overrides": {
+      "rate_percent": null,
+      "exemption_threshold": null,
+      "comment": "条例確定後にのみ上書き使用。通常はnullで税ルール側のデフォルトを使う"
+    }
+  },
+  "channels": ["Airbnb", "Booking.com", "楽天バケーションステイ", "自社サイト", "直接"],
   "receipt": {
     "logo_path": "config/logo.png",
-    "footer_text": "ご利用ありがとうございました"
+    "header_lines": [
+      "○○ゲストハウス",
+      "沖縄県那覇市..."
+    ],
+    "footer_text": "ご利用ありがとうございました",
+    "issuer_name": "発行責任者名",
+    "registration_label": "登録番号: ..."
   }
 }
 ```
 
-`config/facility.example.json` をリポジトリに置き、実体は `.gitignore` で除外する。
+**ポイント**:
+- 施設情報・税ルール上書き・チャネル一覧・領収書テンプレ設定をすべてここに集約
+- `tax.overrides` は通常 `null`（税ルール側のデフォルトを使う）。条例改定時の緊急対応や、施設個別の上書きが必要な時のみ使う
+- リポジトリには `config/facility.example.json` を置き、実体は `.gitignore` で除外する
 
 ---
 
@@ -177,8 +247,12 @@ src/tax-rules/
 
 ### インターフェース
 
+単一Stayの計算と、月次集計（期間+Stay一覧 → 集計結果）の2つを定義する。
+
 ```ts
 // src/tax-rules/types.ts
+
+// --- 単一Stayの計算 ---
 type TaxCalcInput = {
   nightlyRate: number;       // 1人1泊宿泊料金
   nights: number;            // 連泊数
@@ -188,15 +262,45 @@ type TaxCalcInput = {
 type TaxCalcResult = {
   taxableAmount: number;     // 課税対象合計
   taxAmount: number;         // 宿泊税額
-  breakdown: string;         // 計算根拠（監査用）
+  breakdown: string;         // 計算根拠（監査用テキスト）
 };
 
+// --- 月次集計 ---
+type Period = {
+  yearMonth: string;         // "YYYY-MM"
+};
+
+type TaxSummary = {
+  period: Period;
+  totalGuests: number;
+  totalTaxableGuests: number;
+  totalTaxableAmount: number;
+  totalTaxAmount: number;
+  details: Array<{
+    stayId: string;
+    taxableAmount: number;
+    taxAmount: number;
+  }>;
+};
+
+// --- 自治体プラグインインターフェース ---
 interface TaxRule {
-  id: string;
-  label: string;
+  readonly id: string;        // "okinawa" 等
+  readonly label: string;     // "沖縄県宿泊税"
+  readonly version: string;   // "2026-04" 等。条例改定時に更新
+
+  // 単一Stayから税額を計算
   calculate(input: TaxCalcInput): TaxCalcResult;
+
+  // 期間 + Stay一覧から月次集計を返す
+  summarize(stays: Stay[], period: Period): TaxSummary;
 }
 ```
+
+**ガイドライン**:
+- 新しい自治体に対応する時は `src/tax-rules/<prefecture>.ts` を追加し、`TaxRule` を実装するだけ
+- `version` は条例改定時に更新。過去のStayには「保存時の version」を残しておくと再計算時に当時のロジックを呼び出せる
+- `breakdown` はテキストで計算根拠を残し、領収書や監査時に表示できるようにする
 
 ### v0実装: `src/tax-rules/okinawa.ts`
 
@@ -214,6 +318,8 @@ interface TaxRule {
 
 ## 7. オープンクエスチョン（v0着手前に確定したい）
 
+### 制度・条例関連
+
 - [ ] 沖縄県宿泊税条例の最終税率
 - [ ] 施行日
 - [ ] 課税標準に含む/除く要素（食事代・サービス料・清掃費）
@@ -221,6 +327,23 @@ interface TaxRule {
 - [ ] 修学旅行等の課税免除の運用
 - [ ] 領収書に必須記載すべき項目（県の指定があるか）
 - [ ] 保存期間（電帳法ベースで7年想定で進めるか）
+
+### 業務・実務関連
+
+- [ ] **決済手段の扱い**: 現金 / カード / OTA経由オンライン決済 をどこまで識別するか（v0は「料金を捕捉できればOK」で決済区分は持たない案）
+- [ ] **端数処理ルール**:
+  - 円未満の処理（切り捨て / 四捨五入 / 切り上げ）
+  - 人ごとに丸めるか、合計額で丸めるか
+  - 売上違算が出た時の調整方針
+- [ ] **取消・修正の運用**: 確定済み月の修正をどう扱うか（訂正レコード追加 or 月再オープン）
+
+### 運用方針
+
+- [ ] **条例変更への追従方針**:
+  - 基本方針は **「`src/tax-rules/okinawa.ts` の更新 + `version` 更新」のみで完結させる**
+  - 過去のStayには保存時のversionを記録しておき、再計算時に当時のロジックを呼べるようにする
+  - 緊急時のホットフィックスとして `config/facility.json` の `tax.overrides` を使う（通常運用では空）
+  - この方針で問題ないか要確認
 
 ---
 
