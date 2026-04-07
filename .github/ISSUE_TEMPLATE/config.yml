@@ -1,8 +1,0 @@
-blank_issues_enabled: true
-contact_links:
-  - name: 開発規約・コミット規約
-    url: https://github.com/AI-LandBase/okinawa-lodging-tax/blob/main/CONTRIBUTING.md
-    about: Issue 作成前に開発規約を確認してください
-  - name: v0 要件定義
-    url: https://github.com/AI-LandBase/okinawa-lodging-tax/blob/main/docs/v0-requirements.md
-    about: 機能要件は v0-requirements.md を正としてください
