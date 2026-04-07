@@ -31,6 +31,7 @@
 | [docs/non-functional-requirements.md](./docs/non-functional-requirements.md) | 非機能要件（v0最低ライン） | 確定 |
 | [docs/tech-stack.md](./docs/tech-stack.md) | 技術スタック選定（landbase踏襲） | 確定 |
 | [docs/paper-ledger-template.md](./docs/paper-ledger-template.md) | 紙台帳テンプレート（Stayと1:1対応） | 確定 |
+| [docs/decisions.md](./docs/decisions.md) | 意思決定ログ（設計・方針判断の時系列記録） | 運用中 |
 | [docs/archive/requirements-saas-draft.md](./docs/archive/requirements-saas-draft.md) | 初期SaaS前提たたき台（アーカイブ） | 参考 |
 
 ## 次のステップ
