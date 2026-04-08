@@ -211,7 +211,7 @@ v0時点では「申告書への手転記を楽にする」ことが目的。電
 | exemption_reason | string |  | 免除理由（任意） |
 | channel | string |  | 予約チャネル名（Airbnb / Booking / 自社 / 直接 等） |
 | external_reservation_id | string |  | チャネル側の予約ID（突合用） |
-| payment_method | enum |  | 決済手段（square / cash / ota / other）。Square 前提運用の備え。v0 は手入力・API 連携は v1 |
+| payment_method | enum |  | 決済手段（square / cash / ota / other）。Square 前提運用の備え。v0 は手入力・API 連携は v1。紙台帳ベース運用では空欄も可（紙台帳側に対応列を持たないため）、iPad 現場入力運用では UC-1' のフローに従って入力する |
 | memo | text |  | 自由メモ |
 | status | enum | ✓ | active / cancelled |
 | created_by_user_id | int | ✓ | 作成したスタッフ |
