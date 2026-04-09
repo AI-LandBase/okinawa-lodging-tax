@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 開発ガイド
+    url: https://github.com/AI-LandBase/okinawa-lodging-tax/blob/main/CONTRIBUTING.md
+    about: Issue を立てる前に CONTRIBUTING.md の Issue 作成ガイドを確認してください
+  - name: v0 要件定義
+    url: https://github.com/AI-LandBase/okinawa-lodging-tax/blob/main/docs/v0-requirements.md
+    about: 機能 Issue を立てる前に v0 のスコープを確認してください
