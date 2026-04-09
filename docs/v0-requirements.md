@@ -10,7 +10,7 @@
 |---|---|
 | 利用ユーザー | スタッフ2〜3人（同社内） |
 | ロール | 全員同権限（ロール分けなし） |
-| 月次確定・申告データ出力 | 全員可 |
+| 月次集計・エクスポート・申告データ出力 | 全員可 |
 | 対象施設 | 1施設 |
 | 構成 | 独立Railsアプリ（landbase_ai_suite との同居はしない） |
 
@@ -31,19 +31,22 @@ v0は「自分用ミニマム」だが、将来「1施設=1インスタンスの
 
 ### 規律1: ユーザー固有データはコードに書かない
 
-施設名・住所・電話番号・登録番号・ロゴ等はすべて `config/facility.json` から読む。
-他人が deploy する時はこのファイルを書き換えるだけで動くこと。
+施設名・住所・電話番号・登録番号等のテキスト設定は **Rails credentials** (`Rails.application.credentials.facility`) から読む。
+ロゴ等のバイナリ資産は **`app/assets/images/facility/*`** に置き、`.gitignore` で除外する。
+他人が deploy する時は credentials と assets を差し替えるだけで動くこと。コードへのハードコードは禁止。
+
+> 当初は `config/facility.json` への集約を想定していたが、Kamal デプロイ時の受け渡し方法を決める負担が大きいこと、Rails credentials で同等の要件が満たせることから方針変更した。詳細は [`docs/decisions.md` 2026-04-07: config/facility.json の概念を v0 では採用しない](./decisions.md) 参照。
 
 ### 規律2: 税ロジックを自治体ごとに分離
 
 ```
-src/tax-rules/
-  okinawa.ts      ← 沖縄県宿泊税
-  index.ts        ← 設定で切替（v0はokinawa固定）
+app/services/tax_rules/
+  base.rb         ← 共通インターフェース（抽象基底クラス）
+  okinawa.rb      ← 沖縄県宿泊税
 ```
 
-各ルールは共通インターフェース `calculate(input): TaxResult` を実装。
-将来 `kyoto.ts` `tokyo.ts` を追加するだけで他自治体対応が可能。
+各ルールは `TaxRules::Base` を継承し、共通インターフェース `#calculate(input)` を実装する。
+将来 `kyoto.rb` `tokyo.rb` を追加するだけで他自治体対応が可能。条例改定への対応は **`tax_rule_version`** で吸収する（§4 / §6 参照）。
 
 ### 規律3: 領収書・帳票はテンプレート化
 
@@ -160,9 +163,10 @@ v0時点では「申告書への手転記を楽にする」ことが目的。電
 ### UC-2: 月次の申告準備
 
 1. 月初にスタッフの誰かが「月次集計画面」で前月分の合計を確認
-2. 「月次確定」ボタンで対象月を編集ロック（誰が確定したかを記録）
-3. 「エクスポート」から申告書転記用のCSV/PDFをダウンロード
-4. 紙の申告書に転記して県へ提出
+2. 「エクスポート」から申告書転記用の CSV/PDF をダウンロード（実行時刻と実行者は `MonthlyExport` レコードに記録される）
+3. 紙の申告書に転記して県へ提出
+4. v0 では月次の編集ロックは持たない。エクスポート済の月の Stay を編集する場合は警告表示で誤操作を防ぐが、編集自体は許可する。事後監査は paper_trail の履歴に委ねる
+5. 法的な「確定」は条例第10条の申告納入の時点であってアプリ内状態ではない（[`docs/decisions.md` 2026-04-07: MonthlyClose 除外](./decisions.md) 参照）
 
 ### UC-3: 領収書発行
 
@@ -184,10 +188,10 @@ v0時点では「申告書への手転記を楽にする」ことが目的。電
 
 初回deploy直後はDBにユーザーが0人で、画面からログインできない。1人目は以下のいずれかで作成する:
 
-- `db:seed` で `config/facility.json` 等から初期スタッフを投入
-- `bin/rails create_user EMAIL=... NAME=...` のような専用CLIタスク
+- `db:seed` で環境変数（`INITIAL_ADMIN_EMAIL` / `INITIAL_ADMIN_NAME` / `INITIAL_ADMIN_PASSWORD`）経由で初期スタッフを投入
+- `bin/rails create_user EMAIL=... NAME=...` のような専用 rake タスク
 
-どちらを採用するかは技術スタック選定（C）で確定する。
+技術スタック選定では `db:seed` 方式を基本線として採用済み（[`docs/tech-stack.md` §5.2](./tech-stack.md) 参照）。
 2人目以降は1人目がログインしてユーザー管理画面から追加する。
 
 ---
@@ -208,6 +212,7 @@ v0時点では「申告書への手転記を楽にする」ことが目的。電
 | nightly_rate | int | ✓ | 1人1泊宿泊料金（税抜） |
 | taxable_amount | int | ✓ | 課税対象合計（計算結果） |
 | tax_amount | int | ✓ | 宿泊税額（計算結果） |
+| tax_rule_version | string | ✓ | 税計算に使用した条例 version。Stay 入力時に当時の current version を焼き付ける。例: `okinawa-2027-02-01`。v0 は単一値固定運用、切替ロジックは v1 |
 | exemption_reason | string |  | 免除理由（任意） |
 | channel | string |  | 予約チャネル名（Airbnb / Booking / 自社 / 直接 等） |
 | external_reservation_id | string |  | チャネル側の予約ID（突合用） |
@@ -230,6 +235,7 @@ v0時点では「申告書への手転記を楽にする」ことが目的。電
 - `created_by_user_id` / `updated_by_user_id` は **一覧表示や絞り込み時の速引き用**として Stay 本体に持つ（履歴を毎回 join しなくて済むようにするため）
 - 「誰がいつ何を変更したか」の正は履歴 gem 側。Stay 本体の `updated_by_user_id` は最終更新者のキャッシュという位置付け
 - 具体的な履歴 gem（papertrail / audited 等）は技術スタック選定で決定
+- `tax_rule_version` は Stay 入力時に当時の current version（v0 は `okinawa-2027-02-01` 固定）を焼き付ける。マイグレーションでは NOT NULL カラムとして追加。詳細は [`docs/decisions.md` 2026-04-07: tax_rule_version](./decisions.md) 参照
 
 ### Receipt（領収書）
 
@@ -247,18 +253,26 @@ v0時点では「申告書への手転記を楽にする」ことが目的。電
 | issued_by_user_id | int | ✓ | 発行したスタッフ |
 | created_at | datetime | ✓ |  |
 
-### MonthlyClose（月次締め）
+### MonthlyExport（月次エクスポート実行記録）
+
+> v0 では月次「確定」概念を持たないため、エクスポート実行の事実だけを記録する。Stay の編集ロックは行わない。詳細は [`docs/decisions.md` 2026-04-07: MonthlyClose を v0 から外す](./decisions.md) 参照。
 
 | カラム | 型 | 必須 | 説明 |
 |---|---|---|---|
 | id | string | ✓ | UUID |
-| year_month | string | ✓ | YYYY-MM |
-| closed_at | datetime | ✓ | 確定日時 |
-| closed_by_user_id | int | ✓ | 確定したスタッフ |
-| total_guests | int | ✓ |  |
-| total_taxable_guests | int | ✓ |  |
-| total_taxable_amount | int | ✓ |  |
-| total_tax_amount | int | ✓ |  |
+| year_month | string | ✓ | 対象月 YYYY-MM |
+| exported_at | datetime | ✓ | エクスポート実行時刻 |
+| exported_by_user_id | int | ✓ | エクスポートを実行したスタッフ |
+| format | enum | ✓ | csv / pdf |
+| total_guests | int | ✓ | エクスポート時点での集計値（参考） |
+| total_taxable_guests | int | ✓ | 同上 |
+| total_taxable_amount | int | ✓ | 同上 |
+| total_tax_amount | int | ✓ | 同上 |
+
+**設計メモ**:
+- エクスポートは何度でも実行可能。過去の MonthlyExport は履歴として残す
+- エクスポート済の月に Stay 修正が入った場合、画面側で「この月は YYYY-MM-DD HH:MM にエクスポート済です」の警告を出すが、編集自体は許可する
+- 月次の再エクスポートが必要になった場合は再度ボタンを押せばよい（新しい MonthlyExport レコードが追加される）
 
 ### User（スタッフユーザー）
 
@@ -277,47 +291,59 @@ v0時点では「申告書への手転記を楽にする」ことが目的。電
 - `active = false` で無効化。物理削除はしない（過去レコードへの紐付けが切れるため）
 - 認証ライブラリ（Devise / Rodauth 等）の標準カラム構成に合わせる想定。確定は技術スタック選定時
 
-### config/facility.json（施設情報・コミット対象外）
+### 施設情報・設定の保管場所
 
-「コードに書かない・他人がdeployしても動く」ための設定の置き場所。
-v0では1ファイルに集約し、設定UIは持たない（直接編集）。
+「コードに書かない・他人が deploy しても動く」ための設定の置き場所。v0 では設定 UI を持たず、直接編集する想定。詳細な判断背景は [`docs/decisions.md` 2026-04-07: config/facility.json の概念を v0 では採用しない](./decisions.md) 参照。
 
-```json
-{
-  "facility": {
-    "name": "○○ゲストハウス",
-    "address": "沖縄県那覇市...",
-    "phone": "098-xxx-xxxx",
-    "operator_name": "事業者名（届出名義）",
-    "registration_number": "特別徴収義務者登録番号",
-    "host_license_number": "住宅宿泊事業届出番号"
-  },
-  "tax": {
-    "rule_id": "okinawa",
-    "overrides": {
-      "rate_percent": null,
-      "exemption_threshold": null,
-      "comment": "条例確定後にのみ上書き使用。通常はnullで税ルール側のデフォルトを使う"
-    }
-  },
-  "channels": ["Airbnb", "Booking.com", "楽天バケーションステイ", "自社サイト", "直接"],
-  "receipt": {
-    "logo_path": "config/logo.png",
-    "header_lines": [
-      "○○ゲストハウス",
-      "沖縄県那覇市..."
-    ],
-    "footer_text": "ご利用ありがとうございました",
-    "issuer_name": "発行責任者名",
-    "registration_label": "登録番号: ..."
-  }
-}
+#### テキスト設定: Rails credentials
+
+`bin/rails credentials:edit` で以下の構造を編集する。`config/credentials.yml.enc` に暗号化保存され、`config/master.key` は **Kamal secrets** で本番に配布する。
+
+```yaml
+# config/credentials.yml.enc （復号後のイメージ）
+facility:
+  name: ○○ゲストハウス
+  address: 沖縄県○○市...
+  phone: 098-xxx-xxxx
+  operator_name: 事業者名（届出名義）
+  registration_number: 特別徴収義務者登録番号
+  host_license_number: 住宅宿泊事業届出番号
+
+tax:
+  rule_id: okinawa
+  # v0 は tax_rule_version 固定運用のため overrides は持たない。
+  # 条例改定は app/services/tax_rules/okinawa.rb の VERSION 更新で対応する。
+
+channels:
+  - Airbnb
+  - Booking.com
+  - 楽天バケーションステイ
+  - 自社サイト
+  - 直接
+
+receipt:
+  header_lines:
+    - ○○ゲストハウス
+    - 沖縄県○○市...
+  footer_text: ご利用ありがとうございました
+  issuer_name: 発行責任者名
+  registration_label: 登録番号: ...
+```
+
+#### バイナリ資産: `app/assets/images/facility/`
+
+ロゴ画像等のバイナリ資産は以下に配置する。実体は `.gitignore` で除外し、リポジトリには配置例のみ残す（例: `app/assets/images/facility/.gitkeep` + `README`）。
+
+```
+app/assets/images/facility/
+  logo.png          ← 施設ロゴ（.gitignore 対象）
+  receipt_seal.png  ← 発行印等（.gitignore 対象、任意）
 ```
 
 **ポイント**:
-- 施設情報・税ルール上書き・チャネル一覧・領収書テンプレ設定をすべてここに集約
-- `tax.overrides` は通常 `null`（税ルール側のデフォルトを使う）。条例改定時の緊急対応や、施設個別の上書きが必要な時のみ使う
-- リポジトリには `config/facility.example.json` を置き、実体は `.gitignore` で除外する
+- テキスト設定は Rails 標準の credentials で暗号化管理されるため、`config/facility.json` 方式よりも秘密情報管理が安全
+- バイナリは credentials に含めず assets ディレクトリに置くことで画像最適化パイプライン（Propshaft）に載る
+- 汎用配布（他事業者へのインストール）時の受け渡し手順は v1 で改めて検討する（初期セットアップ wizard / Volume マウント等）
 
 ---
 
@@ -329,13 +355,13 @@ v0では1ファイルに集約し、設定UIは持たない（直接編集）。
 2. **ホーム** — 今月のサマリーカード（宿泊数・税額）と直近入力ショートカット
 3. **宿泊実績一覧** — 月切替 + 行クリックで編集
 4. **宿泊実績入力フォーム** — 新規・編集兼用
-5. **月次集計画面** — 月別の確定状況と合計、確定ボタン
+5. **月次集計画面** — 月別の合計表示、エクスポート実行履歴（MonthlyExport）の参照
 6. **領収書発行画面** — 宿泊実績選択 → 宛名入力 → PDF生成
 7. **エクスポート画面** — 月選択 → CSV/PDFダウンロード
 8. **ユーザー管理画面** — スタッフ追加 / 無効化（v0最小機能）
 
-施設情報・税率・領収書テンプレ等の本格設定画面は v0ではなし（`config/facility.json` を直接編集）。
-ユーザー管理だけは画面を持つ（複数スタッフが触るため設定ファイル直編集は現実的でない）。
+施設情報・税率・領収書テンプレ等の本格設定画面は v0 ではなし（Rails credentials を `bin/rails credentials:edit` で直接編集、ロゴ等は `app/assets/images/facility/` に直接配置）。
+ユーザー管理だけは画面を持つ（複数スタッフが触るため credentials 直編集は現実的でない）。
 
 ---
 
@@ -343,72 +369,62 @@ v0では1ファイルに集約し、設定UIは持たない（直接編集）。
 
 ### インターフェース
 
-単一Stayの計算と、月次集計（期間+Stay一覧 → 集計結果）の2つを定義する。
+単一 Stay の計算と、月次集計（期間 + Stay 一覧 → 集計結果）の2つを Ruby の Service Object として定義する。
 
-```ts
-// src/tax-rules/types.ts
+```ruby
+# app/services/tax_rules/base.rb
+#
+# 自治体プラグインの抽象基底クラス。
+# 各自治体は本クラスを継承し、#calculate と #summarize を実装する。
+module TaxRules
+  class Base
+    # 自治体識別子（例: "okinawa"）。サブクラスで定義
+    ID = nil
+    # 表示ラベル（例: "沖縄県宿泊税"）。サブクラスで定義
+    LABEL = nil
+    # 条例 version（例: "okinawa-2027-02-01"）。条例改定時に新しい値を発行する。
+    # 命名規則: "<prefecture>-<施行日 YYYY-MM-DD>"。
+    VERSION = nil
 
-// --- 単一Stayの計算 ---
-type TaxCalcInput = {
-  nightlyRate: number;       // 1人1泊宿泊料金
-  nights: number;            // 連泊数
-  numTaxableGuests: number;  // 課税対象人数
-};
+    # 単一 Stay から税額を計算する。
+    #
+    # @param input [Hash] :nightly_rate, :nights, :num_taxable_guests
+    # @return [Hash] :taxable_amount, :tax_amount, :breakdown(計算根拠の説明文字列)
+    def calculate(input)
+      raise NotImplementedError
+    end
 
-type TaxCalcResult = {
-  taxableAmount: number;     // 課税対象合計
-  taxAmount: number;         // 宿泊税額
-  breakdown: string;         // 計算根拠（監査用テキスト）
-};
-
-// --- 月次集計 ---
-type Period = {
-  yearMonth: string;         // "YYYY-MM"
-};
-
-type TaxSummary = {
-  period: Period;
-  totalGuests: number;
-  totalTaxableGuests: number;
-  totalTaxableAmount: number;
-  totalTaxAmount: number;
-  details: Array<{
-    stayId: string;
-    taxableAmount: number;
-    taxAmount: number;
-  }>;
-};
-
-// --- 自治体プラグインインターフェース ---
-interface TaxRule {
-  readonly id: string;        // "okinawa" 等
-  readonly label: string;     // "沖縄県宿泊税"
-  readonly version: string;   // "2026-04" 等。条例改定時に更新
-
-  // 単一Stayから税額を計算
-  calculate(input: TaxCalcInput): TaxCalcResult;
-
-  // 期間 + Stay一覧から月次集計を返す
-  summarize(stays: Stay[], period: Period): TaxSummary;
-}
+    # 期間 + Stay 一覧から月次集計を返す。
+    #
+    # @param stays [Array<Stay>] 対象期間に含まれる Stay レコード
+    # @param year_month [String] "YYYY-MM"
+    # @return [Hash] :year_month, :total_guests, :total_taxable_guests,
+    #                :total_taxable_amount, :total_tax_amount,
+    #                :details(Array of {stay_id:, taxable_amount:, tax_amount:})
+    def summarize(stays, year_month)
+      raise NotImplementedError
+    end
+  end
+end
 ```
 
 **ガイドライン**:
-- 新しい自治体に対応する時は `src/tax-rules/<prefecture>.ts` を追加し、`TaxRule` を実装するだけ
-- `version` は条例改定時に更新。過去のStayには「保存時の version」を残しておくと再計算時に当時のロジックを呼び出せる
+- 新しい自治体に対応する時は `app/services/tax_rules/<prefecture>.rb` を追加し、`TaxRules::Base` を継承して `#calculate` と `#summarize` を実装する
+- **`VERSION`** は条例改定時に新しい値を発行する。過去の Stay には保存時の `tax_rule_version` を残しておき、再計算時に当時のロジックを呼び出せるようにする（[`docs/decisions.md` 2026-04-07: tax_rule_version](./decisions.md) 参照）
+- v0 では `tax_rule_version` の **切替ロジックは実装しない**（実質単一値固定運用）。改定が発生した v1 以降で version 解決ロジックを導入する
 - `breakdown` はテキストで計算根拠を残し、領収書や監査時に表示できるようにする
 
-### v0実装: `src/tax-rules/okinawa.ts`
+### v0実装: `app/services/tax_rules/okinawa.rb`
 
-- 沖縄県宿泊税条例の**最終確定値が未定**のため、暫定値で実装
-- 条例確定後はこのファイルのみ更新すれば全機能に反映される
-- 暫定の前提:
-  - 税率: 2.0% （要確定）
-  - 課税標準上限: 1人1泊あたり10万円 （要確定）
-  - 税額上限: 2,000円/人泊 （要確定）
-  - 免税点: 未設定 （要確定）
+- 令和9年（2027年）2月1日施行の沖縄県宿泊税条例（令和8年沖縄県条例第1号）に準拠する
+- v0 期間中は単一 version `okinawa-2027-02-01` を固定で使用
+- **条例確定値の本格反映は別 Issue/PR で実施**（Issue #12 の A スコープ）。本 PR では値の精緻化は行わない
+- v0 の暫定実装値（条例本文確定取り込み前）:
+  - 税率: 100分の2 (2.0%) ※附則4項の併課区域は対象外（自社民泊は今帰仁村 = 標準スキーム適用）
+  - 課税標準上限: 1人1泊あたり10万円
+  - 免税点・端数処理等の詳細は条例情報取り込み PR で確定
 
-⚠️ 実装時に「**この値はダミーです**」のコメントを残し、`docs/open-questions.md` の確定待ち事項とリンクする。
+⚠️ 実装時に税率・上限値はダミーではなく条例本文の値を埋めること。値の出典コメントを必ず残す。
 
 ---
 
@@ -431,15 +447,11 @@ interface TaxRule {
   - 円未満の処理（切り捨て / 四捨五入 / 切り上げ）
   - 人ごとに丸めるか、合計額で丸めるか
   - 売上違算が出た時の調整方針
-- [ ] **取消・修正の運用**: 確定済み月の修正をどう扱うか（訂正レコード追加 or 月再オープン）
+- [x] ~~**取消・修正の運用**~~ — 決着済み: v0 では月次「確定」概念を持たず、Stay は常時編集可。エクスポート済月の編集時は警告のみ表示し、編集自体は許可する。事後監査は paper_trail に委ねる（[`docs/decisions.md` 2026-04-07: MonthlyClose を v0 から外す](./decisions.md) 参照）
 
 ### 運用方針
 
-- [ ] **条例変更への追従方針**:
-  - 基本方針は **「`src/tax-rules/okinawa.ts` の更新 + `version` 更新」のみで完結させる**
-  - 過去のStayには保存時のversionを記録しておき、再計算時に当時のロジックを呼べるようにする
-  - 緊急時のホットフィックスとして `config/facility.json` の `tax.overrides` を使う（通常運用では空）
-  - この方針で問題ないか要確認
+- [x] ~~**条例変更への追従方針**~~ — 決着済み: 基本方針は **「`app/services/tax_rules/okinawa.rb` の更新 + `VERSION` 更新」のみで完結させる**。過去の Stay には保存時の `tax_rule_version` を残し、再計算時に当時のロジックを呼べるようにする。v0 は単一値固定運用、version 切替ロジックは v1（[`docs/decisions.md` 2026-04-07: tax_rule_version カラム追加](./decisions.md) 参照）
 
 ---
 

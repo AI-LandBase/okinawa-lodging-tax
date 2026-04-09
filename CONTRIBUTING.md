@@ -227,7 +227,7 @@ git pull origin main
 - **テスト種別**:
   - モデル spec
   - リクエスト spec（コントローラの代わりに request spec を使う）
-  - system spec（領収書PDF生成・月次確定等のクリティカルパス）
+  - system spec（領収書PDF生成・月次集計エクスポート等のクリティカルパス）
 
 > Rails アプリ実装着手後に具体的な実行コマンドを追記します。
 
