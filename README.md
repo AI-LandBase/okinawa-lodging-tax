@@ -46,7 +46,6 @@ v0要件定義フェーズは一段落。実装フェーズへの移行に向け
 | 1 | **Rails アプリの初期セットアップ** | `rails new` + landbase 同等の Gemfile・Docker Compose 構成。Devise / Solid Queue / RSpec / Tailwind+Hotwire を含む |
 | 2 | **GitHub Issue の整備** | landbase 規約に揃えた Issue テンプレートと、v0実装の初期 Issue 群を作成 |
 | 3 | **`CONTRIBUTING.md` / `CLAUDE.md` の本プロジェクト版作成** | landbase の規約をスリム化して移植 |
-| 4 | **沖縄県条例の確定情報を待つかの判断** | 暫定値で実装着手するか、確定後着手するか。詳細は [v0要件 §7 オープンクエスチョン](./docs/v0-requirements.md#7-オープンクエスチョンv0着手前に確定したい) |
 
 ## v0スコープ
 
