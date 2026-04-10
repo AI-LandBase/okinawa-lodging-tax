@@ -1,0 +1,71 @@
+<div class="w-full">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">宿泊実績一覧</h1>
+    <%= link_to "新規登録", new_stay_path, class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+  </div>
+
+  <%# 月切替ナビゲーション %>
+  <div class="flex items-center gap-4 mb-6">
+    <% prev_month = Date.new(@year, @month, 1) - 1.month %>
+    <%= link_to "< 前月", stays_path(year: prev_month.year, month: prev_month.month),
+          class: "text-blue-600 hover:underline" %>
+    <span class="text-lg font-medium"><%= @year %>年<%= @month %>月</span>
+    <% next_month = Date.new(@year, @month, 1) + 1.month %>
+    <%= link_to "翌月 >", stays_path(year: next_month.year, month: next_month.month),
+          class: "text-blue-600 hover:underline" %>
+  </div>
+
+  <% if @stays.any? %>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-sm">
+        <thead>
+          <tr class="border-b-2 border-gray-300">
+            <th class="text-left py-3 px-2">チェックイン</th>
+            <th class="text-left py-3 px-2">泊数</th>
+            <th class="text-left py-3 px-2">代表者名</th>
+            <th class="text-right py-3 px-2">人数</th>
+            <th class="text-right py-3 px-2">料金/人泊</th>
+            <th class="text-right py-3 px-2">税額</th>
+            <th class="text-left py-3 px-2">状態</th>
+            <th class="text-left py-3 px-2">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @stays.each do |stay| %>
+            <tr class="border-b border-gray-200 <%= 'opacity-50' if stay.cancelled? %>">
+              <td class="py-3 px-2"><%= stay.check_in_date.strftime("%m/%d") %></td>
+              <td class="py-3 px-2"><%= stay.nights %></td>
+              <td class="py-3 px-2"><%= stay.guest_name %></td>
+              <td class="py-3 px-2 text-right"><%= stay.num_taxable_guests %>/<%= stay.num_guests %></td>
+              <td class="py-3 px-2 text-right"><%= number_with_delimiter(stay.nightly_rate) %>円</td>
+              <td class="py-3 px-2 text-right"><%= number_with_delimiter(stay.tax_amount) %>円</td>
+              <td class="py-3 px-2">
+                <% if stay.active? %>
+                  <span class="text-green-600">有効</span>
+                <% else %>
+                  <span class="text-red-600">取消</span>
+                <% end %>
+              </td>
+              <td class="py-3 px-2 space-x-2">
+                <% if stay.active? %>
+                  <%= link_to "編集", edit_stay_path(stay), class: "text-blue-600 hover:underline" %>
+                  <%= button_to "取消", cancel_stay_path(stay), method: :patch,
+                        class: "text-red-600 hover:underline",
+                        form: { data: { turbo_confirm: "この宿泊実績を取り消しますか？" } } %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-4 p-4 bg-gray-50 rounded text-sm">
+      <strong>月計:</strong>
+      宿泊税合計 <strong><%= number_with_delimiter(@stays.active.sum(:tax_amount)) %>円</strong>
+      （課税対象 <%= @stays.active.sum(:num_taxable_guests) %>人泊）
+    </div>
+  <% else %>
+    <p class="text-gray-500">この月の宿泊実績はありません。</p>
+  <% end %>
+</div>

@@ -1,0 +1,85 @@
+<%= form_with(model: stay, class: "space-y-4 max-w-lg") do |f| %>
+  <% if stay.errors.any? %>
+    <div class="bg-red-50 border border-red-300 rounded p-4">
+      <h2 class="text-red-800 font-medium mb-2"><%= stay.errors.count %>件のエラーがあります</h2>
+      <ul class="list-disc list-inside text-red-700 text-sm">
+        <% stay.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :check_in_date, "チェックイン日", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.date_field :check_in_date, class: "w-full border border-gray-300 rounded px-3 py-2", required: true %>
+    </div>
+    <div>
+      <%= f.label :nights, "泊数", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.number_field :nights, class: "w-full border border-gray-300 rounded px-3 py-2", min: 1, value: stay.nights || 1, required: true %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :guest_name, "代表者名", class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= f.text_field :guest_name, class: "w-full border border-gray-300 rounded px-3 py-2", required: true %>
+  </div>
+
+  <div class="grid grid-cols-3 gap-4">
+    <div>
+      <%= f.label :num_guests, "総人数", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.number_field :num_guests, class: "w-full border border-gray-300 rounded px-3 py-2", min: 1, required: true %>
+    </div>
+    <div>
+      <%= f.label :num_taxable_guests, "課税対象", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.number_field :num_taxable_guests, class: "w-full border border-gray-300 rounded px-3 py-2", min: 0, required: true %>
+    </div>
+    <div>
+      <%= f.label :num_exempt_guests, "免除", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.number_field :num_exempt_guests, class: "w-full border border-gray-300 rounded px-3 py-2", min: 0, value: stay.num_exempt_guests || 0, required: true %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :nightly_rate, "1人1泊料金（税抜・円）", class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= f.number_field :nightly_rate, class: "w-full border border-gray-300 rounded px-3 py-2", min: 0, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :exemption_reason, "免除理由", class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= f.text_field :exemption_reason, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :channel, "予約チャネル", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.select :channel,
+            options_for_select(["Airbnb", "Booking.com", "楽天バケーションステイ", "自社サイト", "直接"], stay.channel),
+            { include_blank: "選択してください" },
+            class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div>
+      <%= f.label :payment_method, "決済手段", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.select :payment_method,
+            options_for_select([["Square", "square"], ["現金", "cash"], ["OTA決済", "ota"], ["その他", "other"]], stay.payment_method),
+            { include_blank: "選択してください" },
+            class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :external_reservation_id, "予約番号", class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= f.text_field :external_reservation_id, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+  </div>
+
+  <div>
+    <%= f.label :memo, "メモ", class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= f.text_area :memo, rows: 3, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+  </div>
+
+  <div class="flex items-center gap-4">
+    <%= f.submit stay.new_record? ? "登録" : "更新", class: "bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 cursor-pointer" %>
+    <%= link_to "キャンセル", stays_path, class: "text-gray-600 hover:underline" %>
+  </div>
+<% end %>
