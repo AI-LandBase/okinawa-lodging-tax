@@ -1,0 +1,4 @@
+ja:
+  devise:
+    failure:
+      account_inactive: "アカウントが無効化されています。管理者に連絡してください。"
