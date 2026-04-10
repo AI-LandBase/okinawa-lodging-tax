@@ -10,9 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_10_004332) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_10_010000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "stays", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "channel", comment: "予約チャネル名（Airbnb / Booking 等）"
+    t.date "check_in_date", null: false, comment: "チェックイン日"
+    t.datetime "created_at", null: false
+    t.bigint "created_by_user_id", null: false, comment: "作成したスタッフ"
+    t.string "exemption_reason", comment: "免除理由"
+    t.string "external_reservation_id", comment: "チャネル側の予約ID（突合用）"
+    t.string "guest_name", null: false, comment: "代表者氏名"
+    t.text "memo", comment: "自由メモ"
+    t.integer "nightly_rate", null: false, comment: "1人1泊宿泊料金（税抜）"
+    t.integer "nights", null: false, comment: "連泊数"
+    t.integer "num_exempt_guests", default: 0, null: false, comment: "免除人数"
+    t.integer "num_guests", null: false, comment: "総宿泊人数"
+    t.integer "num_taxable_guests", null: false, comment: "課税対象人数"
+    t.string "payment_method", comment: "決済手段（square / cash / ota / other）"
+    t.string "status", default: "active", null: false, comment: "ステータス（active / cancelled）"
+    t.integer "tax_amount", null: false, comment: "宿泊税額（計算結果）"
+    t.string "tax_rule_version", default: "okinawa-2027-02-01", null: false, comment: "税計算に使用した条例 version"
+    t.integer "taxable_amount", null: false, comment: "課税対象合計（計算結果）"
+    t.datetime "updated_at", null: false
+    t.bigint "updated_by_user_id", null: false, comment: "最終更新したスタッフ"
+    t.index ["check_in_date"], name: "index_stays_on_check_in_date"
+    t.index ["created_by_user_id"], name: "index_stays_on_created_by_user_id"
+    t.index ["status"], name: "index_stays_on_status"
+    t.index ["updated_by_user_id"], name: "index_stays_on_updated_by_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.boolean "active", default: true, null: false, comment: "有効フラグ（false でログイン不可）"
@@ -31,10 +58,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_004332) do
   create_table "versions", force: :cascade do |t|
     t.datetime "created_at"
     t.string "event", null: false
-    t.bigint "item_id", null: false
+    t.string "item_id", null: false
     t.string "item_type", null: false
     t.text "object"
     t.string "whodunnit"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
+
+  add_foreign_key "stays", "users", column: "created_by_user_id"
+  add_foreign_key "stays", "users", column: "updated_by_user_id"
 end

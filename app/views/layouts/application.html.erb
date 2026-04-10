@@ -28,7 +28,8 @@
       <nav class="bg-white border-b border-gray-200 px-5 py-3">
         <div class="container mx-auto flex justify-between items-center">
           <div class="flex items-center gap-6">
-            <span class="font-bold text-lg">宿泊税管理</span>
+            <%= link_to "宿泊税管理", root_path, class: "font-bold text-lg hover:text-gray-900" %>
+            <%= link_to "宿泊実績", stays_path, class: "text-gray-600 hover:text-gray-900" %>
             <%= link_to "ユーザー管理", users_path, class: "text-gray-600 hover:text-gray-900" %>
           </div>
           <div class="flex items-center gap-4 text-sm text-gray-600">
