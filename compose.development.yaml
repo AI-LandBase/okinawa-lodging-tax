@@ -1,0 +1,43 @@
+services:
+  postgresdb:
+    image: postgres:${POSTGRES_VERSION}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  railsapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.rails
+      target: development
+      args:
+        RUBY_VERSION: ${RUBY_VERSION}
+        RAILS_VERSION: ${RAILS_VERSION}
+        NODE_VERSION: ${NODE_VERSION}
+    command: bash -c "rm -f tmp/pids/server.pid && bin/setup && bin/dev"
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.development
+    depends_on:
+      postgresdb:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres_data:
+  bundle_cache:

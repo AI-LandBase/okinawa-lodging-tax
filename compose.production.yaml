@@ -1,0 +1,47 @@
+services:
+  postgresdb:
+    image: postgres:${POSTGRES_VERSION}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+    restart: unless-stopped
+
+  railsapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.rails
+      target: production
+      args:
+        RUBY_VERSION: ${RUBY_VERSION}
+        RAILS_VERSION: ${RAILS_VERSION}
+        NODE_VERSION: ${NODE_VERSION}
+    env_file:
+      - .env.production
+    expose:
+      - "3000"
+    depends_on:
+      postgresdb:
+        condition: service_healthy
+    networks:
+      - internal
+      - web-proxy-net
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  internal:
+    internal: true
+  web-proxy-net:
+    external: true
