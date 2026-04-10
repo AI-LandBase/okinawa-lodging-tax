@@ -1,0 +1,5 @@
+# ドメイン名とリバースプロキシ先を本番環境に合わせて変更してください
+# リバースプロキシ先は compose.production.yaml の railsapp サービス名を指定します
+yourdomain.com {
+	reverse_proxy railsapp:3000
+}

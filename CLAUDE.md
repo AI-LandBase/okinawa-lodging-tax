@@ -33,8 +33,8 @@
 
 ## 技術スタック（要点）
 
-- **Rails 8.0.2.1** / **Ruby 3.4.6**
-- **PostgreSQL 16**
+- **Rails 8.1.3** / **Ruby 3.4.8**
+- **PostgreSQL 17**
 - **Devise** (認証) / **Solid Queue・Cache・Cable**（Redis 不要）
 - **paper_trail**（履歴・税務監査）
 - **Prawn**（領収書 PDF）/ **combine_pdf**（PDF 結合）
@@ -64,13 +64,22 @@
 
 ## よく使うコマンド
 
-> Rails アプリ実装着手後に追記します。現状は雛形のみ。
-
 ```bash
-# (TBD) make up        # Docker Compose 起動
-# (TBD) make down      # 停止
-# (TBD) make test      # RSpec 実行
-# (TBD) bin/rails console
+make up        # Docker Compose 起動 (http://localhost:3000)
+make down      # 停止
+make bash      # railsapp コンテナに入る
+make test      # RSpec 実行
+make clean     # Docker 関連をクリーン
+make help      # 全コマンド表示
+```
+
+コンテナ内で:
+```bash
+rails console              # Rails コンソール
+rails db:migrate            # マイグレーション実行
+bundle exec rspec           # テスト実行
+bundle exec rubocop         # Lint チェック
+bundle exec rubocop -a      # Lint 自動修正
 ```
 
 ---

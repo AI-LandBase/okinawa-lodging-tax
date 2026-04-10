@@ -27,8 +27,8 @@
 
 | 種別 | 採用 | 備考 |
 |---|---|---|
-| 言語 | **Ruby 3.4.6** | landbase合わせ |
-| フレームワーク | **Rails 8.0.2.1** | landbase合わせ |
+| 言語 | **Ruby 3.4.8** | rails_boilerplate 合わせ |
+| フレームワーク | **Rails 8.1.3** | rails_boilerplate 合わせ |
 | アセットパイプライン | **Propshaft** | Rails 8 標準・landbase合わせ |
 | Webサーバ | **Puma** + **Thruster** | landbase合わせ |
 
@@ -36,7 +36,7 @@
 
 | 種別 | 採用 | 備考 |
 |---|---|---|
-| RDBMS | **PostgreSQL 16** | 税務データの長期保存・型の堅さ |
+| RDBMS | **PostgreSQL 17** | 税務データの長期保存・型の堅さ |
 | キャッシュ | **Solid Cache** | Postgres backed・Redis不要 |
 | ジョブキュー | **Solid Queue** | Postgres backed・Redis不要 |
 | WebSocket | **Solid Cable** | Postgres backed |
