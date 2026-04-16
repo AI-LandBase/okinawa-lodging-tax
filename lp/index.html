@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>沖縄県宿泊税 対応支援システム｜2027年2月施行</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ocean: {
+              50: '#f0fafb',
+              100: '#d0f0f4',
+              200: '#a1e0e9',
+              300: '#6ac9d6',
+              400: '#3aabb9',
+              500: '#1e8a9a',
+              600: '#196f7d',
+              700: '#1a5966',
+              800: '#1c4a54',
+              900: '#0f2f36',
+              950: '#071c22',
+            },
+            coral: {
+              300: '#fca68e',
+              400: '#f98563',
+              500: '#f46a3f',
+              600: '#e14e25',
+            },
+            sand: {
+              50: '#fdfaf5',
+              100: '#f9f1e3',
+              200: '#f2e2c6',
+              300: '#e8cfa1',
+            },
+          },
+          fontFamily: {
+            display: ['"Shippori Mincho"', 'serif'],
+            body: ['"Zen Kaku Gothic New"', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Zen Kaku Gothic New', sans-serif; }
+
+    /* Wave animation for hero */
+    .wave-bg {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+    .wave-bg svg {
+      position: relative;
+      display: block;
+      width: calc(100% + 1.3px);
+      height: 80px;
+    }
+
+    /* Staggered fade-in */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up {
+      opacity: 0;
+      animation: fadeSlideUp 0.8s ease-out forwards;
+    }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .delay-600 { animation-delay: 0.6s; }
+    .delay-700 { animation-delay: 0.7s; }
+
+    /* Floating animation for cards */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .hover-float:hover {
+      animation: float 2s ease-in-out infinite;
+    }
+
+    /* Gradient text */
+    .text-gradient {
+      background: linear-gradient(135deg, #6ac9d6 0%, #f46a3f 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Grain overlay */
+    .grain::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* Scroll-triggered animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Subtle shimmer on hero subtitle */
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .shimmer-text {
+      background: linear-gradient(90deg, #a1e0e9 0%, #f9f1e3 50%, #a1e0e9 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 6s linear infinite;
+    }
+
+    /* CTA pulse */
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(244, 106, 63, 0.4); }
+      50% { box-shadow: 0 0 0 12px rgba(244, 106, 63, 0); }
+    }
+    .cta-pulse {
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    /* Table row hover */
+    .table-row {
+      transition: background-color 0.2s ease;
+    }
+    .table-row:hover {
+      background-color: rgba(26, 89, 102, 0.04);
+    }
+
+    /* Kit card gradient border */
+    .kit-card {
+      position: relative;
+      background: linear-gradient(135deg, #0f2f36 0%, #1a5966 50%, #0f2f36 100%);
+    }
+    .kit-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 1rem;
+      padding: 2px;
+      background: linear-gradient(135deg, #3aabb9, #f46a3f, #3aabb9);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="bg-sand-50 text-ocean-900">
+
+  <!-- ヘッダー -->
+  <header class="relative overflow-hidden grain" style="background: linear-gradient(160deg, #071c22 0%, #1a5966 40%, #196f7d 70%, #1e8a9a 100%);">
+    <div class="absolute inset-0 opacity-10">
+      <div style="position:absolute; top:10%; left:5%; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle, #3aabb9 0%, transparent 70%);"></div>
+      <div style="position:absolute; top:40%; right:10%; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, #f46a3f 0%, transparent 70%);"></div>
+    </div>
+    <div class="relative max-w-5xl mx-auto px-6 pt-24 pb-32 text-center">
+      <p class="animate-fade-up text-ocean-300 text-sm font-medium tracking-widest mb-6 uppercase">令和8年沖縄県条例第1号</p>
+      <h1 class="animate-fade-up delay-100 font-display text-4xl md:text-6xl font-800 leading-tight mb-8 text-white">
+        2027年2月、<br class="md:hidden">沖縄県で<br>
+        <span class="shimmer-text">宿泊税がスタートします</span>
+      </h1>
+      <p class="animate-fade-up delay-300 text-lg md:text-xl text-ocean-200 max-w-2xl mx-auto mb-12 leading-relaxed">
+        旅館・ホテル・民泊すべてが対象。<br>
+        帳簿の記載・保存、毎月の申告納入が義務化されます。
+      </p>
+      <a href="#contact" class="animate-fade-up delay-500 inline-block bg-coral-500 hover:bg-coral-600 text-white font-bold py-4 px-12 rounded-full text-lg transition-all duration-300 cta-pulse hover:scale-105">
+        お問い合わせはこちら
+      </a>
+    </div>
+    <div class="wave-bg">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" fill="#fdfaf5">
+        <path d="M0,64 C150,100 350,0 600,64 C850,128 1050,20 1200,64 L1200,120 L0,120 Z"></path>
+      </svg>
+    </div>
+  </header>
+
+  <!-- 課題提起 -->
+  <section class="py-24">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16 reveal">
+        <p class="text-coral-500 font-medium tracking-wider text-sm mb-3">PAIN POINTS</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">こんなお悩みはありませんか？</h2>
+        <p class="text-ocean-700/60">特に小規模宿泊事業者の方へ</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="reveal bg-white rounded-2xl p-8 shadow-lg shadow-ocean-900/5 border border-ocean-100/50 hover-float transition-shadow hover:shadow-xl hover:shadow-ocean-900/10" style="transition-delay:0.1s">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-ocean-100 to-ocean-200 flex items-center justify-center text-2xl mb-6">&#x1F4CB;</div>
+          <h3 class="font-display font-bold text-xl mb-3 text-ocean-900">帳簿の記載・保存が不安</h3>
+          <p class="text-ocean-700/70 text-sm leading-relaxed">条例で宿泊年月日・料金・人数・税額等の記載と5年超の保存が義務付けられます。紙だけで管理し続けるのは大変です。</p>
+        </div>
+        <div class="reveal bg-white rounded-2xl p-8 shadow-lg shadow-ocean-900/5 border border-ocean-100/50 hover-float transition-shadow hover:shadow-xl hover:shadow-ocean-900/10" style="transition-delay:0.2s">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-coral-300/30 to-coral-400/30 flex items-center justify-center text-2xl mb-6">&#x1F4C8;</div>
+          <h3 class="font-display font-bold text-xl mb-3 text-ocean-900">毎月の申告作業が負担</h3>
+          <p class="text-ocean-700/70 text-sm leading-relaxed">前月分の宿泊税を毎月末日までに申告・納入する必要があります。手計算での集計はミスのもとです。</p>
+        </div>
+        <div class="reveal bg-white rounded-2xl p-8 shadow-lg shadow-ocean-900/5 border border-ocean-100/50 hover-float transition-shadow hover:shadow-xl hover:shadow-ocean-900/10" style="transition-delay:0.3s">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-sand-200 to-sand-300 flex items-center justify-center text-2xl mb-6">&#x1F4BB;</div>
+          <h3 class="font-display font-bold text-xl mb-3 text-ocean-900">そもそもパソコンがない</h3>
+          <p class="text-ocean-700/70 text-sm leading-relaxed">沖縄北部を中心に、端末を持たない小規模事業者も少なくありません。システムがあっても動かす環境がない。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 宿泊税の概要 -->
+  <section class="py-24 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-sand-50 via-ocean-50/30 to-sand-50"></div>
+    <div class="relative max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16 reveal">
+        <p class="text-ocean-500 font-medium tracking-wider text-sm mb-3">OVERVIEW</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold">沖縄県宿泊税の概要</h2>
+      </div>
+      <div class="reveal max-w-3xl mx-auto bg-white rounded-2xl shadow-lg shadow-ocean-900/5 overflow-hidden border border-ocean-100/30">
+        <table class="w-full text-left">
+          <tbody>
+            <tr class="table-row border-b border-ocean-100/40">
+              <th class="py-5 pl-8 pr-4 text-ocean-500 font-medium w-44 align-top text-sm">施行日</th>
+              <td class="py-5 pr-8 font-display font-semibold text-ocean-900">2027年（令和9年）2月1日</td>
+            </tr>
+            <tr class="table-row border-b border-ocean-100/40">
+              <th class="py-5 pl-8 pr-4 text-ocean-500 font-medium align-top text-sm">対象施設</th>
+              <td class="py-5 pr-8 text-ocean-800">旅館業（旅館・ホテル・簡易宿所）、特区民泊、住宅宿泊事業（民泊）</td>
+            </tr>
+            <tr class="table-row border-b border-ocean-100/40">
+              <th class="py-5 pl-8 pr-4 text-ocean-500 font-medium align-top text-sm">税率</th>
+              <td class="py-5 pr-8 text-ocean-800">宿泊料金（1人1泊あたり）の <span class="font-display font-bold text-xl text-gradient">2%</span></td>
+            </tr>
+            <tr class="table-row border-b border-ocean-100/40">
+              <th class="py-5 pl-8 pr-4 text-ocean-500 font-medium align-top text-sm">課税標準上限</th>
+              <td class="py-5 pr-8 text-ocean-800">1人1泊あたり 100,000円</td>
+            </tr>
+            <tr class="table-row border-b border-ocean-100/40">
+              <th class="py-5 pl-8 pr-4 text-ocean-500 font-medium align-top text-sm">申告納入</th>
+              <td class="py-5 pr-8 text-ocean-800">毎月末日までに前月分を県へ申告・納入</td>
+            </tr>
+            <tr class="table-row">
+              <th class="py-5 pl-8 pr-4 text-ocean-500 font-medium align-top text-sm">帳簿保存</th>
+              <td class="py-5 pr-8 text-ocean-800">使用終了月末翌日から3ヶ月経過後 5年間</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-ocean-400 mt-6 text-center max-w-3xl mx-auto">出典: 令和8年沖縄県条例第1号「沖縄県宿泊税条例」および同施行規則（沖縄県規則第2号）</p>
+    </div>
+  </section>
+
+  <!-- システム紹介 -->
+  <section class="py-24">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16 reveal">
+        <p class="text-coral-500 font-medium tracking-wider text-sm mb-3">SOLUTION</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">面倒な作業を、<br class="md:hidden">まるごと効率化</h2>
+        <p class="text-ocean-700/60">小規模宿泊事業者のために設計された、シンプルで使いやすいシステム</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="reveal group bg-white rounded-2xl p-8 shadow-lg shadow-ocean-900/5 border border-ocean-100/50 transition-all duration-300 hover:border-ocean-300/50 hover:shadow-xl" style="transition-delay:0.1s">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-ocean-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-ocean-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-lg text-ocean-900">税額の自動計算</h3>
+          </div>
+          <p class="text-ocean-700/70 text-sm leading-relaxed">宿泊料金・人数・泊数を入力するだけで、沖縄県の条例に基づいた宿泊税額を自動で算出。手計算のミスをなくします。</p>
+        </div>
+        <div class="reveal group bg-white rounded-2xl p-8 shadow-lg shadow-ocean-900/5 border border-ocean-100/50 transition-all duration-300 hover:border-ocean-300/50 hover:shadow-xl" style="transition-delay:0.15s">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-ocean-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-ocean-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-lg text-ocean-900">帳簿の自動管理</h3>
+          </div>
+          <p class="text-ocean-700/70 text-sm leading-relaxed">条例で求められる記載義務項目をすべてカバー。データは安全に保管され、法定保存期間を満たします。</p>
+        </div>
+        <div class="reveal group bg-white rounded-2xl p-8 shadow-lg shadow-ocean-900/5 border border-ocean-100/50 transition-all duration-300 hover:border-ocean-300/50 hover:shadow-xl" style="transition-delay:0.2s">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-ocean-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-ocean-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-lg text-ocean-900">月次集計・申告データ出力</h3>
+          </div>
+          <p class="text-ocean-700/70 text-sm leading-relaxed">ボタンひとつで月次の集計表やCSV/PDFを出力。申告書への転記がすぐに終わります。</p>
+        </div>
+        <div class="reveal group bg-white rounded-2xl p-8 shadow-lg shadow-ocean-900/5 border border-ocean-100/50 transition-all duration-300 hover:border-ocean-300/50 hover:shadow-xl" style="transition-delay:0.25s">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-ocean-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-ocean-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            </div>
+            <h3 class="font-display font-bold text-lg text-ocean-900">領収書PDF発行</h3>
+          </div>
+          <p class="text-ocean-700/70 text-sm leading-relaxed">宿泊料金と宿泊税を分離表示した領収書をPDFで発行。ゲストへすぐにお渡しできます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- キット販売 -->
+  <section class="py-24 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-sand-50 via-ocean-50/20 to-sand-50"></div>
+    <div class="relative max-w-5xl mx-auto px-6">
+      <div class="text-center mb-16 reveal">
+        <p class="text-coral-500 font-medium tracking-wider text-sm mb-3">STARTER KIT</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">端末がなくても大丈夫</h2>
+        <p class="text-ocean-700/60">パソコン・タブレット・決済端末をまとめてお届けします</p>
+      </div>
+      <div class="reveal max-w-3xl mx-auto kit-card rounded-2xl p-10 md:p-14 text-white">
+        <h3 class="font-display text-2xl md:text-3xl font-bold mb-8">導入キット<span class="text-ocean-300 text-base font-body ml-3">準備中</span></h3>
+        <ul class="space-y-6 mb-10">
+          <li class="flex items-start gap-4">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-ocean-400/20 flex items-center justify-center text-ocean-300 font-bold text-sm mt-0.5">&#x2713;</span>
+            <div>
+              <span class="font-display font-bold text-lg">Mac</span>
+              <span class="text-ocean-200/80 text-sm block mt-1">システムがすぐ使える状態でセットアップ済み</span>
+            </div>
+          </li>
+          <li class="flex items-start gap-4">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-ocean-400/20 flex items-center justify-center text-ocean-300 font-bold text-sm mt-0.5">&#x2713;</span>
+            <div>
+              <span class="font-display font-bold text-lg">iPad</span>
+              <span class="text-ocean-200/80 text-sm block mt-1">受付カウンターでの現場入力用（オプション）</span>
+            </div>
+          </li>
+          <li class="flex items-start gap-4">
+            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-ocean-400/20 flex items-center justify-center text-ocean-300 font-bold text-sm mt-0.5">&#x2713;</span>
+            <div>
+              <span class="font-display font-bold text-lg">Square 決済端末</span>
+              <span class="text-ocean-200/80 text-sm block mt-1">キャッシュレス決済にそのまま対応</span>
+            </div>
+          </li>
+        </ul>
+        <div class="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+          <p class="text-ocean-200/90 text-sm leading-relaxed">
+            県の宿泊税関連の助成金制度を活用することで、導入費用の負担を軽減できる可能性があります。詳しくはお問い合わせください。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 紙台帳でもOK -->
+  <section class="py-20">
+    <div class="reveal max-w-3xl mx-auto px-6 text-center">
+      <div class="inline-block bg-ocean-100/40 rounded-full px-5 py-2 text-ocean-600 text-sm font-medium mb-6">すでにパソコンをお持ちの方も</div>
+      <p class="text-ocean-700/80 leading-relaxed text-lg">
+        本システムはブラウザがあれば動作します。お手持ちのパソコンでそのままご利用いただけます。<br>
+        紙の台帳での運用を続けながら、月次の集計・申告だけシステムを使うことも可能です。
+      </p>
+    </div>
+  </section>
+
+  <!-- 問い合わせフォーム -->
+  <section id="contact" class="relative py-24 overflow-hidden grain" style="background: linear-gradient(160deg, #071c22 0%, #1a5966 50%, #196f7d 100%);">
+    <div class="absolute inset-0 opacity-5">
+      <div style="position:absolute; bottom:10%; right:5%; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle, #f46a3f 0%, transparent 70%);"></div>
+    </div>
+    <div class="relative max-w-2xl mx-auto px-6">
+      <div class="text-center mb-12 reveal">
+        <p class="text-coral-400 font-medium tracking-wider text-sm mb-3">CONTACT</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">お問い合わせ</h2>
+        <p class="text-ocean-200/80">
+          宿泊税対応についてのご相談、システム・導入キットに関するご質問など、<br class="hidden md:inline">
+          お気軽にお問い合わせください。
+        </p>
+      </div>
+      <form action="#" method="POST" class="reveal space-y-5">
+        <div class="grid md:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-sm font-medium text-ocean-300 mb-2">施設名 <span class="text-coral-400">*</span></label>
+            <input type="text" required
+              class="w-full rounded-xl px-5 py-3.5 bg-ocean-950/60 border border-ocean-600/40 text-white placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-coral-400/60 focus:border-transparent transition-all"
+              placeholder="例: ○○ゲストハウス">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-ocean-300 mb-2">お名前 <span class="text-coral-400">*</span></label>
+            <input type="text" required
+              class="w-full rounded-xl px-5 py-3.5 bg-ocean-950/60 border border-ocean-600/40 text-white placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-coral-400/60 focus:border-transparent transition-all"
+              placeholder="例: 山田 太郎">
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-sm font-medium text-ocean-300 mb-2">メールアドレス <span class="text-coral-400">*</span></label>
+            <input type="email" required
+              class="w-full rounded-xl px-5 py-3.5 bg-ocean-950/60 border border-ocean-600/40 text-white placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-coral-400/60 focus:border-transparent transition-all"
+              placeholder="example@example.com">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-ocean-300 mb-2">電話番号</label>
+            <input type="tel"
+              class="w-full rounded-xl px-5 py-3.5 bg-ocean-950/60 border border-ocean-600/40 text-white placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-coral-400/60 focus:border-transparent transition-all"
+              placeholder="098-xxx-xxxx">
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-sm font-medium text-ocean-300 mb-2">施設の種類</label>
+            <select class="w-full rounded-xl px-5 py-3.5 bg-ocean-950/60 border border-ocean-600/40 text-white focus:outline-none focus:ring-2 focus:ring-coral-400/60 focus:border-transparent transition-all">
+              <option value="">選択してください</option>
+              <option>民泊（住宅宿泊事業）</option>
+              <option>簡易宿所</option>
+              <option>旅館</option>
+              <option>ホテル</option>
+              <option>その他</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-ocean-300 mb-2">現在パソコンをお持ちですか？</label>
+            <select class="w-full rounded-xl px-5 py-3.5 bg-ocean-950/60 border border-ocean-600/40 text-white focus:outline-none focus:ring-2 focus:ring-coral-400/60 focus:border-transparent transition-all">
+              <option value="">選択してください</option>
+              <option>はい（Mac）</option>
+              <option>はい（Windows）</option>
+              <option>はい（その他）</option>
+              <option>いいえ</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-ocean-300 mb-2">ご相談内容</label>
+          <textarea rows="4"
+            class="w-full rounded-xl px-5 py-3.5 bg-ocean-950/60 border border-ocean-600/40 text-white placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-coral-400/60 focus:border-transparent transition-all"
+            placeholder="ご質問やご要望があればご記入ください"></textarea>
+        </div>
+        <div class="text-center pt-6">
+          <button type="submit"
+            class="bg-coral-500 hover:bg-coral-600 text-white font-bold py-4 px-20 rounded-full text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-coral-500/30">
+            送信する
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer class="bg-ocean-950 text-ocean-400 py-10">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <p class="text-sm">&copy; 2026 okinawa-lodging-tax. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scroll reveal script -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
