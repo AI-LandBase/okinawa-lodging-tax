@@ -74,6 +74,6 @@ gem "combine_pdf", "~> 1.0"
 gem "pry-rails", "~> 0.3.11", group: :development
 gem "bullet", "~> 8.1", group: :development
 
-gem "rspec-rails", "~> 8.0", groups: [:development, :test]
-gem "factory_bot_rails", "~> 6.5", groups: [:development, :test]
-gem "faker", "~> 3.6", groups: [:development, :test]
+gem "rspec-rails", "~> 8.0", groups: [ :development, :test ]
+gem "factory_bot_rails", "~> 6.5", groups: [ :development, :test ]
+gem "faker", "~> 3.6", groups: [ :development, :test ]
