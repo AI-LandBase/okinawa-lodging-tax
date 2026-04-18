@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宿泊税営業資料リニューアル｜変更点</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --ocean-900: #0f2f36;
+  --ocean-700: #1a5966;
+  --ocean-600: #196f7d;
+  --ocean-500: #1e8a9a;
+  --ocean-400: #3aabb9;
+  --ocean-200: #a1e0e9;
+  --ocean-50:  #f0fafb;
+  --coral-500: #f46a3f;
+  --coral-600: #e14e25;
+  --coral-700: #c0392b;
+  --sand-50:  #fdfaf5;
+  --sand-100: #f9f1e3;
+  --sand-200: #f2e2c6;
+  --line: #d8dee6;
+}
+html, body {
+  font-family: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+  background: var(--sand-50);
+  color: var(--ocean-900);
+  line-height: 1.7;
+}
+.wrap { max-width: 880px; margin: 0 auto; padding: 32px 24px 48px; }
+
+.h-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 22pt;
+  font-weight: 800;
+  color: var(--ocean-900);
+  border-left: 6px solid var(--coral-500);
+  padding-left: 14px;
+  margin-bottom: 4px;
+}
+.h-date {
+  font-size: 11pt;
+  color: #6c757d;
+  margin-left: 20px;
+  margin-bottom: 28px;
+}
+
+h2 {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 15pt;
+  font-weight: 700;
+  color: var(--ocean-800, #1c4a54);
+  margin: 28px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--ocean-200);
+}
+
+.aim {
+  background: linear-gradient(135deg, var(--ocean-900), var(--ocean-600));
+  color: #fff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  font-size: 13pt;
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+.aim strong { color: #ffd966; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11pt;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+th {
+  background: var(--ocean-50);
+  color: var(--ocean-700);
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--ocean-200);
+  font-size: 10pt;
+}
+td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr.new td { background: #fff8ef; }
+tr.new td:first-child { font-weight: 800; color: var(--coral-600); }
+tr.new td:nth-child(2) { font-weight: 700; }
+.tag-new {
+  display: inline-block;
+  background: var(--coral-500);
+  color: #fff;
+  font-size: 9pt;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.05em;
+}
+.tag-upd {
+  display: inline-block;
+  background: var(--ocean-500);
+  color: #fff;
+  font-size: 9pt;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.05em;
+}
+
+.punch {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 4px;
+}
+.punch .box {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--coral-500);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.punch .box:nth-child(1) { border-top-color: var(--ocean-500); }
+.punch .box:nth-child(2) { border-top-color: var(--coral-600); }
+.punch .box:nth-child(3) { border-top-color: var(--ocean-700); }
+.punch .box .step {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 11pt;
+  font-weight: 800;
+  color: var(--coral-600);
+  margin-bottom: 4px;
+}
+.punch .box:nth-child(1) .step { color: var(--ocean-600); }
+.punch .box:nth-child(3) .step { color: var(--ocean-700); }
+.punch .box .msg {
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--ocean-900);
+}
+
+ul.plain {
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+ul.plain li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 11pt;
+}
+ul.plain li:last-child { border-bottom: none; }
+ul.plain li::before {
+  content: "☐ ";
+  color: var(--coral-500);
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.howto {
+  background: var(--sand-100);
+  border-left: 4px solid var(--ocean-500);
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 11pt;
+}
+code {
+  background: var(--ocean-900);
+  color: #ffd966;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10pt;
+  font-family: Menlo, Consolas, monospace;
+}
+
+.files {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 10pt;
+}
+.files div { margin: 4px 0; }
+.files .label {
+  display: inline-block;
+  width: 120px;
+  color: #6c757d;
+  font-size: 9.5pt;
+}
+.files code { font-size: 9.5pt; }
+
+@media (max-width: 640px) {
+  .punch { grid-template-columns: 1fr; }
+  .files .label { display: block; width: auto; margin-bottom: 2px; }
+}
+
+@media print {
+  body { background: #fff; }
+  .wrap { max-width: 100%; padding: 12mm; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="h-title">宿泊税営業資料リニューアル｜変更点</div>
+  <div class="h-date">2026-04-18</div>
+
+  <div class="aim">
+    <strong>「令和8年6月末を過ぎたら¥1,965,000が自己負担」</strong>を突きつけて、<br>
+    先送りを許さない資料にする。
+  </div>
+
+  <h2>旧7p → 新12p の差分</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 8%;">新</th>
+        <th>ページ</th>
+        <th style="width: 14%;">状態</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>P1</td>
+        <td>表紙（KPI3点追加）</td>
+        <td><span class="tag-upd">刷新</span></td>
+      </tr>
+      <tr class="new">
+        <td>P2</td>
+        <td>カウントダウン（施行まで9ヶ月／締切まで2ヶ月）</td>
+        <td><span class="tag-new">新規</span></td>
+      </tr>
+      <tr>
+        <td>P3</td>
+        <td>制度のポイント（税率・帳簿保存5年を追記）</td>
+        <td><span class="tag-upd">強化</span></td>
+      </tr>
+      <tr class="new">
+        <td>P4</td>
+        <td>"対応しない" 選択肢はない（民泊・小規模も対象）</td>
+        <td><span class="tag-new">新規</span></td>
+      </tr>
+      <tr class="new">
+        <td>P5</td>
+        <td>年90時間の現実（¥13.5万／年の隠れコスト）</td>
+        <td><span class="tag-new">新規</span></td>
+      </tr>
+      <tr>
+        <td>P6</td>
+        <td>運用比較（Before/After＋年間コスト試算）</td>
+        <td><span class="tag-upd">強化</span></td>
+      </tr>
+      <tr>
+        <td>P7</td>
+        <td>機能＋キット（Mac/iPad/Square追加）</td>
+        <td><span class="tag-upd">強化</span></td>
+      </tr>
+      <tr>
+        <td>P8</td>
+        <td>補助金100%で¥0（申請期間を明示）</td>
+        <td><span class="tag-upd">強化</span></td>
+      </tr>
+      <tr class="new">
+        <td>P9</td>
+        <td>補助金を逃すと¥1,965,000（山場）</td>
+        <td><span class="tag-new">新規</span></td>
+      </tr>
+      <tr>
+        <td>P10</td>
+        <td>タイムライン（6ステップ＋6月末赤枠）</td>
+        <td><span class="tag-upd">強化</span></td>
+      </tr>
+      <tr class="new">
+        <td>P11</td>
+        <td>沖縄の地場企業／対面対応／書類代行</td>
+        <td><span class="tag-new">新規</span></td>
+      </tr>
+      <tr class="new">
+        <td>P12</td>
+        <td>CTA（無料相談／見積／資料請求）</td>
+        <td><span class="tag-new">新規</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>山場は P8 → P9 → P10 の3連打</h2>
+  <div class="punch">
+    <div class="box">
+      <div class="step">P8</div>
+      <div class="msg">今やれば ¥0</div>
+    </div>
+    <div class="box">
+      <div class="step">P9</div>
+      <div class="msg">逃すと ¥1,965,000</div>
+    </div>
+    <div class="box">
+      <div class="step">P10</div>
+      <div class="msg">今月動けば間に合う</div>
+    </div>
+  </div>
+
+  <h2>差し替え待ち（黄色ストライプで表示中）</h2>
+  <ul class="plain">
+    <li>会社所在地（沖縄県内の具体住所）</li>
+    <li>電話番号</li>
+    <li>メールアドレス</li>
+  </ul>
+
+  <h2>PDF書き出し</h2>
+  <div class="howto">
+    Chrome → <code>Cmd + P</code> → A4横・余白なし・<strong>「背景のグラフィック」ON</strong> → PDFに保存
+  </div>
+
+  <h2>ファイル</h2>
+  <div class="files">
+    <div><span class="label">新資料</span><code>docs/shukuhakuzei-sales-doc.html</code></div>
+    <div><span class="label">詳細設計書</span><code>docs/specs/2026-04-18-shukuhakuzei-sales-doc-design.md</code></div>
+  </div>
+
+</div>
+</body>
+</html>
