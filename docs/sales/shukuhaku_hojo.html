@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>宿泊税システム改修補助金｜役割・書類・期限一覧</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
+      background: #f0f4f8;
+      color: #1a1a2e;
+      padding: 40px 20px;
+    }
+    .container { max-width: 960px; margin: 0 auto; }
+
+    header {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: white;
+      border-radius: 16px;
+      padding: 36px 40px;
+      margin-bottom: 28px;
+    }
+    header h1 { font-size: 22px; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 8px; }
+    header p { font-size: 14px; color: #a0aec0; }
+    .badge-row { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+    .badge {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #e2e8f0;
+    }
+    .badge span { font-weight: 700; color: #63b3ed; }
+
+    .section-title {
+      font-size: 15px; font-weight: 700; color: #2d3748;
+      margin-bottom: 14px; padding-left: 10px;
+      border-left: 4px solid #4299e1;
+    }
+    .card {
+      background: white; border-radius: 12px; padding: 28px;
+      margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th {
+      background: #edf2f7; padding: 10px 14px;
+      font-weight: 700; color: #4a5568; font-size: 13px;
+      text-align: center;
+    }
+    th:first-child { text-align: left; }
+    td { padding: 11px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; color: #2d3748; }
+    td:not(:first-child):not(.dl-col) { text-align: center; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f7fafc; }
+
+    .check { color: #38a169; font-size: 18px; font-weight: 700; }
+    .dash { color: #cbd5e0; }
+    .highlight { background: #ebf8ff !important; }
+    .num { color: #718096; font-size: 13px; }
+
+    .tag {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      padding: 2px 8px; border-radius: 4px; margin-left: 6px;
+    }
+    .tag-attach { background: #fef3c7; color: #92400e; }
+    .tag-req    { background: #fee2e2; color: #991b1b; }
+    .tag-ref    { background: #e9d8fd; color: #553c9a; }
+
+    .dl-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #ebf8ff; color: #2b6cb0;
+      border: 1px solid #bee3f8; border-radius: 6px;
+      padding: 4px 10px; font-size: 12px; font-weight: 600;
+      text-decoration: none; white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .dl-btn:hover { background: #bee3f8; }
+    .dl-btn.xlsx { background: #f0fff4; color: #276749; border-color: #c6f6d5; }
+    .dl-btn.xlsx:hover { background: #c6f6d5; }
+
+    .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .role-card { border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .role-card.guest  { background: linear-gradient(135deg,#ebf8ff,#dbeafe); border: 1px solid #bfdbfe; }
+    .role-card.vendor { background: linear-gradient(135deg,#f0fdf4,#dcfce7); border: 1px solid #bbf7d0; }
+    .role-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+    .role-card.guest h3  { color: #1d4ed8; }
+    .role-card.vendor h3 { color: #15803d; }
+    .role-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #374151; margin-bottom: 8px; line-height: 1.5; }
+
+    footer { text-align: center; font-size: 13px; color: #718096; margin-top: 8px; padding-bottom: 20px; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>宿泊税システム改修補助金｜役割・書類・期限 一覧</h1>
+    <p>沖縄県 宿泊税システム改修補助金事業</p>
+    <div class="badge-row">
+      <div class="badge">申請期間 <span>2026年3月1日〜6月末</span></div>
+      <div class="badge">完了期限 <span>2027年1月31日</span></div>
+      <div class="badge">問い合わせ <span>0120-153-048</span>（平日10:00〜17:00）</div>
+    </div>
+  </header>
+
+  <!-- タイムライン -->
+  <div class="card">
+    <div class="section-title">タイムライン別 担当マトリクス</div>
+    <table>
+      <thead>
+        <tr>
+          <th>時期</th>
+          <th>やること</th>
+          <th>宿泊業者</th>
+          <th>AILandBase</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td><strong>今すぐ</strong></td>
+          <td>見積書の作成・受け取り</td>
+          <td>受取</td>
+          <td class="check">✅ 作成・提出</td>
+        </tr>
+        <tr>
+          <td><strong>〜2026年6月末</strong></td>
+          <td>交付申請書類を事務局へ提出</td>
+          <td class="check">✅ 提出</td>
+          <td class="dash">—</td>
+        </tr>
+        <tr>
+          <td><strong>改修期間中</strong></td>
+          <td>システム改修</td>
+          <td>確認・承認</td>
+          <td class="check">✅ 開発</td>
+        </tr>
+        <tr>
+          <td><strong>改修完了後</strong></td>
+          <td>請求書・領収書の発行・受け取り</td>
+          <td>受取</td>
+          <td class="check">✅ 発行</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>〜2027年1月31日</strong></td>
+          <td>実績報告・補助金請求を提出</td>
+          <td class="check">✅ 提出</td>
+          <td class="dash">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 役割カード -->
+  <div class="role-grid">
+    <div class="role-card guest">
+      <h3>🏠 宿泊業者（申請者）</h3>
+      <div class="role-item"><span>📋</span>申請書類をすべてまとめて事務局へ提出する</div>
+      <div class="role-item"><span>📎</span>AILandBaseの見積書・領収書を添付する</div>
+      <div class="role-item"><span>✅</span>改修内容の確認・承認を行う</div>
+      <div class="role-item"><span>💰</span>補助金の精算請求を行う</div>
+    </div>
+    <div class="role-card vendor">
+      <h3>💻 AILandBase（開発ベンダー）</h3>
+      <div class="role-item"><span>📄</span>申請前に見積書を作成・提出する</div>
+      <div class="role-item"><span>🛠️</span>2027年1月31日までにシステム改修を完了する</div>
+      <div class="role-item"><span>🧾</span>完了後に請求書・領収書を発行する</div>
+    </div>
+  </div>
+
+  <!-- 提出書類一覧 -->
+  <div class="card">
+    <div class="section-title">宿泊業者が提出する書類（事務局へ）＋様式ダウンロード</div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th style="text-align:left">書類名</th>
+          <th>タイミング</th>
+          <th>様式</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="4" style="background:#fef9e7;font-weight:700;font-size:12px;color:#92400e;padding:8px 14px;letter-spacing:0.05em;">
+            ▼ 事前に用意するもの
+          </td>
+        </tr>
+        <tr>
+          <td class="num">1</td>
+          <td>旅館業営業許可番号</td>
+          <td>申請時</td>
+          <td class="dl-col dash">—</td>
+        </tr>
+        <tr>
+          <td class="num">2</td>
+          <td>納税証明書</td>
+          <td>申請時</td>
+          <td class="dl-col dash">—</td>
+        </tr>
+        <tr>
+          <td class="num">3</td>
+          <td>宿泊税特別徴収義務者証票の写し　または　旅館業法許可書の写し</td>
+          <td>申請時</td>
+          <td class="dl-col dash">—</td>
+        </tr>
+        <tr>
+          <td class="num">4</td>
+          <td>通帳の写し（表紙 ＋ 中面のカタカナ書き記載面）</td>
+          <td>申請時</td>
+          <td class="dl-col dash">—</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="background:#edf2f7;font-weight:700;font-size:12px;color:#4a5568;padding:8px 14px;letter-spacing:0.05em;">
+            ▼ 申請書類
+          </td>
+        </tr>
+        <tr>
+          <td class="num">5</td>
+          <td>様式第1号：交付申請書</td>
+          <td>申請時</td>
+          <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/01%20%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E6%A7%98%E5%BC%8F%E7%AC%AC%EF%BC%91%E5%8F%B7%EF%BC%88%E7%AC%AC%EF%BC%97%E6%9D%A1%E9%96%A2%E4%BF%82%EF%BC%89%E4%BA%A4%E4%BB%98%E7%94%B3%E8%AB%8B%E6%9B%B8.docx" target="_blank">📥 Word</a></td>
+        </tr>
+        <tr>
+          <td class="num">6</td>
+          <td>様式第1-1号：実施計画書</td>
+          <td>申請時</td>
+          <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/02%20%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E6%A7%98%E5%BC%8F%E7%AC%AC1-1%E5%8F%B7%EF%BC%88%E7%AC%AC%EF%BC%97%E6%9D%A1%E9%96%A2%E4%BF%82%EF%BC%89%E5%AE%9F%E6%96%BD%E8%A8%88%E7%94%BB%E6%9B%B8.docx" target="_blank">📥 Word</a></td>
+        </tr>
+        <tr>
+          <td class="num">7</td>
+          <td>宣誓・同意書</td>
+          <td>申請時</td>
+          <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/03%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E5%AE%A3%E8%AA%93%E3%83%BB%E5%90%8C%E6%84%8F%E6%9B%B8.docx" target="_blank">📥 Word</a></td>
+        </tr>
+        <tr class="highlight">
+          <td class="num">8</td>
+          <td><strong>見積書</strong><span class="tag tag-attach">AILandBase作成</span></td>
+          <td>申請時に添付</td>
+          <td class="dl-col dash">—</td>
+        </tr>
+        <tr>
+          <td class="num">9</td>
+          <td>債権・債務者登録申出書</td>
+          <td>申請時</td>
+          <td class="dl-col"><a class="dl-btn xlsx" href="https://shukuhakuzei-system.okinawa/doc/%E3%80%90%E6%A7%98%E5%BC%8F%E3%80%91%E5%82%B5%E6%A8%A9%E3%83%BB%E5%82%B5%E5%8B%99%E8%80%85%E7%99%BB%E9%8C%B2%E7%94%B3%E5%87%BA%E6%9B%B8.xlsx" target="_blank">📥 Excel</a></td>
+        </tr>
+        <tr>
+          <td class="num">10</td>
+          <td>様式第2号：事前着手届<span class="tag tag-req">必要な場合</span></td>
+          <td>着手前</td>
+          <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/04%20%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E6%A7%98%E5%BC%8F%E7%AC%AC%EF%BC%92%E5%8F%B7%EF%BC%88%E7%AC%AC%EF%BC%97%E6%9D%A1%E9%96%A2%E4%BF%82%EF%BC%89%E4%BA%8B%E5%89%8D%E7%9D%80%E6%89%8B%E5%B1%8A.docx" target="_blank">📥 Word</a></td>
+        </tr>
+        <tr>
+          <td class="num">11</td>
+          <td>様式第8号：実績報告書</td>
+          <td>完了後</td>
+          <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/10%20%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E6%A7%98%E5%BC%8F%E7%AC%AC%EF%BC%98%E5%8F%B7%EF%BC%88%E7%AC%AC15%E6%9D%A1%E9%96%A2%E4%BF%82%EF%BC%89%E5%AE%9F%E7%B8%BE%E5%A0%B1%E5%91%8A%E6%9B%B8.docx" target="_blank">📥 Word</a></td>
+        </tr>
+        <tr>
+          <td class="num">12</td>
+          <td>様式第8-1号：実績書</td>
+          <td>完了後</td>
+          <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/11%20%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E6%A7%98%E5%BC%8F%E7%AC%AC8-1%E5%8F%B7%EF%BC%88%E7%AC%AC15%E6%9D%A1%E9%96%A2%E4%BF%82%EF%BC%89%E5%AE%9F%E7%B8%BE%E6%9B%B8.docx" target="_blank">📥 Word</a></td>
+        </tr>
+        <tr class="highlight">
+          <td class="num">13</td>
+          <td><strong>請求書・領収書</strong><span class="tag tag-attach">AILandBase発行</span></td>
+          <td>完了後に添付</td>
+          <td class="dl-col dash">—</td>
+        </tr>
+        <tr>
+          <td class="num">14</td>
+          <td>様式第11号：消費税仕入控除税額報告書</td>
+          <td>完了後</td>
+          <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/14%20%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E6%A7%98%E5%BC%8F%E7%AC%AC11%E5%8F%B7%EF%BC%88%E7%AC%AC19%E6%9D%A1%E9%96%A2%E4%BF%82%EF%BC%89%E6%B6%88%E8%B2%BB%E7%A8%8E%E4%BB%95%E5%85%A5%E6%8E%A7%E9%99%A4%E7%A8%8E%E9%A1%8D%E5%A0%B1%E5%91%8A%E6%9B%B8.docx" target="_blank">📥 Word</a></td>
+        </tr>
+        <tr>
+          <td class="num">15</td>
+          <td>様式第10号：精算払請求書</td>
+          <td>補助金請求時</td>
+          <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/13%20%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E6%A7%98%E5%BC%8F%E7%AC%AC10%E5%8F%B7%EF%BC%88%E7%AC%AC17%E6%9D%A1%E9%96%A2%E4%BF%82%EF%BC%89%E8%A3%9C%E5%8A%A9%E9%87%91%E7%B2%BE%E7%AE%97%E6%89%95%E8%AB%8B%E6%B1%82%E6%9B%B8.docx" target="_blank">📥 Word</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 参考様式 -->
+  <div class="card">
+    <div class="section-title">参考・その他様式</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:left">書類名</th>
+          <th>用途</th>
+          <th>様式</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>一者選定理由書<span class="tag tag-ref">参考様式</span></td>
+          <td>AILandBaseを単独選定する場合</td>
+          <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%EF%BC%88%E5%8F%82%E8%80%83%E6%A7%98%E5%BC%8F%EF%BC%89%E4%B8%80%E8%80%85%E9%81%B8%E5%AE%9A%E7%90%86%E7%94%B1%E6%9B%B8.docx" target="_blank">📥 Word</a></td>
+        </tr>
+        <tr>
+          <td>様式第4号：計画変更承認申請書</td>
+          <td>計画を変更する場合</td>
+          <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/06%20%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E6%A7%98%E5%BC%8F%E7%AC%AC%EF%BC%94%E5%8F%B7%EF%BC%88%E7%AC%AC11%E6%9D%A1%E9%96%A2%E4%BF%82%EF%BC%89%E8%A8%88%E7%94%BB%E5%A4%89%E6%9B%B4%E6%89%BF%E8%AA%8D%E7%94%B3%E8%AB%8B%E6%9B%B8.docx" target="_blank">📥 Word</a></td>
+        </tr>
+        <tr>
+          <td>様式第6号：計画遅延等報告書</td>
+          <td>遅延が生じた場合</td>
+          <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/08%20%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E6%A7%98%E5%BC%8F%E7%AC%AC%EF%BC%96%E5%8F%B7%EF%BC%88%E7%AC%AC11%E6%9D%A1%E9%96%A2%E4%BF%82%EF%BC%89%E8%A8%88%E7%94%BB%E9%81%85%E5%BB%B6%E7%AD%89%E5%A0%B1%E5%91%8A%E6%9B%B8%20%E3%80%88%E4%BF%AE%E6%AD%A3%E3%80%89.docx" target="_blank">📥 Word</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 補助金申請サイト -->
+  <div class="card" style="text-align:center; padding: 24px 28px;">
+    <div class="section-title" style="margin-bottom:16px;">補助金申請サイト</div>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <div>
+        <a href="https://va.apollon.nta.co.jp/shukuhakuzei-hojo001/" target="_blank"
+           style="display:inline-flex;align-items:center;gap:8px;background:#1a1a2e;color:white;
+                  border-radius:10px;padding:12px 28px;font-size:15px;font-weight:700;
+                  text-decoration:none;letter-spacing:0.05em;transition:opacity 0.15s;"
+           onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+          🌐 補助金申請サイトを開く
+        </a>
+        <p style="margin-top:8px;font-size:12px;color:#718096;">va.apollon.nta.co.jp/shukuhakuzei-hojo001/</p>
+      </div>
+      <div>
+        <a href="https://shukuhakuzei-system.okinawa/#application" target="_blank"
+           style="display:inline-flex;align-items:center;gap:8px;background:#2b6cb0;color:white;
+                  border-radius:10px;padding:12px 28px;font-size:15px;font-weight:700;
+                  text-decoration:none;letter-spacing:0.05em;transition:opacity 0.15s;"
+           onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+          📋 沖縄県 補助金案内サイト
+        </a>
+        <p style="margin-top:8px;font-size:12px;color:#718096;">shukuhakuzei-system.okinawa/#application</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    申請方法：電子申請が基本（困難な場合は郵送可） ｜ 出典：<a href="https://shukuhakuzei-system.okinawa" target="_blank">shukuhakuzei-system.okinawa</a>
+  </footer>
+
+</div>
+</body>
+</html>

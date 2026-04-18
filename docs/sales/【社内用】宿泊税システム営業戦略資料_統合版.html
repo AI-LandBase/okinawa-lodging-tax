@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【社内用】沖縄県宿泊税システム事業 — 営業戦略資料</title>
+<style>
+:root {
+  --primary: #1a5276;
+  --accent: #2980b9;
+  --success: #27ae60;
+  --warning: #f39c12;
+  --danger: #e74c3c;
+  --bg: #f8f9fa;
+  --card: #ffffff;
+  --text: #2c3e50;
+  --border: #dee2e6;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 40px 0; text-align: center; }
+header h1 { font-size: 1.8em; margin-bottom: 8px; }
+header p { opacity: 0.85; font-size: 0.95em; }
+nav { background: var(--card); border-bottom: 2px solid var(--border); padding: 15px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+nav .container { display: flex; flex-wrap: wrap; gap: 6px; }
+nav a { text-decoration: none; color: var(--accent); font-size: 0.78em; padding: 4px 10px; border-radius: 4px; background: #eaf2f8; white-space: nowrap; }
+nav a:hover { background: var(--accent); color: white; }
+section { background: var(--card); margin: 20px 0; padding: 30px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+h2 { color: var(--primary); font-size: 1.4em; border-bottom: 3px solid var(--accent); padding-bottom: 8px; margin-bottom: 20px; }
+h3 { color: var(--accent); font-size: 1.1em; margin: 20px 0 10px; }
+h4 { color: var(--text); font-size: 1em; margin: 15px 0 8px; }
+table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.88em; }
+th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+th { background: #eaf2f8; color: var(--primary); font-weight: 600; }
+tr:nth-child(even) { background: #f8f9fa; }
+.highlight { background: #fff3cd; padding: 15px; border-radius: 6px; border-left: 4px solid var(--warning); margin: 15px 0; }
+.success { background: #d4edda; padding: 15px; border-radius: 6px; border-left: 4px solid var(--success); margin: 15px 0; }
+.danger { background: #f8d7da; padding: 15px; border-radius: 6px; border-left: 4px solid var(--danger); margin: 15px 0; }
+.info { background: #d1ecf1; padding: 15px; border-radius: 6px; border-left: 4px solid #17a2b8; margin: 15px 0; }
+pre { background: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 0.85em; margin: 15px 0; white-space: pre-wrap; }
+code { background: #eee; padding: 2px 6px; border-radius: 3px; font-size: 0.9em; }
+.badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.75em; font-weight: 600; color: white; }
+.badge-primary { background: var(--accent); }
+.badge-success { background: var(--success); }
+.badge-warning { background: var(--warning); }
+.badge-danger { background: var(--danger); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.stat-card { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 20px; border-radius: 8px; text-align: center; }
+.stat-card .num { font-size: 2em; font-weight: 700; }
+.stat-card .label { font-size: 0.85em; opacity: 0.85; }
+ul { padding-left: 20px; margin: 10px 0; }
+li { margin: 4px 0; }
+@media (max-width: 768px) { .grid2 { grid-template-columns: 1fr; } section { padding: 20px; } }
+.toc-num { display: inline-block; width: 24px; height: 24px; background: var(--accent); color: white; border-radius: 50%; text-align: center; line-height: 24px; font-size: 0.7em; margin-right: 4px; }
+</style>
+</head>
+<body>
+
+<header>
+<div class="container">
+<h1>沖縄県宿泊税システム事業 — 営業戦略資料</h1>
+<p>AI.LandBase株式会社 | 社内限り | 2026-03-28</p>
+</div>
+</header>
+
+<nav>
+<div class="container">
+<a href="#s1"><span class="toc-num">1</span>市場</a>
+<a href="#s2"><span class="toc-num">2</span>制度</a>
+<a href="#s3"><span class="toc-num">3</span>補助金</a>
+<a href="#s4"><span class="toc-num">4</span>価格戦略</a>
+<a href="#s5"><span class="toc-num">5</span>キャッシュポイント</a>
+<a href="#s6"><span class="toc-num">6</span>セグメント</a>
+<a href="#s7"><span class="toc-num">7</span>値引き</a>
+<a href="#s8"><span class="toc-num">8</span>エスクロー</a>
+<a href="#s9"><span class="toc-num">9</span>セゾン</a>
+<a href="#s10"><span class="toc-num">10</span>競合</a>
+<a href="#s11"><span class="toc-num">11</span>めんどくさい</a>
+<a href="#s12"><span class="toc-num">12</span>顧客CF</a>
+<a href="#s13"><span class="toc-num">13</span>DXロードマップ</a>
+<a href="#s14"><span class="toc-num">14</span>クロージング</a>
+<a href="#s15"><span class="toc-num">15</span>収益</a>
+<a href="#s16"><span class="toc-num">16</span>タイムライン</a>
+<a href="#s17"><span class="toc-num">17</span>確認事項</a>
+</div>
+</nav>
+
+<div class="container">
+
+<!-- ワンライナー -->
+<div class="highlight">
+<strong>ワンライナー：</strong>沖縄県の宿泊税導入（2027年2月）に伴い、補助金100%（上限200万円/施設）を活用して宿泊施設向けシステムを販売。宿泊税対応をフックにDXの入口を作り、SaaS月額でストック収益を積む。
+</div>
+
+<!-- 数値サマリー -->
+<div class="grid2" style="margin: 20px 0;">
+<div class="stat-card"><div class="num">4,251軒</div><div class="label">沖縄県内 宿泊施設数</div></div>
+<div class="stat-card"><div class="num">約85億円</div><div class="label">最大市場規模</div></div>
+<div class="stat-card"><div class="num">200万円</div><div class="label">補助金上限/施設（補助率100%）</div></div>
+<div class="stat-card"><div class="num">2,650軒</div><div class="label">メインターゲット（セグメントC+D）</div></div>
+</div>
+
+<!-- SECTION 1: 市場 -->
+<section id="s1">
+<h2>1. 事業概要と市場</h2>
+
+<h3>基礎データ</h3>
+<table>
+<tr><th>項目</th><th>数値</th><th>出典</th></tr>
+<tr><td>沖縄県内 宿泊施設数</td><td><strong>4,251軒</strong>（2024年、23年連続過去最高）</td><td>沖縄県宿泊施設実態調査</td></tr>
+<tr><td>客室数</td><td>64,371室</td><td>同上</td></tr>
+<tr><td>収容人数</td><td>188,425人</td><td>同上</td></tr>
+<tr><td>施設内訳</td><td>ペンション・貸別荘 2,183軒 / ビジネスホテル 651軒 / 民宿 438軒 / その他</td><td>同上</td></tr>
+<tr><td>補助金上限</td><td>1施設 <strong>200万円</strong>（補助率100%）</td><td>補助金公募要領</td></tr>
+</table>
+
+<h3>市場規模の算定根拠</h3>
+<table>
+<tr><th>市場定義</th><th>算定式</th><th>金額</th></tr>
+<tr><td><strong>TAM（最大市場規模）</strong><br>全施設 × 補助金上限</td><td>4,251軒 × 200万円</td><td><strong>約85億円</strong></td></tr>
+<tr><td><strong>SAM（対象可能市場）</strong><br>小規模施設（セグメントC+D）× 補助金上限</td><td>2,650軒 × 200万円</td><td><strong>約53億円</strong></td></tr>
+<tr><td><strong>SOM（獲得可能市場）</strong><br>初年度目標100施設 × 平均導入単価</td><td>100軒 × 150万円</td><td><strong>1.5億円</strong></td></tr>
+</table>
+
+<h3>ストック収益（SaaS）の市場規模</h3>
+<table>
+<tr><th>市場定義</th><th>算定式</th><th>年間金額</th></tr>
+<tr><td><strong>TAM</strong><br>全施設 × 月額SaaS × 12ヶ月</td><td>4,251軒 × 3.5万円 × 12</td><td><strong>約17.9億円/年</strong></td></tr>
+<tr><td><strong>SAM</strong><br>セグメントC+D × 月額 × 12</td><td>2,650軒 × 3.5万円 × 12</td><td><strong>約11.1億円/年</strong></td></tr>
+<tr><td><strong>SOM</strong><br>100施設 × 月額 × 12</td><td>100軒 × 3.5万円 × 12</td><td><strong>4,200万円/年</strong></td></tr>
+</table>
+
+<h3>副商材（Layer 3）の市場規模</h3>
+<table>
+<tr><th>副商材</th><th>算定式</th><th>金額</th></tr>
+<tr><td>PMS導入（デジタル化補助金活用）</td><td>2,650軒 × 30%（PMS未導入率）× 450万円（補助金上限）× 50%（補助率）</td><td><strong>約17.9億円</strong></td></tr>
+<tr><td>セルフCI端末（省力化補助金活用）</td><td>2,650軒 × 20% × 200万円 × 50%</td><td><strong>約5.3億円</strong></td></tr>
+<tr><td>会計連携（月額）</td><td>2,650軒 × 5,000円 × 12</td><td><strong>約1.6億円/年</strong></td></tr>
+<tr><td>セゾン紹介料</td><td>2,650軒 × 紹介成立率20% × 平均紹介料3万円</td><td><strong>約1,590万円</strong></td></tr>
+</table>
+
+<div class="highlight">
+<strong>市場規模サマリー</strong><br><br>
+<table>
+<tr><th></th><th>TAM</th><th>SAM</th><th>SOM（初年度）</th></tr>
+<tr><td>初期売上（補助金）</td><td>85億円<br><code>4,251軒 × 200万</code></td><td>53億円<br><code>2,650軒 × 200万</code></td><td>1.5億円<br><code>100軒 × 150万</code></td></tr>
+<tr><td>年間SaaS</td><td>17.9億円/年<br><code>4,251軒 × 3.5万 × 12</code></td><td>11.1億円/年<br><code>2,650軒 × 3.5万 × 12</code></td><td>4,200万円/年<br><code>100軒 × 3.5万 × 12</code></td></tr>
+<tr style="background:#d4edda"><td><strong>合計（初年度）</strong></td><td><strong>約103億円</strong></td><td><strong>約64億円</strong></td><td><strong>約1.9億円</strong></td></tr>
+</table>
+</div>
+</section>
+
+<!-- SECTION 2: 制度 -->
+<section id="s2">
+<h2>2. 宿泊税制度の要点</h2>
+<table>
+<tr><th>項目</th><th>内容</th></tr>
+<tr><td>税率</td><td>宿泊料金の <strong>2%</strong>（定率制）</td></tr>
+<tr><td>上限</td><td>1泊1人 <strong>2,000円</strong></td></tr>
+<tr><td>県市町村内訳</td><td>県税0.8%（上限800円）+ 市町村税1.2%（上限1,200円）</td></tr>
+<tr><td>施行開始</td><td><strong>令和9年2月1日</strong>（2027年2月）</td></tr>
+<tr><td>免税</td><td>修学旅行・部活等の教育活動</td></tr>
+<tr><td>申告</td><td>毎月（特例：3ヶ月に1回）</td></tr>
+<tr><td>年間税収見込</td><td><strong>約78億円</strong></td></tr>
+</table>
+</section>
+
+<!-- SECTION 3: 補助金 -->
+<section id="s3">
+<h2>3. 補助金制度の詳細と査定</h2>
+<table>
+<tr><th>項目</th><th>内容</th></tr>
+<tr><td>補助率</td><td><strong>100%</strong></td></tr>
+<tr><td>上限額</td><td>1施設 <strong>200万円</strong></td></tr>
+<tr><td>申請期間</td><td>令和8年3月1日〜<strong>6月末日</strong></td></tr>
+<tr><td>完了期限</td><td><strong>令和9年1月31日</strong></td></tr>
+<tr><td>支払方式</td><td>概算払い（様式第9号）と精算払い（様式第10号）の両方あり</td></tr>
+</table>
+
+<div class="grid2">
+<div>
+<h4>補助対象 <span class="badge badge-success">OK</span></h4>
+<ul>
+<li>宿泊税額算定機能の追加</li>
+<li>宿泊者数x税額の月次集計機能</li>
+<li>領収書への宿泊税印字機能</li>
+<li>上記に直接必要なHW・SW</li>
+</ul>
+</div>
+<div>
+<h4>補助対象外 <span class="badge badge-danger">NG</span></h4>
+<ul>
+<li>PMS本体（予約管理、チェックイン等）</li>
+<li>クラウド月額利用料・ランニングコスト</li>
+<li>消費税・振込手数料</li>
+<li>汎用PC・タブレット</li>
+</ul>
+</div>
+</div>
+
+<div class="info">
+<strong>採択率：高い（要件充足型）</strong> — 県が年78億円の税収のために全施設に対応させたい<br>
+<strong>査定：線引きは厳格</strong> — 「宿泊税導入に伴い発生する経費分のみ」。一括見積だと大幅減額リスク
+</div>
+</section>
+
+<!-- SECTION 4: 価格戦略 -->
+<section id="s4">
+<h2>4. プライシング戦略（2層見積もり）</h2>
+
+<div class="danger">
+<strong>絶対NG：</strong>「システム一式 350万円」→ 査定で「宿泊税分は120万円のみ」→ 失注<br>
+<strong>正解：</strong>見積A 190万円（宿泊税専用）→ 満額認定 + 見積B 月額（別契約）→ 受注
+</div>
+
+<h3>見積書A：補助金対象（200万円以内）</h3>
+<table>
+<tr><th>No.</th><th>項目</th><th>金額（税抜）</th></tr>
+<tr><td>1</td><td>宿泊税額算定エンジン開発</td><td>80万円</td></tr>
+<tr><td>2</td><td>月次集計・申告データ出力機能</td><td>40万円</td></tr>
+<tr><td>3</td><td>領収書宿泊税印字機能</td><td>30万円</td></tr>
+<tr><td>4</td><td>テスト・検証</td><td>20万円</td></tr>
+<tr><td>5</td><td>導入設定・初期データ投入</td><td>20万円</td></tr>
+<tr><th colspan="2">小計</th><th>190万円</th></tr>
+</table>
+
+<h3>見積書B：補助金対象外（月額サービス）</h3>
+<table>
+<tr><th>項目</th><th>月額</th></tr>
+<tr><td>クラウド利用料</td><td>5,000円</td></tr>
+<tr><td>保守・アップデート</td><td>10,000円</td></tr>
+<tr><td>サポート</td><td>5,000円</td></tr>
+<tr><td>データバックアップ</td><td>5,000円</td></tr>
+<tr><td>PMS基本機能（オプション）</td><td>10,000円</td></tr>
+<tr><th>月額合計</th><th>35,000円</th></tr>
+</table>
+</section>
+
+<!-- SECTION 5: キャッシュポイント -->
+<section id="s5">
+<h2>5. キャッシュポイント構造（3層モデル）</h2>
+<table>
+<tr><th>層</th><th>内容</th><th>金額</th><th>原資</th><th>性質</th></tr>
+<tr><td><span class="badge badge-primary">Layer 1</span></td><td>宿泊税対応システム（初期）</td><td>150〜200万円</td><td>補助金100%</td><td>フロー収益</td></tr>
+<tr><td><span class="badge badge-success">Layer 2</span></td><td>SaaS月額</td><td>1〜3.5万円/月</td><td>顧客負担</td><td><strong>ストック収益</strong></td></tr>
+<tr><td><span class="badge badge-warning">Layer 3</span></td><td>副商材</td><td>都度</td><td>顧客/別補助金</td><td>クロスセル</td></tr>
+</table>
+<div class="success">Layer 1で「無料で入れられます」と門を開き、Layer 2・3でストック収益を積む</div>
+</section>
+
+<!-- SECTION 6: セグメント -->
+<section id="s6">
+<h2>6. 顧客セグメントと営業戦略</h2>
+<table>
+<tr><th>セグメント</th><th>施設数</th><th>特徴</th><th>優先度</th></tr>
+<tr><td>A. 大型ホテル・リゾート</td><td>~200軒</td><td>既存PMS利用</td><td><span class="badge badge-warning">低</span></td></tr>
+<tr><td>B. 中規模ビジネスホテル</td><td>~450軒</td><td>PMS導入済み</td><td><span class="badge badge-warning">中</span></td></tr>
+<tr style="background:#d4edda"><td><strong>C. 小規模ペンション・貸別荘</strong></td><td><strong>~2,200軒</strong></td><td><strong>IT化が遅れている</strong></td><td><span class="badge badge-danger">最高</span></td></tr>
+<tr style="background:#d4edda"><td><strong>D. 民宿・ゲストハウス</strong></td><td><strong>~450軒</strong></td><td><strong>システム未導入</strong></td><td><span class="badge badge-danger">最高</span></td></tr>
+<tr><td>E. 民泊</td><td>数百軒</td><td>OTA依存</td><td><span class="badge badge-warning">中</span></td></tr>
+</table>
+</section>
+
+<!-- SECTION 7: 値引き -->
+<section id="s7">
+<h2>7. 値引き戦略と顧客価値提案</h2>
+<div class="highlight"><strong>原則：</strong>見積A（補助金分）は値引きしない。見積B（月額）で価値を提供する</div>
+<h3>早割プラン</h3>
+<table>
+<tr><th>プラン</th><th>条件</th><th>特典</th></tr>
+<tr style="background:#d4edda"><td><strong>プレミアム早割</strong></td><td>4月末まで</td><td><strong>初年度（12ヶ月）無料</strong></td></tr>
+<tr><td>スタンダード早割</td><td>5月末まで</td><td>初年度半額</td></tr>
+<tr><td>通常</td><td>6月以降</td><td>なし</td></tr>
+</table>
+
+<h3>契約保証</h3>
+<ul>
+<li>税率変更対応：永年無償</li>
+<li>申告フォーマット変更：永年無償</li>
+<li>解約違約金：なし</li>
+<li>データポータビリティ：CSV返却保証</li>
+</ul>
+</section>
+
+<!-- SECTION 8: エスクロー -->
+<section id="s8">
+<h2>8. エスクロー施策（支払スキーム）</h2>
+<table>
+<tr><th>#</th><th>パターン</th><th>顧客立替</th><th>推奨度</th></tr>
+<tr style="background:#d4edda"><td>6</td><td><strong>代理受領型</strong></td><td><strong>0円</strong></td><td>★★★</td></tr>
+<tr style="background:#d4edda"><td>9</td><td><strong>共同事業体型</strong></td><td><strong>0円</strong></td><td>★★★</td></tr>
+<tr><td>5</td><td>完全後払い型</td><td>0円</td><td>★★</td></tr>
+<tr><td>7</td><td>つなぎ融資紹介型</td><td>0円（利息のみ）</td><td>★★</td></tr>
+<tr style="background:#fff3cd"><td>4</td><td><strong>分割＋概算払い</strong></td><td><strong>約35万円</strong></td><td>★★</td></tr>
+<tr><td>2</td><td>分割払い型</td><td>約70万円</td><td>○</td></tr>
+<tr><td>1</td><td>標準型</td><td>209万円</td><td>×</td></tr>
+</table>
+
+<h3>顧客向け「選べる支払いプラン」</h3>
+<table>
+<tr><th>プラン名</th><th>お客様の手出し</th><th>こんな方に</th></tr>
+<tr><td>ゼロプラン</td><td>0円→消費税19万円のみ</td><td>とにかく手出しゼロ</td></tr>
+<tr><td>安心プラン</td><td>着手金63万円のみ</td><td>少しなら出せる</td></tr>
+<tr><td>スタンダード</td><td>3回分割</td><td>資金に余裕あり</td></tr>
+<tr><td>融資サポート</td><td>0円（利息約3万）</td><td>銀行相談が面倒</td></tr>
+</table>
+</section>
+
+<!-- SECTION 9: セゾン -->
+<section id="s9">
+<h2>9. セゾン提携戦略</h2>
+<div class="info"><strong>前提：</strong>セゾンファンデックス事業部責任者と直接つながりあり。いつでも提携可能。企画提出可能な関係。</div>
+<table>
+<tr><th>パターン</th><th>内容</th><th>効果</th></tr>
+<tr><td>A. POファイナンス</td><td>補助金交付決定→つなぎ融資</td><td>顧客の手出しゼロ</td></tr>
+<tr><td>B. 運転資金調達</td><td>弊社への事業融資（〜5,000万）</td><td>完全後払い型を大規模展開</td></tr>
+<tr><td>C. 顧客紹介</td><td>セゾン金融商品の紹介</td><td>Layer 3の追加収益</td></tr>
+<tr><td>D. ブランド活用</td><td>「セゾン提携」を営業資料に</td><td>顧客信頼度UP</td></tr>
+<tr><td>E. 共同マーケティング</td><td>セゾン加盟店へのDM</td><td>リード獲得拡大</td></tr>
+</table>
+</section>
+
+<!-- SECTION 10: 競合 -->
+<section id="s10">
+<h2>10. 競合比較と差別化</h2>
+<table>
+<tr><th>項目</th><th>Staysee</th><th>MujInn</th><th>エクスクラン</th><th style="background:#d4edda">AI.LandBase</th></tr>
+<tr><td>月額</td><td><strong>980円〜</strong></td><td>要見積</td><td>不明</td><td>35,000円</td></tr>
+<tr><td>本社</td><td>東京</td><td>沖縄</td><td>不明</td><td><strong>沖縄</strong></td></tr>
+<tr><td>宿泊税対応</td><td>○</td><td>○</td><td>○</td><td>○</td></tr>
+<tr><td>補助金申請代行</td><td>×</td><td>△</td><td>不明</td><td style="background:#d4edda"><strong>○ 無料</strong></td></tr>
+<tr><td>対面サポ（沖縄）</td><td>×</td><td>○</td><td>不明</td><td style="background:#d4edda"><strong>○</strong></td></tr>
+<tr><td>会計連携</td><td>×</td><td>×</td><td>不明</td><td style="background:#d4edda"><strong>○</strong></td></tr>
+<tr><td>つなぎ融資</td><td>×</td><td>×</td><td>×</td><td style="background:#d4edda"><strong>○ セゾン</strong></td></tr>
+<tr><td>現状</td><td>全国展開中</td><td>沖縄展開中</td><td>PR済</td><td>プッシュ営業開始</td></tr>
+</table>
+
+<h3>弊社の差別化（3点に集約）</h3>
+<div class="grid2" style="grid-template-columns: 1fr 1fr 1fr;">
+<div class="success" style="text-align:center"><strong>「全部やります」</strong><br>補助金申請→資金→導入→経理→DX</div>
+<div class="success" style="text-align:center"><strong>「沖縄で会えます」</strong><br>地場企業として直接訪問</div>
+<div class="success" style="text-align:center"><strong>「お金の心配ゼロ」</strong><br>セゾン提携つなぎ融資</div>
+</div>
+
+<h3>正直な棲み分け</h3>
+<table>
+<tr><th>顧客タイプ</th><th>最適な選択肢</th></tr>
+<tr><td>IT詳しい・コスト最優先</td><td>Staysee</td></tr>
+<tr><td>セルフCI無人化が最優先</td><td>MujInn</td></tr>
+<tr><td>年間50泊以下の極小規模</td><td>Excel手作業</td></tr>
+<tr style="background:#d4edda"><td><strong>全部任せたい・会える人がほしい</strong></td><td><strong>AI.LandBase</strong></td></tr>
+<tr style="background:#d4edda"><td><strong>複数施設運営</strong></td><td><strong>AI.LandBase</strong></td></tr>
+<tr style="background:#d4edda"><td><strong>資金がない・立替不可</strong></td><td><strong>AI.LandBase</strong></td></tr>
+</table>
+</section>
+
+<!-- SECTION 11: めんどくさい -->
+<section id="s11">
+<h2>11. 「めんどくさい」の解決</h2>
+<table>
+<tr><th>工程</th><th>自前（年間）</th><th>AI.LandBase</th><th>削減率</th></tr>
+<tr><td>届出</td><td>3時間</td><td>5分</td><td>97%</td></tr>
+<tr><td>税額計算（毎日）</td><td>10時間</td><td>0時間</td><td>100%</td></tr>
+<tr><td>領収書</td><td>5時間</td><td>0時間</td><td>100%</td></tr>
+<tr><td>月次集計</td><td>48時間</td><td>1時間</td><td>98%</td></tr>
+<tr><td>申告・納付</td><td>12時間</td><td>2時間</td><td>83%</td></tr>
+<tr><td>補助金申請</td><td>15時間</td><td>0.5時間</td><td>97%</td></tr>
+<tr style="background:#d4edda"><th>年間合計</th><th>93時間</th><th>3.5時間</th><th>96%削減</th></tr>
+</table>
+
+<h3>「めんどくさい」7段階と弊社の解決</h3>
+<table>
+<tr><th>Level</th><th>顧客の悩み</th><th>弊社の解決</th></tr>
+<tr><td>1</td><td>宿泊税って何？</td><td>全部説明＋資料提供</td></tr>
+<tr><td>2</td><td>書類多すぎ</td><td>申請も届出も代行。署名だけ</td></tr>
+<tr><td>3</td><td>お金がない</td><td>補助金100%。立替ゼロ。セゾン融資</td></tr>
+<tr><td>4</td><td>毎日の計算がイヤ</td><td>すべて自動化</td></tr>
+<tr><td>5</td><td>確定申告わからない</td><td>会計連携＋テンプレート</td></tr>
+<tr><td>6</td><td>トラブル時来てほしい</td><td>沖縄地場企業として直接訪問</td></tr>
+<tr><td>7</td><td>DX化何から？</td><td>4段階ロードマップ</td></tr>
+</table>
+</section>
+
+<!-- SECTION 12: 顧客CF -->
+<section id="s12">
+<h2>12. 顧客キャッシュフロー</h2>
+<h3>資金繰り対策メニュー</h3>
+<table>
+<tr><th>対策</th><th>立替MAX</th><th>コスト</th></tr>
+<tr><td>概算払い活用</td><td>約104万円</td><td>なし</td></tr>
+<tr><td>支払3分割</td><td>約70万円</td><td>なし</td></tr>
+<tr style="background:#d4edda"><td><strong>概算払い＋分割</strong></td><td><strong>約35万円</strong></td><td>なし</td></tr>
+<tr><td>つなぎ融資（セゾン）</td><td>0円</td><td>約10万円</td></tr>
+</table>
+<div class="danger"><strong>圧縮記帳は必須：</strong>適用しないと補助金190万円がそのまま課税 → 約38万円の税金が発生</div>
+</section>
+
+<!-- SECTION 13: DXロードマップ -->
+<section id="s13">
+<h2>13. DXロードマップ（ロールモデル：生きがい stay）</h2>
+<table>
+<tr><th>STEP</th><th>内容</th><th>補助金</th><th>自己負担</th><th>年間効果</th><th>3年累計</th></tr>
+<tr><td>1</td><td>宿泊税対応</td><td>200万（100%）</td><td>0円</td><td>+7.3万</td><td>+21.9万</td></tr>
+<tr><td>2</td><td>PMS・予約管理</td><td>最大450万</td><td>少額</td><td>+22万</td><td>+66万</td></tr>
+<tr><td>3</td><td>経理自動化</td><td>STEP2に含む</td><td>ほぼ0</td><td>+18.4万</td><td>+55.2万</td></tr>
+<tr><td>4</td><td>データ活用</td><td>最大800万</td><td>少額</td><td>+58〜98万</td><td>+174〜294万</td></tr>
+<tr style="background:#d4edda"><th colspan="2">合計</th><th>最大1,450万円</th><th>ほぼ0円</th><th>+106〜146万/年</th><th>+317〜437万</th></tr>
+</table>
+<pre>Before: 運営に3時間/日 → After: 運営に5分/日（年間1,000時間以上の時間を取り戻す）</pre>
+</section>
+
+<!-- SECTION 14: クロージング -->
+<section id="s14">
+<h2>14. 3日間クロージング設計</h2>
+<div class="info">
+<strong>設計思想：</strong>「売る」ためではなく「正しい判断」をしてもらうための情報設計。<br>
+YES → 信頼関係スタート。NOT → 正しい判断。無理なYESより100倍価値がある。
+</div>
+
+<h3>フロー</h3>
+<table>
+<tr><th>Day</th><th>アクション</th><th>顧客の状態</th></tr>
+<tr><td>Day 0</td><td>ターゲットリスト作成</td><td>—</td></tr>
+<tr><td>Day 1</td><td>パケット送信（A4x3枚＋QR）</td><td>「なんだこれ？」好奇心</td></tr>
+<tr><td>Day 2</td><td>電話タッチ（15分）</td><td>「なるほど」理解と納得</td></tr>
+<tr><td>Day 3</td><td>訪問10分 → 1枚シート</td><td>「わかった。決めた。」自分の意思</td></tr>
+</table>
+
+<h3>Day 2「やらない理由」パターンと対応</h3>
+<table>
+<tr><th>パターン</th><th>対応</th><th>ポイント</th></tr>
+<tr><td>まだ先でしょ</td><td>補助金期限は6月末</td><td>判断は急がせない</td></tr>
+<tr><td>お金がない</td><td>手出しゼロプラン</td><td>必要性の判断が先</td></tr>
+<tr><td>自分でやる</td><td>OK。無料テンプレを渡す</td><td><strong>やらない理由を尊重</strong></td></tr>
+<tr><td>他社を検討</td><td>Stayseeの良い点も正直に</td><td>判断軸を提示</td></tr>
+<tr><td>よくわからない</td><td>覚えるのは「6月末」だけ</td><td>情報を減らす</td></tr>
+<tr><td>宿泊税に反対</td><td>共感→条例は成立済み</td><td>感情は否定しない</td></tr>
+</table>
+
+<h3>KPI</h3>
+<table>
+<tr><th>指標</th><th>目標値</th></tr>
+<tr><td>パケット送付数</td><td>50件/週</td></tr>
+<tr><td>QR回答率</td><td>20%</td></tr>
+<tr><td>Day 3 面談→YES率</td><td>50%</td></tr>
+<tr style="background:#d4edda"><td><strong>月間成約目標</strong></td><td><strong>8〜10件</strong></td></tr>
+</table>
+</section>
+
+<!-- SECTION 15: 収益 -->
+<section id="s15">
+<h2>15. 収益シミュレーション</h2>
+<table>
+<tr><th>項目</th><th>初年度</th><th>2年目</th><th>3年目</th></tr>
+<tr><td>獲得施設数</td><td>100</td><td>累計150</td><td>累計200</td></tr>
+<tr><td>初期売上（補助金経由）</td><td>1.5億円</td><td>7,500万</td><td>5,000万</td></tr>
+<tr><td>SaaS売上</td><td>585万</td><td>3,600万</td><td>4,800万</td></tr>
+<tr style="background:#d4edda"><th>営業利益</th><th>約1億円</th><th>約1,740万</th><th>約2,820万</th></tr>
+</table>
+</section>
+
+<!-- SECTION 16: タイムライン -->
+<section id="s16">
+<h2>16. タイムラインと実行計画</h2>
+<table>
+<tr><th>時期</th><th>アクション</th></tr>
+<tr style="background:#fff3cd"><td><strong>3月末（今）</strong></td><td>事務局に重要事項確認（代理受領・概算払い・登録事業者）</td></tr>
+<tr><td>4月上旬</td><td>パケット制作・リスト作成・営業開始</td></tr>
+<tr><td>4〜5月</td><td>プッシュ営業（週50件パケット送付）</td></tr>
+<tr><td>5〜6月</td><td>提案・見積・補助金申請サポート</td></tr>
+<tr style="background:#f8d7da"><td><strong>6月末</strong></td><td><strong>補助金申請締切</strong></td></tr>
+<tr><td>7〜12月</td><td>順次導入・研修</td></tr>
+<tr><td>令和9年1月</td><td>完了・実績報告</td></tr>
+<tr style="background:#d4edda"><td><strong>令和9年2月</strong></td><td><strong>宿泊税スタート・運用サポート開始</strong></td></tr>
+</table>
+</section>
+
+<!-- SECTION 17: 確認事項 -->
+<section id="s17">
+<h2>17. 確認すべき重要事項（18項目）</h2>
+
+<h3><span class="badge badge-danger">★★★</span> 最優先（今週中）— 事務局 0120-153-048</h3>
+<table>
+<tr><th>#</th><th>項目</th><th>影響</th><th>確認日</th><th>結果</th></tr>
+<tr><td>1</td><td><strong>代理受領の可否</strong></td><td>顧客立替ゼロの最強スキーム</td><td></td><td></td></tr>
+<tr><td>2</td><td><strong>概算払いの条件・割合</strong></td><td>立替209万→76万に圧縮</td><td></td><td></td></tr>
+<tr><td>3</td><td><strong>登録事業者制度の有無</strong></td><td>共同事業体スキーム</td><td></td><td></td></tr>
+</table>
+
+<h3><span class="badge badge-warning">★★</span> 重要（2週間以内）</h3>
+<table>
+<tr><th>#</th><th>項目</th><th>確認日</th><th>結果</th></tr>
+<tr><td>4</td><td>債権譲渡の可否</td><td></td><td></td></tr>
+<tr><td>5</td><td>複数施設の個別申請</td><td></td><td></td></tr>
+<tr><td>6</td><td>相見積もりの要否</td><td></td><td></td></tr>
+<tr><td>7</td><td>免税事業者の消費税</td><td></td><td></td></tr>
+</table>
+
+<h3><span class="badge badge-primary">★★</span> セゾン提携関連</h3>
+<table>
+<tr><th>#</th><th>項目</th><th>確認日</th><th>結果</th></tr>
+<tr><td>13</td><td>POファイナンス対象拡大</td><td></td><td></td></tr>
+<tr><td>14</td><td>Tranzax電子記録債権化</td><td></td><td></td></tr>
+<tr><td>15</td><td>共同プロモーション</td><td></td><td></td></tr>
+<tr><td>16</td><td>営業資料への提携表記</td><td></td><td></td></tr>
+<tr><td>17</td><td>紹介料・レベニューシェア</td><td></td><td></td></tr>
+<tr><td>18</td><td>AI.LandBase運転資金融資</td><td></td><td></td></tr>
+</table>
+</section>
+
+<!-- フッター -->
+<section style="background:var(--primary); color:white; text-align:center;">
+<p style="margin:0;"><strong>AI.LandBase株式会社</strong> | <a href="https://ai-landbase.jp/" style="color:#85c1e9">ai-landbase.jp</a></p>
+<p style="margin:5px 0 0; opacity:0.7; font-size:0.85em;">本資料は社内限り。顧客への提供不可。</p>
+</section>
+
+</div>
+</body>
+</html>
