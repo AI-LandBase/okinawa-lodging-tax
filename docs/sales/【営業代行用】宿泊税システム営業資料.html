@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>【営業代行パートナー様向け】沖縄県宿泊税対応システム 営業ガイド</title>
+<style>
+@page { size: A4 landscape; margin: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif; color: #1f2d3d; background: #e9ecef; line-height: 1.55; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+:root {
+  --primary: #0a3d62;
+  --accent: #1e6091;
+  --gold: #c08a1f;
+  --soft: #f4f6f9;
+  --line: #d8dee6;
+  --ok: #1e7e34;
+  --warn: #a05a00;
+}
+
+.page {
+  width: 297mm; height: 210mm;
+  padding: 12mm 16mm;
+  background: #fff;
+  margin: 10mm auto;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.page:last-child { page-break-after: auto; }
+
+.pg-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 10px; flex-shrink: 0; }
+.pg-header .ttl { font-size: 15pt; font-weight: 700; color: var(--primary); }
+.pg-header .sub { font-size: 9pt; color: #6c757d; }
+.pg-footer { position: absolute; bottom: 5mm; left: 16mm; right: 16mm; display: flex; justify-content: space-between; font-size: 7.5pt; color: #8a93a0; border-top: 1px solid var(--line); padding-top: 3px; }
+
+h2 { font-size: 13pt; color: var(--primary); margin-bottom: 6px; }
+h3 { font-size: 10.5pt; color: var(--accent); margin: 8px 0 5px; }
+p { font-size: 9.5pt; margin-bottom: 5px; }
+ul { padding-left: 16px; }
+li { font-size: 9.5pt; margin: 2px 0; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+.card { background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; }
+.card.hl { background: #fff8e6; border-color: #e8c777; }
+.card.ok { background: #e8f5ec; border-color: #a8d7b6; }
+.card.primary { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; border: none; }
+.card h4 { font-size: 10pt; margin-bottom: 4px; color: inherit; }
+.card p, .card li { color: inherit; }
+.card .big { font-size: 20pt; font-weight: 700; line-height: 1.1; }
+.card .mid { font-size: 14pt; font-weight: 700; }
+.card .lbl { font-size: 8.5pt; opacity: 0.85; }
+
+table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+th, td { border: 1px solid var(--line); padding: 5px 7px; text-align: left; vertical-align: middle; }
+th { background: #eef3f8; color: var(--primary); font-weight: 600; }
+tr.em td { background: #fff8e6; font-weight: 600; }
+
+.tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 8pt; font-weight: 600; color: #fff; }
+.tag-primary { background: var(--accent); }
+.tag-gold { background: var(--gold); }
+.tag-ok { background: var(--ok); }
+
+.cover { background: linear-gradient(135deg, #0a3d62 0%, #1e6091 60%, #3c7cb0 100%); color: #fff; padding: 0; }
+.cover .inner { padding: 20mm 18mm; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
+.cover .eyebrow { font-size: 10.5pt; letter-spacing: 0.2em; opacity: 0.85; }
+.cover h1 { font-size: 28pt; line-height: 1.25; font-weight: 700; margin: 10px 0 12px; }
+.cover .lead { font-size: 11pt; opacity: 0.9; max-width: 200mm; }
+.cover .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
+.cover .kpi { background: rgba(255,255,255,0.14); border-radius: 8px; padding: 12px; backdrop-filter: blur(2px); }
+.cover .kpi .n { font-size: 18pt; font-weight: 700; }
+.cover .kpi .t { font-size: 9pt; opacity: 0.85; margin-top: 2px; }
+.cover .meta { display: flex; justify-content: space-between; align-items: flex-end; margin-top: auto; font-size: 9pt; opacity: 0.85; }
+
+.step { background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 4px; padding: 8px 10px; }
+.step .n { font-size: 8.5pt; color: var(--accent); font-weight: 700; letter-spacing: 0.08em; }
+.step h5 { font-size: 10pt; margin: 2px 0 3px; color: var(--primary); }
+.step p { font-size: 8.5pt; margin: 0; color: #425466; }
+.step.gold { border-left-color: var(--gold); }
+.step.gold .n { color: var(--gold); }
+
+.note { background: #f1f5fb; border-left: 4px solid var(--accent); padding: 7px 10px; border-radius: 4px; font-size: 9pt; }
+.warn { background: #fff3e0; border-left: 4px solid var(--warn); padding: 7px 10px; border-radius: 4px; font-size: 9pt; }
+
+.placeholder { background: repeating-linear-gradient(135deg, #fff8e6, #fff8e6 8px, #fdeec3 8px, #fdeec3 16px); border: 1.5px dashed #c08a1f; border-radius: 6px; padding: 10px 12px; color: #7a5800; font-size: 9pt; }
+.placeholder strong { color: #5a3f00; }
+
+.role-tbl th:first-child { width: 28%; }
+.role-tbl td:nth-child(2), .role-tbl td:nth-child(3) { text-align: center; width: 22%; }
+
+@media print {
+  html, body { background: #fff; }
+  .page { margin: 0; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ 表紙 ═══════════════ -->
+<section class="page cover">
+  <div class="inner">
+    <div>
+      <div class="eyebrow">営業代行パートナー様向け ご案内資料</div>
+      <h1>沖縄県・宿泊税対応システム<br>営業パートナー募集</h1>
+      <p class="lead">2027年2月、沖縄県で宿泊税がスタート。県内 約4,251軒の宿泊施設が対応システム導入を迫られます。<br>補助金100%活用で顧客負担ゼロ。完全成果報酬型でパートナー様のリスクもゼロ。</p>
+
+      <div class="kpis">
+        <div class="kpi"><div class="n">完全成果型</div><div class="t">固定費・初期費用なし</div></div>
+        <div class="kpi"><div class="n">¥250,000</div><div class="t">営業クロージング完了</div></div>
+        <div class="kpi"><div class="n">¥500,000</div><div class="t">補助金申請フォロー完遂</div></div>
+        <div class="kpi"><div class="n">補助率100%</div><div class="t">顧客の実質負担 0円</div></div>
+      </div>
+    </div>
+
+    <div class="meta">
+      <div>AI.LandBase株式会社</div>
+      <div>Ver.2.0 &nbsp;/&nbsp; 本書は営業代行パートナー様限り</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 01 制度概要と市場背景 ═══════════════ -->
+<section class="page">
+  <div class="pg-header"><div class="ttl">01. 宿泊税制度の概要と市場背景</div><div class="sub">制度 / 補助金 / 市場規模</div></div>
+
+  <div class="grid-2" style="flex:1;">
+    <div>
+      <h3>沖縄県 宿泊税制度のポイント</h3>
+      <table>
+        <tr><th style="width:35%;">項目</th><th>内容</th></tr>
+        <tr><td>税率</td><td>宿泊料金の <strong>2%</strong>（定率制）</td></tr>
+        <tr><td>上限</td><td>1泊1人あたり <strong>2,000円</strong></td></tr>
+        <tr><td>内訳</td><td>県税 0.8%（上限800円）+ 市町村税 1.2%（上限1,200円）</td></tr>
+        <tr><td>施行日</td><td><strong>令和9年（2027年）2月1日</strong></td></tr>
+        <tr><td>免税対象</td><td>修学旅行・部活動等の教育活動に限定</td></tr>
+        <tr><td>申告頻度</td><td>毎月（特例：四半期ごと）</td></tr>
+        <tr><td>年間税収見込</td><td><strong>約78億円</strong></td></tr>
+      </table>
+      <div class="card" style="margin-top:8px; background:linear-gradient(135deg,#0a3d62,#1e6091); color:#fff; padding:12px 14px;">
+        <h4 style="font-size:10.5pt; margin-bottom:4px;">条例は成立済み — すべての宿泊施設に対応義務</h4>
+        <p style="font-size:9.5pt; margin:0; opacity:0.95;">旅館・ホテル・ペンション・民宿・ゲストハウス・民泊を問わず、<strong style="color:#ffd966;">宿泊料金を受け取る事業者は漏れなく対象</strong>です。「対応するかどうか」ではなく「いつ・どこで導入するか」という段階にあります。</p>
+      </div>
+    </div>
+
+    <div>
+      <h3>補助金制度の概要</h3>
+      <table>
+        <tr><th style="width:35%;">項目</th><th>内容</th></tr>
+        <tr><td>補助率</td><td><strong>100%</strong>（全額補助）</td></tr>
+        <tr><td>上限額</td><td>1施設あたり <strong>200万円</strong></td></tr>
+        <tr><td>申請期間</td><td>令和8年3月1日 〜 <strong>6月末日</strong></td></tr>
+        <tr><td>完了期限</td><td>令和9年1月31日</td></tr>
+      </table>
+      <div class="card ok" style="margin-top:8px;">
+        <h4>補助対象となる経費</h4>
+        <ul>
+          <li>宿泊税額の算定機能の追加・開発</li>
+          <li>宿泊者数 × 税額の月次集計・申告データ出力機能</li>
+          <li>領収書への宿泊税額印字機能</li>
+          <li>上記に直接必要なハードウェア・ソフトウェア</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:8px; background:#e74c3c; color:#fff; padding:12px 14px;">
+        <h4 style="font-size:10.5pt; margin-bottom:4px;">採択の見込みは高い — ただし期限厳守</h4>
+        <p style="font-size:9.5pt; margin:0; opacity:0.95;">県が年78億円の税収確保のために全施設の対応を求めており、要件を満たせば採択率は高い制度設計です。<br><strong style="color:#ffd966;">申請締切は令和8年6月末。この期限を過ぎると補助金は使えず、全額自費での対応</strong>になります。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-4" style="margin-top:8px; flex-shrink:0;">
+    <div class="card primary"><div class="lbl">沖縄県内 宿泊施設</div><div class="big">4,251<span style="font-size:11pt;">軒</span></div><div class="lbl">23年連続で過去最高（沖縄県調査）</div></div>
+    <div class="card primary"><div class="lbl">客室数</div><div class="big">64,371<span style="font-size:11pt;">室</span></div><div class="lbl">収容人数 188,425人</div></div>
+    <div class="card primary"><div class="lbl">施設内訳（主要）</div><div class="mid" style="font-size:11pt;">ペンション・貸別荘 2,183<br>ビジネスホテル 651<br>民宿 438</div></div>
+    <div class="card primary"><div class="lbl">メインターゲット</div><div class="big">2,650<span style="font-size:11pt;">軒</span></div><div class="lbl">小規模施設（セグメントC+D）</div></div>
+  </div>
+
+  <div class="pg-footer"><div>沖縄県・宿泊税対応システム 営業ガイド</div><div>P.2</div></div>
+</section>
+
+<!-- ═══════════════ 02 商品内容 ═══════════════ -->
+<section class="page">
+  <div class="pg-header"><div class="ttl">02. お客様への納品内容</div><div class="sub">ハードウェア + システム + 導入サポート</div></div>
+
+  <div class="grid-3" style="margin-bottom:8px;">
+    <div class="card ok">
+      <h4>① Mac（管理用PC）</h4>
+      <ul>
+        <li>宿泊税の月次集計・申告データ出力</li>
+        <li>経理ソフト連携・CSV出力</li>
+        <li>施設全体の管理ダッシュボード</li>
+        <li>耐用年数・セキュリティに優れた端末</li>
+      </ul>
+    </div>
+    <div class="card ok">
+      <h4>② iPad（フロント運用端末）</h4>
+      <ul>
+        <li>チェックイン時の宿泊台帳記録</li>
+        <li>宿泊税額の自動計算・表示</li>
+        <li>電子領収書の発行（税額印字対応）</li>
+        <li>直感操作でスタッフ研修が最小限</li>
+      </ul>
+    </div>
+    <div class="card ok">
+      <h4>③ Squareターミナル（決済端末）</h4>
+      <ul>
+        <li>宿泊料金 + 宿泊税の一体決済</li>
+        <li>クレジット・電子マネー・QR対応</li>
+        <li>インバウンド対応（多通貨表示）</li>
+        <li>レシートへの宿泊税額自動印字</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <h3>提案価格（お客様提示額）</h3>
+      <div class="card hl">
+        <div class="big" style="color: var(--primary);">¥1,965,000<span style="font-size:10pt; font-weight:400;"> （税込）</span></div>
+        <div class="lbl">Mac + iPad + Squareターミナル + 宿泊税対応システム 導入・設定・研修 一式</div>
+        <ul style="margin-top:6px;">
+          <li>補助金上限200万円の範囲内におさまる価格設計</li>
+          <li>補助金活用によりお客様の実質負担は<strong>原則0円</strong></li>
+          <li>月額サービス（保守・クラウド等）は別途ご案内</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <h3>システムが提供する機能一覧</h3>
+      <table>
+        <tr><th>カテゴリ</th><th>機能</th></tr>
+        <tr><td>税額計算</td><td>宿泊料金の2%自動算定 / 上限2,000円制御 / 免税区分（修学旅行等）自動判定</td></tr>
+        <tr><td>集計・申告</td><td>月次自動集計 / 県税・市町村税の内訳分離 / 申告用データ出力（CSV・PDF）</td></tr>
+        <tr><td>領収書</td><td>宿泊税額の自動印字 / 電子領収書発行 / レシート連動</td></tr>
+        <tr><td>保守・保証</td><td>税率・申告様式変更への永年無償アップデート / データCSVエクスポート保証</td></tr>
+      </table>
+      <div class="note" style="margin-top:6px;">
+        <strong>補助金申請の書類作成サポート・実績報告の伴走まで当社が対応。</strong>お客様の事務負担はほぼゼロです。見積書の発行は当社が即時対応。パートナー様がお客様に説明しやすいよう、提案書テンプレートも用意しています。
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer"><div>沖縄県・宿泊税対応システム 営業ガイド</div><div>P.3</div></div>
+</section>
+
+<!-- ═══════════════ 03 ターゲット顧客 ═══════════════ -->
+<section class="page">
+  <div class="pg-header"><div class="ttl">03. ターゲット顧客と営業の優先順位</div><div class="sub">セグメント分析 / 成約しやすい施設の見分け方</div></div>
+
+  <div class="grid-2" style="flex:1;">
+    <div>
+      <h3>顧客セグメントと優先度</h3>
+      <table>
+        <tr><th>セグメント</th><th>施設数</th><th>IT化状況</th><th>優先度</th></tr>
+        <tr><td>A. 大型ホテル・リゾート</td><td>約200</td><td>大手PMS導入済。IT部門あり</td><td>低</td></tr>
+        <tr><td>B. 中規模ビジネスホテル</td><td>約450</td><td>既存PMS利用。比較検討する層</td><td>中</td></tr>
+        <tr class="em"><td>C. ペンション・貸別荘</td><td>約2,200</td><td>手書き台帳・Excel多。IT化遅延</td><td><span class="tag tag-gold">最優先</span></td></tr>
+        <tr class="em"><td>D. 民宿・ゲストハウス</td><td>約450</td><td>システム未導入が大半</td><td><span class="tag tag-gold">最優先</span></td></tr>
+        <tr><td>E. 民泊</td><td>数百</td><td>OTA依存。独自管理なし</td><td>中</td></tr>
+      </table>
+
+      <div class="note" style="margin-top:8px;">
+        <strong>最優先ターゲットは C + D の合計 約2,650軒。</strong><br>
+        「制度のことはよく分からないが、対応しないわけにはいかない」と感じている小規模施設。補助金100%＋全部お任せの提案が最も刺さるセグメントです。
+      </div>
+
+      <h3>避けた方がよい先</h3>
+      <ul>
+        <li>大手チェーン系（本部判断・既存PMSベンダーとの契約あり）</li>
+        <li>完全無人民泊（OTA経由のみで自社管理なし）</li>
+        <li>年間稼働が極端に少ない施設（年50泊以下など）</li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>成約しやすい施設の特徴</h3>
+      <div class="card hl">
+        <ul>
+          <li><strong>家族経営・夫婦経営</strong> — スタッフ数が少なく、事務にかける余裕がない</li>
+          <li><strong>手書き台帳やExcelで管理</strong> — 宿泊税計算を毎日手作業でやるのは非現実的</li>
+          <li><strong>「何をすればいいか」を相談できていない</strong> — 情報が届いていない層</li>
+          <li><strong>補助金・助成金の申請経験がない</strong> — 書類作業の代行に大きな価値を感じる</li>
+          <li><strong>複数施設を運営</strong> — 施設ごとに報酬が発生するため単価が高い</li>
+          <li><strong>決済がまだ現金中心</strong> — Square導入でキャッシュレス対応も同時に解決</li>
+        </ul>
+      </div>
+
+      <h3>アプローチの具体ヒント</h3>
+      <table>
+        <tr><th>接点の作り方</th><th>内容</th></tr>
+        <tr><td>観光協会・商工会</td><td>地域の宿泊事業者が集まる会合・説明会に資料配布</td></tr>
+        <tr><td>既存の取引関係</td><td>リネン業者・食材卸・清掃業者など既にお付き合いのある先</td></tr>
+        <tr><td>エリア集中営業</td><td>恩納村・北谷・本部町・石垣・宮古島など宿泊施設が密集するエリア</td></tr>
+        <tr><td>FAX・郵送</td><td>パケット（A4×3枚）を送付→電話フォローの2ステップ</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="pg-footer"><div>沖縄県・宿泊税対応システム 営業ガイド</div><div>P.4</div></div>
+</section>
+
+<!-- ═══════════════ 04 お客様メリット ═══════════════ -->
+<section class="page">
+  <div class="pg-header"><div class="ttl">04. お客様に伝えるメリット</div><div class="sub">提案時に使える訴求ポイント</div></div>
+
+  <div class="grid-2" style="flex:1;">
+    <div>
+      <h3>年間の宿泊税関連事務が 96% 削減される</h3>
+      <table>
+        <tr><th>作業項目</th><th>自前対応<br>（年間）</th><th>システム導入後<br>（年間）</th><th>削減率</th></tr>
+        <tr><td>各種届出（開業届・変更届等）</td><td>3時間</td><td>5分</td><td>97%</td></tr>
+        <tr><td>税額計算（毎日の宿泊料 × 2%）</td><td>10時間</td><td>0時間</td><td>100%</td></tr>
+        <tr><td>領収書への宿泊税印字対応</td><td>5時間</td><td>0時間</td><td>100%</td></tr>
+        <tr><td>月次集計（県税・市町村税の分離）</td><td>48時間</td><td>1時間</td><td>98%</td></tr>
+        <tr><td>申告書作成・納付手続き</td><td>12時間</td><td>2時間</td><td>83%</td></tr>
+        <tr><td>補助金申請・実績報告</td><td>15時間</td><td>0.5時間</td><td>97%</td></tr>
+        <tr class="em"><td>年間合計</td><td>93時間</td><td>3.5時間</td><td>96%</td></tr>
+      </table>
+      <p style="margin-top:6px;">年間 約90時間 = <strong>実質11営業日分の事務作業を削減</strong>。小規模施設にとって、この時間を接客やサービス向上に充てられるメリットは大きいです。</p>
+    </div>
+
+    <div>
+      <h3>お客様が感じる7つの不安と解決策</h3>
+      <table>
+        <tr><th style="width:8%;">Lv</th><th style="width:38%;">不安の声</th><th>当社の対応</th></tr>
+        <tr><td>1</td><td>宿泊税って結局なに？</td><td>制度の説明資料を提供。訪問して直接ご説明</td></tr>
+        <tr><td>2</td><td>届出・申請が多すぎる</td><td>申請も届出もすべて代行。お客様はサインのみ</td></tr>
+        <tr><td>3</td><td>導入にお金がかかる</td><td>補助金100%で実質0円。資金立替の手段も用意</td></tr>
+        <tr><td>4</td><td>毎日の計算が面倒</td><td>チェックイン時に自動計算。手作業ゼロ</td></tr>
+        <tr><td>5</td><td>確定申告が難しくなる？</td><td>月次データが自動出力。会計ソフト連携も対応</td></tr>
+        <tr><td>6</td><td>トラブル時に来てほしい</td><td>沖縄の地場企業として直接訪問で対応</td></tr>
+        <tr><td>7</td><td>IT化したいが何から？</td><td>宿泊税対応を入口に、段階的なDXプランを提案</td></tr>
+      </table>
+
+      <div class="card ok" style="margin-top:8px;">
+        <h4>営業トークの型</h4>
+        <p>「今回の宿泊税対応は、御社のIT化を補助金100%で始められる数少ないチャンスです。<br>宿泊税の計算・申告はすべて自動化。届出から補助金申請まで全部うちでやります。<br>御社にお願いするのは契約書のサインだけ。<strong>申請は6月末が期限</strong>です。」</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer"><div>沖縄県・宿泊税対応システム 営業ガイド</div><div>P.5</div></div>
+</section>
+
+<!-- ═══════════════ 05 報酬体系 ═══════════════ -->
+<section class="page">
+  <div class="pg-header"><div class="ttl">05. 営業パートナー報酬体系</div><div class="sub">完全成果報酬型 / ノーリスク</div></div>
+
+  <div class="grid-2" style="margin-bottom:6px;">
+    <div class="card hl" style="padding:8px 12px;">
+      <h4><span class="tag tag-primary">プラン A</span> 営業クロージング完了</h4>
+      <div class="big" style="color: var(--primary);">¥250,000<span style="font-size:10pt; font-weight:400;"> / 1契約（税別）</span></div>
+      <ul style="margin-top:5px;">
+        <li>パートナー様が営業・提案・クロージングを行い、<strong>契約締結済みの状態</strong>で当社にお引き渡し</li>
+        <li>契約締結以降（補助金申請・納品・設定・研修）は<strong>すべて当社が対応</strong></li>
+      </ul>
+    </div>
+    <div class="card hl" style="padding:8px 12px;">
+      <h4><span class="tag tag-gold">プラン B</span> 補助金申請フォローまで完遂</h4>
+      <div class="big" style="color: var(--primary);">¥500,000<span style="font-size:10pt; font-weight:400;"> / 1契約（税別）</span></div>
+      <ul style="margin-top:5px;">
+        <li>プランAに加え、<strong>補助金申請フォロー・実績報告まで</strong>一貫して対応</li>
+        <li>当社は商品の納品・システム設定のみ。お客様対応はパートナー様が完遂</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top:4px;">プラン別 役割分担</h3>
+  <table class="role-tbl" style="font-size:8.5pt;">
+    <tr><th>工程</th><th>プラン A（パートナー様）</th><th>プラン A（当社）</th><th>プラン B（パートナー様）</th><th>プラン B（当社）</th></tr>
+    <tr><td>見込み客の発掘・アプローチ</td><td style="text-align:center;"><strong>主担当</strong></td><td style="text-align:center;">—</td><td style="text-align:center;"><strong>主担当</strong></td><td style="text-align:center;">—</td></tr>
+    <tr><td>商品説明・提案・見積提示</td><td style="text-align:center;"><strong>主担当</strong></td><td style="text-align:center;">資料・見積発行</td><td style="text-align:center;"><strong>主担当</strong></td><td style="text-align:center;">資料・見積発行</td></tr>
+    <tr><td>営業クロージング・契約締結</td><td style="text-align:center;"><strong>主担当</strong></td><td style="text-align:center;">契約書準備</td><td style="text-align:center;"><strong>主担当</strong></td><td style="text-align:center;">契約書準備</td></tr>
+    <tr><td>補助金申請サポート・書類作成</td><td style="text-align:center;">—</td><td style="text-align:center;"><strong>主担当</strong></td><td style="text-align:center;"><strong>主担当</strong></td><td style="text-align:center;">テンプレート提供</td></tr>
+    <tr><td>ハードウェア納品・システム設定</td><td style="text-align:center;">—</td><td style="text-align:center;"><strong>主担当</strong></td><td style="text-align:center;">—</td><td style="text-align:center;"><strong>主担当</strong></td></tr>
+    <tr><td>操作研修・運用開始サポート</td><td style="text-align:center;">—</td><td style="text-align:center;"><strong>主担当</strong></td><td style="text-align:center;"><strong>主担当</strong></td><td style="text-align:center;">技術支援</td></tr>
+    <tr><td>実績報告・補助金精算</td><td style="text-align:center;">—</td><td style="text-align:center;"><strong>主担当</strong></td><td style="text-align:center;"><strong>主担当</strong></td><td style="text-align:center;">書面サポート</td></tr>
+  </table>
+
+  <div class="grid-2" style="margin-top:6px;">
+    <div>
+      <h3 style="margin-top:0;">報酬の基本方針</h3>
+      <ul>
+        <li><strong>完全成果報酬型</strong>：初期費用・月額固定費は一切不要</li>
+        <li><strong>在庫・与信リスクゼロ</strong>：お客様との金銭のやりとりは全て当社</li>
+        <li>案件ごとにプランA / B を事前選択（途中変更は個別協議）</li>
+        <li>複数施設のご紹介の場合、施設ごとに報酬を算定</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-top:0;">成約の定義と支払条件</h3>
+      <div class="placeholder" style="padding:8px 12px;">
+        <strong>※ 具体的な支払条件は後日記載します。</strong><br>
+        ・成約の定義 ・報酬支払いタイミング<br>
+        ・インボイス／源泉徴収 ・キャンセル時の取扱い<br>
+        ・契約期間・秘密保持・競業避止
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer"><div>沖縄県・宿泊税対応システム 営業ガイド</div><div>P.6</div></div>
+</section>
+
+<!-- ═══════════════ 06 営業フロー ═══════════════ -->
+<section class="page">
+  <div class="pg-header"><div class="ttl">06. 営業フローと当社のサポート体制</div><div class="sub">プラン別の進め方 / 提供ツール</div></div>
+
+  <h3>プラン A — 営業クロージング完了型</h3>
+  <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:10px;">
+    <div class="step"><div class="n">STEP 1</div><h5>ターゲット選定</h5><p>見込み施設をリストアップ。当社で重複チェック。</p></div>
+    <div class="step"><div class="n">STEP 2</div><h5>アプローチ</h5><p>パケット送付・電話・訪問で接触。制度と補助金の案内。</p></div>
+    <div class="step"><div class="n">STEP 3</div><h5>商談・提案</h5><p>当社発行の見積書で提案。不明点は当社ホットラインへ。</p></div>
+    <div class="step"><div class="n">STEP 4</div><h5>契約締結</h5><p>お客様と当社の直接契約。パートナー様が締結をサポート。</p></div>
+    <div class="step" style="border-left-color:var(--ok);"><div class="n" style="color:var(--ok);">引き渡し</div><h5>当社へバトンタッチ</h5><p>以降の補助金申請・納品・設定・研修は全て当社対応。</p></div>
+  </div>
+
+  <h3>プラン B — 補助金申請フォロー完遂型</h3>
+  <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-bottom:10px;">
+    <div class="step gold"><div class="n">STEP 1</div><h5>ターゲット選定</h5><p>リストアップ＋重複チェック。</p></div>
+    <div class="step gold"><div class="n">STEP 2</div><h5>アプローチ</h5><p>パケット送付・電話・訪問。</p></div>
+    <div class="step gold"><div class="n">STEP 3</div><h5>商談・提案</h5><p>見積提示・質疑対応。</p></div>
+    <div class="step gold"><div class="n">STEP 4</div><h5>契約締結</h5><p>お客様との契約をクローズ。</p></div>
+    <div class="step gold"><div class="n">STEP 5</div><h5>補助金申請</h5><p>申請書類の作成・提出フォロー。当社がテンプレ提供。</p></div>
+    <div class="step gold"><div class="n">STEP 6</div><h5>導入サポート</h5><p>操作研修・運用開始の伴走。納品・設定は当社。</p></div>
+    <div class="step gold"><div class="n">STEP 7</div><h5>実績報告</h5><p>精算まで一貫フォロー。当社が書面をバックアップ。</p></div>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <h3>当社が提供するツール・サポート</h3>
+      <table>
+        <tr><th>提供物</th><th>内容</th></tr>
+        <tr><td>営業パケット原稿</td><td>A4×3枚の送付用資料（FAX・郵送・LINE対応）</td></tr>
+        <tr><td>提案書テンプレート</td><td>お客様向け説明資料（カスタマイズ可）</td></tr>
+        <tr><td>見積書・契約書</td><td>当社が即時発行。パートナー様の手間ゼロ</td></tr>
+        <tr><td>補助金申請キット</td><td>記入ガイド付き申請書テンプレート一式（プランB向け）</td></tr>
+        <tr><td>FAQ・断り対応集</td><td>想定される断り文句とそれに対する回答例</td></tr>
+        <tr><td>ホットライン</td><td>商談中の技術的質問に当社スタッフが即座に回答</td></tr>
+        <tr><td>同行支援</td><td>オンラインまたは現地訪問での商談同行（無料）</td></tr>
+      </table>
+    </div>
+
+    <div>
+      <h3>スケジュール感</h3>
+      <table>
+        <tr><th>時期</th><th>アクション</th></tr>
+        <tr class="em"><td>4〜5月</td><td>アプローチのピーク。パケット送付→電話→訪問</td></tr>
+        <tr class="em"><td>5〜6月</td><td>提案・見積提示・契約締結・補助金申請</td></tr>
+        <tr><td style="color:var(--warn);"><strong>6月末</strong></td><td><strong>補助金申請締切</strong></td></tr>
+        <tr><td>7〜12月</td><td>順次納品・設定・研修（当社主導）</td></tr>
+        <tr><td>令和9年1月</td><td>実績報告・補助金精算完了</td></tr>
+        <tr><td>令和9年2月</td><td>宿泊税スタート。運用サポート開始</td></tr>
+      </table>
+      <div class="card" style="margin-top:6px; background:#e74c3c; color:#fff; padding:10px 14px;">
+        <h4 style="font-size:10pt; margin-bottom:3px;">4〜5月が最重要期間</h4>
+        <p style="font-size:9pt; margin:0; opacity:0.95;">6月末の補助金締切に間に合わせるには、<strong style="color:#ffd966;">遅くとも6月上旬までに契約締結が必要</strong>です。ここを逃すとお客様は全額自費対応となり、提案の前提が崩れます。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer"><div>沖縄県・宿泊税対応システム 営業ガイド</div><div>P.7</div></div>
+</section>
+
+<!-- ═══════════════ 07 FAQ + 連絡先 ═══════════════ -->
+<section class="page">
+  <div class="pg-header"><div class="ttl">07. よくあるご質問 / お問い合わせ</div><div class="sub">パートナー様からよくいただく質問</div></div>
+
+  <div class="grid-2" style="flex:1;">
+    <div>
+      <h3>FAQ</h3>
+      <table>
+        <tr><th style="width:42%;">ご質問</th><th>回答</th></tr>
+        <tr><td>営業経験・実績がなくても参画できる？</td><td>可能です。営業資料・トークスクリプト・同行支援を全て提供。</td></tr>
+        <tr><td>沖縄県外からの紹介は可能？</td><td>可能です。対象施設が沖縄県内であれば全国どこからでもOK。</td></tr>
+        <tr><td>紹介先の重複はどう管理する？</td><td>施設名を事前にご連絡いただき、当社側で一元管理・重複チェック。</td></tr>
+        <tr><td>契約の当事者は？</td><td>お客様と当社の直接契約。報酬は別途パートナー契約に基づき支払。</td></tr>
+        <tr><td>お客様の資金繰りが厳しい場合は？</td><td>補助金100%活用＋分割払い等の複数スキームを用意。</td></tr>
+        <tr><td>プランAとBは途中で変更できる？</td><td>案件ごとに事前選択。進捗によっては個別協議で対応可能。</td></tr>
+        <tr><td>複数施設を運営するオーナーの場合は？</td><td>施設ごとに1契約。3施設紹介で報酬も3件分。</td></tr>
+        <tr><td>補助金が不採択だったら？</td><td>要件充足型のため不採択リスクは低いが、万一の場合は個別協議。</td></tr>
+      </table>
+    </div>
+
+    <div>
+      <h3>パートナー契約開始までの流れ</h3>
+      <div style="display:grid; grid-template-columns:1fr; gap:6px; margin-bottom:10px;">
+        <div class="step"><div class="n">STEP 1</div><h5>お問い合わせ・ご説明</h5><p>本資料をご覧いただき、ご興味があればまずはお問い合わせください。オンラインで事業内容・報酬体系を詳しくご説明します。</p></div>
+        <div class="step"><div class="n">STEP 2</div><h5>パートナー契約の締結</h5><p>秘密保持・報酬条件等をまとめた契約書を締結。その後、営業キット（資料・テンプレート・ツール一式）をお渡しします。</p></div>
+        <div class="step"><div class="n">STEP 3</div><h5>営業活動スタート</h5><p>見込み施設をご共有いただいた時点からサポート開始。初回商談は当社が同行することも可能です。</p></div>
+      </div>
+
+      <h3>お問い合わせ窓口</h3>
+      <div class="card" style="margin-bottom:8px;">
+        <strong>AI.LandBase株式会社</strong><br>
+        営業代行パートナー担当<br>
+        Web: https://ai-landbase.jp/<br>
+        E-mail / Tel： <span style="color:#a05a00;">（別途ご案内いたします）</span>
+      </div>
+
+      <div class="placeholder">
+        <strong>※ 契約書・支払条件の具体記述はこの枠内に後日追記。</strong><br>
+        ・報酬支払いタイミング ・インボイス／源泉徴収<br>
+        ・キャンセル時の取扱い ・秘密保持・競業避止
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-footer"><div>沖縄県・宿泊税対応システム 営業ガイド</div><div>本書は営業代行パートナー様限り・無断転載禁止</div></div>
+</section>
+
+</body>
+</html>
