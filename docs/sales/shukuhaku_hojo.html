@@ -91,6 +91,21 @@
     .role-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #374151; margin-bottom: 8px; line-height: 1.5; }
 
     footer { text-align: center; font-size: 13px; color: #718096; margin-top: 8px; padding-bottom: 20px; }
+
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    @media (max-width: 640px) {
+      body { padding: 16px 12px; }
+      header { padding: 24px 20px; border-radius: 12px; }
+      header h1 { font-size: 17px; }
+      .badge { font-size: 12px; padding: 6px 12px; }
+      .card { padding: 18px 14px; border-radius: 10px; margin-bottom: 16px; }
+      .section-title { font-size: 14px; }
+      table { font-size: 13px; }
+      th, td { padding: 9px 10px; }
+      .role-grid { grid-template-columns: 1fr; }
+      .role-card { padding: 18px; }
+    }
   </style>
 </head>
 <body>
@@ -109,7 +124,7 @@
   <!-- タイムライン -->
   <div class="card">
     <div class="section-title">タイムライン別 担当マトリクス</div>
-    <table>
+    <div class="table-wrap"><table>
       <thead>
         <tr>
           <th>時期</th>
@@ -162,7 +177,7 @@
           <td class="dash">—</td>
         </tr>
       </tbody>
-    </table>
+    </table></div>
   </div>
 
   <!-- 役割カード -->
@@ -185,7 +200,7 @@
   <!-- 提出書類一覧 -->
   <div class="card">
     <div class="section-title">宿泊業者が提出する書類（事務局へ）＋様式ダウンロード</div>
-    <table>
+    <div class="table-wrap"><table>
       <thead>
         <tr>
           <th>#</th>
@@ -296,13 +311,13 @@
           <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/13%20%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E6%A7%98%E5%BC%8F%E7%AC%AC10%E5%8F%B7%EF%BC%88%E7%AC%AC17%E6%9D%A1%E9%96%A2%E4%BF%82%EF%BC%89%E8%A3%9C%E5%8A%A9%E9%87%91%E7%B2%BE%E7%AE%97%E6%89%95%E8%AB%8B%E6%B1%82%E6%9B%B8.docx" target="_blank">📥 Word</a></td>
         </tr>
       </tbody>
-    </table>
+    </table></div>
   </div>
 
   <!-- 参考様式 -->
   <div class="card">
     <div class="section-title">参考・その他様式</div>
-    <table>
+    <div class="table-wrap"><table>
       <thead>
         <tr>
           <th style="text-align:left">書類名</th>
@@ -327,13 +342,13 @@
           <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/08%20%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E6%A7%98%E5%BC%8F%E7%AC%AC%EF%BC%96%E5%8F%B7%EF%BC%88%E7%AC%AC11%E6%9D%A1%E9%96%A2%E4%BF%82%EF%BC%89%E8%A8%88%E7%94%BB%E9%81%85%E5%BB%B6%E7%AD%89%E5%A0%B1%E5%91%8A%E6%9B%B8%20%E3%80%88%E4%BF%AE%E6%AD%A3%E3%80%89.docx" target="_blank">📥 Word</a></td>
         </tr>
       </tbody>
-    </table>
+    </table></div>
   </div>
 
   <!-- 納税証明書 -->
   <div class="card">
     <div class="section-title">納税証明書の取得方法</div>
-    <table>
+    <div class="table-wrap"><table>
       <thead>
         <tr>
           <th style="text-align:left">種別</th>
@@ -368,7 +383,7 @@
           <td style="text-align:center;font-weight:700;color:#276749;">400円/通<br><span style="font-size:11px;font-weight:400;color:#718096;">現金または証紙</span></td>
         </tr>
       </tbody>
-    </table>
+    </table></div>
     <p style="margin-top:14px;font-size:12px;color:#718096;padding-left:4px;">※ e-Tax・eLTAXによるオンライン申請も可能。郵送申請の場合は返信用封筒と手数料分の収入印紙が必要。</p>
   </div>
 
