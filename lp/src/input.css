@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@source "../index.html";
+
+@theme {
+  --color-ocean-50: #f0fafb;
+  --color-ocean-100: #d0f0f4;
+  --color-ocean-200: #a1e0e9;
+  --color-ocean-300: #6ac9d6;
+  --color-ocean-400: #3aabb9;
+  --color-ocean-500: #1e8a9a;
+  --color-ocean-600: #196f7d;
+  --color-ocean-700: #1a5966;
+  --color-ocean-800: #1c4a54;
+  --color-ocean-900: #0f2f36;
+  --color-ocean-950: #071c22;
+
+  --color-coral-300: #fca68e;
+  --color-coral-400: #f98563;
+  --color-coral-500: #f46a3f;
+  --color-coral-600: #e14e25;
+
+  --color-sand-50: #fdfaf5;
+  --color-sand-100: #f9f1e3;
+  --color-sand-200: #f2e2c6;
+  --color-sand-300: #e8cfa1;
+
+  --font-display: "Shippori Mincho", serif;
+  --font-body: "Zen Kaku Gothic New", sans-serif;
+}
