@@ -49,3 +49,4 @@ backups/
 
 # LP
 lp/node_modules/
+lp/dist/
