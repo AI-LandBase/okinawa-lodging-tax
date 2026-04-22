@@ -84,3 +84,14 @@ v0時点から守る規律。これにより v0の小ささと将来の汎用化
 
 メインスタックは **Ruby on Rails**（独立Railsアプリとして構築）。
 `landbase_ai_suite` の技術スタック・開発規約を踏襲する。詳細は [docs/tech-stack.md](./docs/tech-stack.md) 参照。
+
+## LP（ランディングページ）
+
+`lp/` ディレクトリに静的 HTML として配置。Tailwind CSS v4 をローカルビルドで使用。
+
+```bash
+cd lp
+npm install        # 初回のみ
+npm run build      # dist/output.css を生成
+npm run watch      # 開発時（ファイル変更で自動リビルド）
+```

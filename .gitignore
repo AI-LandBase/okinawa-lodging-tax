@@ -46,3 +46,7 @@ app/assets/images/facility/*
 
 # Backups
 backups/
+
+# LP
+lp/node_modules/
+lp/dist/
