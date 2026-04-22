@@ -68,7 +68,7 @@ gem "kaminari", "~> 1.2"
 gem "rack-cors", "~> 3.0"
 gem "rails-i18n", "~> 8.1"
 gem "paper_trail", "~> 17.0"
-gem "prawn", "~> 2.4"
+gem "prawn", "~> 2.5"
 gem "combine_pdf", "~> 1.0"
 
 gem "pry-rails", "~> 0.3.11", group: :development
