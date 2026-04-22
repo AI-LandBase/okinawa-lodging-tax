@@ -34,7 +34,7 @@
     scroll-behavior: smooth;
   }
   body {
-    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-family: var(--font-body);
     touch-action: manipulation;
   }
 }
