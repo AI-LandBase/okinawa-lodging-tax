@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  namespace :api do
+    resources :inquiries, only: %i[create]
+  end
+
   resources :stays, only: %i[index new create edit update] do
     member do
       patch :cancel
     end
   end
+
+  resources :inquiries, only: %i[index show]
 
   resources :users, only: %i[index new create edit update] do
     member do

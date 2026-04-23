@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_10_010000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_23_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "inquiries", force: :cascade do |t|
+    t.string "contact_name", null: false, comment: "担当者名"
+    t.datetime "created_at", null: false
+    t.string "email", null: false, comment: "メールアドレス"
+    t.string "facility_name", null: false, comment: "施設名"
+    t.string "facility_type", comment: "施設の種類（minpaku / simple_lodging / ryokan / hotel / other）"
+    t.string "has_pc", comment: "PC保有状況（mac / windows / other_pc / no）"
+    t.text "message", comment: "ご相談内容"
+    t.string "phone", comment: "電話番号"
+    t.datetime "updated_at", null: false
+  end
 
   create_table "stays", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "channel", comment: "予約チャネル名（Airbnb / Booking 等）"
