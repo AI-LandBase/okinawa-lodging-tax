@@ -446,7 +446,12 @@
             form.classList.add('hidden');
             thanksDiv.classList.remove('hidden');
           } else {
-            errorsDiv.innerHTML = result.data.errors.join('<br>');
+            errorsDiv.textContent = '';
+            result.data.errors.forEach(function(msg) {
+              var p = document.createElement('p');
+              p.textContent = msg;
+              errorsDiv.appendChild(p);
+            });
             errorsDiv.classList.remove('hidden');
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;

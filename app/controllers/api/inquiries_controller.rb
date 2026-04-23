@@ -1,8 +1,5 @@
 module Api
-  class InquiriesController < ApplicationController
-    skip_before_action :verify_authenticity_token
-    skip_before_action :authenticate_user!
-
+  class InquiriesController < ActionController::API
     def create
       inquiry = Inquiry.new(inquiry_params)
 
