@@ -18,8 +18,9 @@ class SalesLeadImporter
     spreadsheet = Roo::Spreadsheet.open(@file_path)
     sheet = pick_sheet(spreadsheet)
 
-    headers = normalize_headers(sheet.row(1))
-    (2..sheet.last_row).each do |i|
+    header_row = detect_header_row(sheet)
+    headers = normalize_headers(sheet.row(header_row))
+    ((header_row + 1)..sheet.last_row).each do |i|
       row = Hash[headers.zip(sheet.row(i))]
       import_row(row, result, i)
     end
@@ -37,6 +38,15 @@ class SalesLeadImporter
       target = spreadsheet.sheets.find { |s| s.include?("Deduped") }
       spreadsheet.sheet(target || spreadsheet.sheets.first)
     end
+  end
+
+  def detect_header_row(sheet)
+    (1..[ sheet.last_row, 5 ].min).each do |i|
+      row = sheet.row(i)
+      headers_str = row.compact.map(&:to_s)
+      return i if headers_str.any? { |h| h.include?("施設名") }
+    end
+    1
   end
 
   def normalize_headers(row)
