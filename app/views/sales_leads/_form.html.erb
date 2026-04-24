@@ -1,0 +1,143 @@
+<%= form_with(model: sales_lead, class: "space-y-4 max-w-lg") do |f| %>
+  <% if sales_lead.errors.any? %>
+    <div class="bg-red-50 border border-red-300 rounded p-4">
+      <h2 class="text-red-800 font-medium mb-2"><%= sales_lead.errors.count %>件のエラーがあります</h2>
+      <ul class="list-disc list-inside text-red-700 text-sm">
+        <% sales_lead.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h2 class="text-lg font-semibold border-b border-gray-300 pb-2">基本情報</h2>
+
+  <div>
+    <%= f.label :facility_name, "施設名", class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= f.text_field :facility_name, class: "w-full border border-gray-300 rounded px-3 py-2", required: true %>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :region, "地域", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.select :region,
+            options_for_select(SalesLead::REGIONS, sales_lead.region),
+            { include_blank: "選択してください" },
+            class: "w-full border border-gray-300 rounded px-3 py-2", required: true %>
+    </div>
+    <div>
+      <%= f.label :area, "市町村", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.text_field :area, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :segment, "セグメント", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.select :segment,
+            options_for_select(SalesLead::SEGMENTS, sales_lead.segment),
+            { include_blank: "選択してください" },
+            class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div>
+      <%= f.label :phone, "電話番号", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.text_field :phone, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+  </div>
+
+  <h2 class="text-lg font-semibold border-b border-gray-300 pb-2 mt-6">営業管理</h2>
+
+  <div class="grid grid-cols-3 gap-4">
+    <div>
+      <%= f.label :priority, "優先度", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.select :priority,
+            options_for_select(SalesLead::PRIORITIES, sales_lead.priority),
+            { include_blank: "選択してください" },
+            class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div>
+      <%= f.label :it_literacy, "IT化度", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.select :it_literacy,
+            options_for_select(SalesLead::IT_LITERACIES, sales_lead.it_literacy),
+            { include_blank: "選択してください" },
+            class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div>
+      <%= f.label :sales_status, "ステータス", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.select :sales_status,
+            options_for_select(SalesLead::SALES_STATUSES, sales_lead.sales_status),
+            {},
+            class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :person_in_charge, "担当者", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.text_field :person_in_charge, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div>
+      <%= f.label :proposal_amount, "提案金額（円・税抜）", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.number_field :proposal_amount, class: "w-full border border-gray-300 rounded px-3 py-2", min: 0 %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :contacted_at, "初回接触日", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.date_field :contacted_at, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div>
+      <%= f.label :appointment_date, "アポ日", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.date_field :appointment_date, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :visited_at, "訪問日", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.date_field :visited_at, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div>
+      <%= f.label :subsidy_status, "補助金申請状況", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.select :subsidy_status,
+            options_for_select(SalesLead::SUBSIDY_STATUSES, sales_lead.subsidy_status),
+            { include_blank: "選択してください" },
+            class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :closed_at, "成約日", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.date_field :closed_at, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div>
+      <%= f.label :monthly_start_date, "月額開始日", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.date_field :monthly_start_date, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+  </div>
+
+  <h2 class="text-lg font-semibold border-b border-gray-300 pb-2 mt-6">データソース</h2>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :source, "ソース", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.text_field :source, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div>
+      <%= f.label :source_url, "ソースURL", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.url_field :source_url, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :memo, "メモ", class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= f.text_area :memo, rows: 3, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+  </div>
+
+  <div class="flex items-center gap-4">
+    <%= f.submit sales_lead.new_record? ? "登録" : "更新", class: "bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 cursor-pointer" %>
+    <%= link_to "キャンセル", sales_leads_path, class: "text-gray-600 hover:underline" %>
+  </div>
+<% end %>
