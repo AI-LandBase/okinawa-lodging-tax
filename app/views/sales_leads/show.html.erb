@@ -103,7 +103,7 @@
         <div>
           <dt class="text-gray-500">ソースURL</dt>
           <dd class="font-medium">
-            <% if @sales_lead.source_url.present? %>
+            <% if @sales_lead.source_url.present? && @sales_lead.source_url.match?(%r{\Ahttps?://}) %>
               <%= link_to truncate(@sales_lead.source_url, length: 40), @sales_lead.source_url, target: "_blank", rel: "noopener", class: "text-blue-600 hover:underline" %>
             <% else %>
               —

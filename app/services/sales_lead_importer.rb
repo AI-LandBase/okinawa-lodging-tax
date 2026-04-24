@@ -83,18 +83,40 @@ class SalesLeadImporter
   end
 
   def assign_sales_fields(lead, row)
-    lead.priority = extract_value(row, %w[優先度]) if extract_value(row, %w[優先度]).present?
-    lead.it_literacy = extract_value(row, %w[IT化度 IT化度推定]) if extract_value(row, %w[IT化度 IT化度推定]).present?
+    val = extract_value(row, %w[優先度])
+    lead.priority = val if val.present?
+
+    val = extract_value(row, %w[IT化度 IT化度推定])
+    lead.it_literacy = val if val.present?
+
     lead.sales_status = extract_sales_status(row) || lead.sales_status
-    lead.person_in_charge = extract_value(row, %w[担当者 担当]) if extract_value(row, %w[担当者 担当]).present?
-    lead.contacted_at = parse_date(extract_value(row, %w[初回接触日 接触日])) if extract_value(row, %w[初回接触日 接触日]).present?
-    lead.appointment_date = parse_date(extract_value(row, %w[アポ日])) if extract_value(row, %w[アポ日]).present?
-    lead.visited_at = parse_date(extract_value(row, %w[訪問日])) if extract_value(row, %w[訪問日]).present?
-    lead.proposal_amount = parse_amount(extract_value(row, %w[提案金額 提案額])) if extract_value(row, %w[提案金額 提案額]).present?
-    lead.subsidy_status = extract_value(row, %w[補助金申請状況 補助金 補助金申請]) if extract_value(row, %w[補助金申請状況 補助金 補助金申請]).present?
-    lead.closed_at = parse_date(extract_value(row, %w[成約日])) if extract_value(row, %w[成約日]).present?
-    lead.monthly_start_date = parse_date(extract_value(row, %w[月額開始日 月額開始])) if extract_value(row, %w[月額開始日 月額開始]).present?
-    lead.memo = extract_value(row, %w[メモ 備考]) if extract_value(row, %w[メモ 備考]).present?
+
+    val = extract_value(row, %w[担当者 担当])
+    lead.person_in_charge = val if val.present?
+
+    val = extract_value(row, %w[初回接触日 接触日])
+    lead.contacted_at = parse_date(val) if val.present?
+
+    val = extract_value(row, %w[アポ日])
+    lead.appointment_date = parse_date(val) if val.present?
+
+    val = extract_value(row, %w[訪問日])
+    lead.visited_at = parse_date(val) if val.present?
+
+    val = extract_value(row, %w[提案金額 提案額])
+    lead.proposal_amount = parse_amount(val) if val.present?
+
+    val = extract_value(row, %w[補助金申請状況 補助金 補助金申請])
+    lead.subsidy_status = val if val.present?
+
+    val = extract_value(row, %w[成約日])
+    lead.closed_at = parse_date(val) if val.present?
+
+    val = extract_value(row, %w[月額開始日 月額開始])
+    lead.monthly_start_date = parse_date(val) if val.present?
+
+    val = extract_value(row, %w[メモ 備考])
+    lead.memo = val if val.present?
   end
 
   def facility_name_keys
