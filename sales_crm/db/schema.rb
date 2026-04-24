@@ -37,9 +37,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_24_020554) do
     t.string "subsidy_status", comment: "補助金申請状況"
     t.datetime "updated_at", null: false
     t.date "visited_at", comment: "訪問日"
-    t.index ["facility_name", "phone", "region"], name: "index_sales_leads_on_unique_key", unique: true
-    t.index ["region"], name: "index_sales_leads_on_region"
-    t.index ["sales_status"], name: "index_sales_leads_on_sales_status"
+    t.index [ "facility_name", "phone", "region" ], name: "index_sales_leads_on_unique_key", unique: true
+    t.index [ "region" ], name: "index_sales_leads_on_region"
+    t.index [ "sales_status" ], name: "index_sales_leads_on_sales_status"
   end
 
   create_table "users", force: :cascade do |t|
@@ -52,7 +52,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_24_020554) do
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index [ "email" ], name: "index_users_on_email", unique: true
+    t.index [ "reset_password_token" ], name: "index_users_on_reset_password_token", unique: true
   end
 end

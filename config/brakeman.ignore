@@ -1,7 +1,7 @@
 {
   "ignored_warnings": [
     {
-      "fingerprint": "bec8a925ce7c0f36d8c19f53d24cc32c9265134e64e0d58f17dce6d91a2d04a6",
+      "fingerprint": "1cd7056d187622b5f5323e2bdf8e829e3ecbc9bf069c1a8e064f8d17d503317a",
       "note": "source_url は http/https スキーム制限済み（show.html.erb で match? による検証あり）"
     }
   ],
