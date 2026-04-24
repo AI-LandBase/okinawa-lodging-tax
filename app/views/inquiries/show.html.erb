@@ -1,0 +1,58 @@
+<div class="w-full max-w-2xl">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">お問い合わせ詳細</h1>
+    <%= link_to "一覧に戻る", inquiries_path, class: "text-blue-600 hover:underline" %>
+  </div>
+
+  <div class="bg-white border border-gray-200 rounded-lg p-6 space-y-4">
+    <dl class="grid grid-cols-1 gap-4 text-sm">
+      <div>
+        <dt class="font-medium text-gray-500">受信日時</dt>
+        <dd class="mt-1"><%= @inquiry.created_at.strftime("%Y年%m月%d日 %H:%M") %></dd>
+      </div>
+
+      <div>
+        <dt class="font-medium text-gray-500">施設名</dt>
+        <dd class="mt-1"><%= @inquiry.facility_name %></dd>
+      </div>
+
+      <div>
+        <dt class="font-medium text-gray-500">担当者名</dt>
+        <dd class="mt-1"><%= @inquiry.contact_name %></dd>
+      </div>
+
+      <div>
+        <dt class="font-medium text-gray-500">メールアドレス</dt>
+        <dd class="mt-1"><%= mail_to @inquiry.email %></dd>
+      </div>
+
+      <% if @inquiry.phone.present? %>
+        <div>
+          <dt class="font-medium text-gray-500">電話番号</dt>
+          <dd class="mt-1"><%= @inquiry.phone %></dd>
+        </div>
+      <% end %>
+
+      <% if @inquiry.facility_type.present? %>
+        <div>
+          <dt class="font-medium text-gray-500">施設の種類</dt>
+          <dd class="mt-1"><%= @inquiry.facility_type_label %></dd>
+        </div>
+      <% end %>
+
+      <% if @inquiry.has_pc.present? %>
+        <div>
+          <dt class="font-medium text-gray-500">PC保有状況</dt>
+          <dd class="mt-1"><%= @inquiry.has_pc_label %></dd>
+        </div>
+      <% end %>
+
+      <% if @inquiry.message.present? %>
+        <div>
+          <dt class="font-medium text-gray-500">ご相談内容</dt>
+          <dd class="mt-1 whitespace-pre-wrap"><%= @inquiry.message %></dd>
+        </div>
+      <% end %>
+    </dl>
+  </div>
+</div>

@@ -9,4 +9,12 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       headers: :any,
       methods: [ :get, :post, :put, :patch, :delete, :options, :head ]
   end
+
+  allow do
+    origins "https://lodging-tax.ai-landbase.jp"
+
+    resource "/api/inquiries",
+      headers: :any,
+      methods: [ :post, :options ]
+  end
 end

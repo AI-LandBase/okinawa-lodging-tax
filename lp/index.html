@@ -313,7 +313,13 @@
           お気軽にお問い合わせください。
         </p>
       </div>
-      <form action="#" method="POST" class="reveal space-y-5" novalidate>
+      <div id="inquiry-thanks" class="hidden text-center py-16 reveal visible">
+        <div class="text-5xl mb-4">&#10003;</div>
+        <h3 class="text-2xl font-bold text-white mb-4">お問い合わせありがとうございます</h3>
+        <p class="text-ocean-200/80">内容を確認の上、ご連絡いたします。</p>
+      </div>
+      <form id="inquiry-form" method="POST" class="reveal space-y-5" novalidate>
+        <div id="inquiry-errors" class="hidden rounded-xl border border-red-400/50 bg-red-900/30 p-4 text-sm text-red-200"></div>
         <div class="grid md:grid-cols-2 gap-5">
           <div>
             <label for="facility-name" class="block text-sm font-medium text-ocean-300 mb-2">施設名 <span class="text-coral-400">*</span></label>
@@ -403,6 +409,62 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+  <!-- Inquiry form submission -->
+  <script>
+    (function() {
+      var API_URL = 'https://app.lodging-tax.ai-landbase.jp/api/inquiries';
+      var form = document.getElementById('inquiry-form');
+      var errorsDiv = document.getElementById('inquiry-errors');
+      var thanksDiv = document.getElementById('inquiry-thanks');
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        errorsDiv.classList.add('hidden');
+        errorsDiv.textContent = '';
+
+        var formData = new FormData(form);
+        var inquiry = {};
+        formData.forEach(function(value, key) { inquiry[key] = value; });
+
+        var submitBtn = form.querySelector('button[type="submit"]');
+        var originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = '送信中...';
+
+        fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ inquiry: inquiry })
+        })
+        .then(function(res) {
+          return res.json().then(function(data) { return { ok: res.ok, data: data }; });
+        })
+        .then(function(result) {
+          if (result.ok) {
+            form.classList.add('hidden');
+            thanksDiv.classList.remove('hidden');
+          } else {
+            errorsDiv.textContent = '';
+            result.data.errors.forEach(function(msg) {
+              var p = document.createElement('p');
+              p.textContent = msg;
+              errorsDiv.appendChild(p);
+            });
+            errorsDiv.classList.remove('hidden');
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+          }
+        })
+        .catch(function() {
+          errorsDiv.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+          errorsDiv.classList.remove('hidden');
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        });
+      });
+    })();
   </script>
 
 </body>

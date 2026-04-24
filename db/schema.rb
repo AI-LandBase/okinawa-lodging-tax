@@ -54,6 +54,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_24_020554) do
     t.index ["sales_status"], name: "index_sales_leads_on_sales_status"
   end
 
+
   create_table "stays", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "channel", comment: "予約チャネル名（Airbnb / Booking 等）"
     t.date "check_in_date", null: false, comment: "チェックイン日"
