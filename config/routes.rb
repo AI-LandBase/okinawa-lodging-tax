@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :sales_leads, only: %i[index show new create edit update]
+
   resources :users, only: %i[index new create edit update] do
     member do
       patch :toggle_active

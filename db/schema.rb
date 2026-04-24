@@ -10,9 +10,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_10_010000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_24_020554) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "inquiries", force: :cascade do |t|
+    t.string "contact_name", null: false, comment: "担当者名"
+    t.datetime "created_at", null: false
+    t.string "email", null: false, comment: "メールアドレス"
+    t.string "facility_name", null: false, comment: "施設名"
+    t.string "facility_type", comment: "施設の種類（minpaku / simple_lodging / ryokan / hotel / other）"
+    t.string "has_pc", comment: "PC保有状況（mac / windows / other_pc / no）"
+    t.text "message", comment: "ご相談内容"
+    t.string "phone", comment: "電話番号"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sales_leads", force: :cascade do |t|
+    t.date "appointment_date", comment: "アポ日"
+    t.string "area", comment: "市町村"
+    t.date "closed_at", comment: "成約日"
+    t.date "contacted_at", comment: "初回接触日"
+    t.datetime "created_at", null: false
+    t.boolean "duplicate_flag", default: false, null: false, comment: "重複候補フラグ"
+    t.string "facility_name", null: false, comment: "施設名"
+    t.string "it_literacy", comment: "IT化度推定"
+    t.text "memo", comment: "メモ"
+    t.date "monthly_start_date", comment: "月額開始日"
+    t.string "person_in_charge", comment: "担当者"
+    t.string "phone", comment: "電話番号"
+    t.string "priority", comment: "優先度"
+    t.integer "proposal_amount", comment: "提案金額（円・税抜）"
+    t.string "region", null: false, comment: "地域区分（北部 / 中部 / 南部）"
+    t.string "sales_status", default: "未着手", null: false, comment: "営業ステータス"
+    t.string "segment", comment: "セグメント（大型ホテル・リゾート等）"
+    t.string "source", comment: "ソース分類"
+    t.string "source_url", comment: "ソースURL"
+    t.string "subsidy_status", comment: "補助金申請状況"
+    t.datetime "updated_at", null: false
+    t.date "visited_at", comment: "訪問日"
+    t.index ["facility_name", "phone", "region"], name: "index_sales_leads_on_unique_key", unique: true
+    t.index ["region"], name: "index_sales_leads_on_region"
+    t.index ["sales_status"], name: "index_sales_leads_on_sales_status"
+  end
 
   create_table "stays", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "channel", comment: "予約チャネル名（Airbnb / Booking 等）"
