@@ -91,6 +91,21 @@
     .role-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #374151; margin-bottom: 8px; line-height: 1.5; }
 
     footer { text-align: center; font-size: 13px; color: #718096; margin-top: 8px; padding-bottom: 20px; }
+
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    @media (max-width: 640px) {
+      body { padding: 16px 12px; }
+      header { padding: 24px 20px; border-radius: 12px; }
+      header h1 { font-size: 17px; }
+      .badge { font-size: 12px; padding: 6px 12px; }
+      .card { padding: 18px 14px; border-radius: 10px; margin-bottom: 16px; }
+      .section-title { font-size: 14px; }
+      table { font-size: 13px; }
+      th, td { padding: 9px 10px; }
+      .role-grid { grid-template-columns: 1fr; }
+      .role-card { padding: 18px; }
+    }
   </style>
 </head>
 <body>
@@ -103,13 +118,14 @@
       <div class="badge">申請期間 <span>2026年3月1日〜6月末</span></div>
       <div class="badge">完了期限 <span>2027年1月31日</span></div>
       <div class="badge">問い合わせ <span>0120-153-048</span>（平日10:00〜17:00）</div>
+      <div class="badge"><a href="https://shukuhakuzei-system.okinawa/doc/FAQ_20260410_3.pdf" target="_blank" style="color:#63b3ed;font-weight:700;text-decoration:none;">📄 よくある質問（FAQ）</a></div>
     </div>
   </header>
 
   <!-- タイムライン -->
   <div class="card">
     <div class="section-title">タイムライン別 担当マトリクス</div>
-    <table>
+    <div class="table-wrap"><table>
       <thead>
         <tr>
           <th>時期</th>
@@ -143,14 +159,32 @@
           <td>受取</td>
           <td class="check">✅ 発行</td>
         </tr>
+        <tr>
+          <td><strong>実績報告前</strong></td>
+          <td>宿泊業者 → AILandBaseへ開発費を支払い（支払い完了が実績報告の条件）<br><span style="font-size:12px;color:#718096;">※補助金は精算払い（先払い後に返還）のため、宿泊業者が先に全額支払う</span></td>
+          <td class="check">✅ 支払い</td>
+          <td>受取</td>
+        </tr>
+        <tr>
+          <td><strong>実績報告前</strong></td>
+          <td>宿泊税特別徴収義務者登録</td>
+          <td class="check">✅ 申請</td>
+          <td class="dash">—</td>
+        </tr>
         <tr class="highlight">
           <td><strong>〜2027年1月31日</strong></td>
           <td>実績報告・補助金請求を提出</td>
           <td class="check">✅ 提出</td>
           <td class="dash">—</td>
         </tr>
+        <tr style="background:#f0fff4;">
+          <td><strong>審査完了後<br>（数週間〜数ヶ月）</strong></td>
+          <td>補助金が宿泊業者の口座へ振り込まれ、給付完了</td>
+          <td class="check">✅ 受取</td>
+          <td class="dash">—</td>
+        </tr>
       </tbody>
-    </table>
+    </table></div>
   </div>
 
   <!-- 役割カード -->
@@ -160,7 +194,10 @@
       <div class="role-item"><span>📋</span>申請書類をすべてまとめて事務局へ提出する</div>
       <div class="role-item"><span>📎</span>AILandBaseの見積書・領収書を添付する</div>
       <div class="role-item"><span>✅</span>改修内容の確認・承認を行う</div>
+      <div class="role-item"><span>📝</span>宿泊税特別徴収義務者登録を行う</div>
+      <div class="role-item"><span>💳</span>AILandBaseへ開発費を支払う</div>
       <div class="role-item"><span>💰</span>補助金の精算請求を行う</div>
+      <div class="role-item"><span>🏦</span>補助金を口座で受け取る</div>
     </div>
     <div class="role-card vendor">
       <h3>💻 AILandBase（開発ベンダー）</h3>
@@ -173,7 +210,7 @@
   <!-- 提出書類一覧 -->
   <div class="card">
     <div class="section-title">宿泊業者が提出する書類（事務局へ）＋様式ダウンロード</div>
-    <table>
+    <div class="table-wrap"><table>
       <thead>
         <tr>
           <th>#</th>
@@ -202,7 +239,7 @@
         </tr>
         <tr>
           <td class="num">3</td>
-          <td>宿泊税特別徴収義務者証票の写し　または　旅館業法許可書の写し</td>
+          <td>宿泊税特別徴収義務者「証票」の写し。　登録申請前で提出できない場合は旅館業法許可書の写し又は住宅宿泊事業法第３条第１項の届出番号の通知又は標識の写し</td>
           <td>申請時</td>
           <td class="dl-col dash">—</td>
         </tr>
@@ -284,13 +321,13 @@
           <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/13%20%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E6%A7%98%E5%BC%8F%E7%AC%AC10%E5%8F%B7%EF%BC%88%E7%AC%AC17%E6%9D%A1%E9%96%A2%E4%BF%82%EF%BC%89%E8%A3%9C%E5%8A%A9%E9%87%91%E7%B2%BE%E7%AE%97%E6%89%95%E8%AB%8B%E6%B1%82%E6%9B%B8.docx" target="_blank">📥 Word</a></td>
         </tr>
       </tbody>
-    </table>
+    </table></div>
   </div>
 
   <!-- 参考様式 -->
   <div class="card">
     <div class="section-title">参考・その他様式</div>
-    <table>
+    <div class="table-wrap"><table>
       <thead>
         <tr>
           <th style="text-align:left">書類名</th>
@@ -315,7 +352,88 @@
           <td class="dl-col"><a class="dl-btn" href="https://shukuhakuzei-system.okinawa/doc/08%20%E3%80%90%E6%B2%96%E7%B8%84%E7%9C%8C%E3%80%91%E6%A7%98%E5%BC%8F%E7%AC%AC%EF%BC%96%E5%8F%B7%EF%BC%88%E7%AC%AC11%E6%9D%A1%E9%96%A2%E4%BF%82%EF%BC%89%E8%A8%88%E7%94%BB%E9%81%85%E5%BB%B6%E7%AD%89%E5%A0%B1%E5%91%8A%E6%9B%B8%20%E3%80%88%E4%BF%AE%E6%AD%A3%E3%80%89.docx" target="_blank">📥 Word</a></td>
         </tr>
       </tbody>
-    </table>
+    </table></div>
+  </div>
+
+  <!-- 納税証明書 -->
+  <div class="card">
+    <div class="section-title">納税証明書の取得方法</div>
+    <div class="table-wrap"><table>
+      <thead>
+        <tr>
+          <th style="text-align:left">種別</th>
+          <th style="text-align:left">申請場所</th>
+          <th style="text-align:left">必要書類</th>
+          <th>手数料</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>県税</strong><br><span style="font-size:12px;color:#718096;">事業税・法人住民税の<br>滞納なし証明</span></td>
+          <td>沖縄県 県税事務所<br><span style="font-size:12px;color:#718096;">那覇・沖縄・コザ・名護・宮古・八重山 等</span></td>
+          <td>
+            <ul style="font-size:13px;padding-left:16px;line-height:2;">
+              <li>納税証明書交付申請書</li>
+              <li>本人確認書類（代表者）</li>
+              <li>委任状（代理人が申請する場合）</li>
+            </ul>
+          </td>
+          <td style="text-align:center;font-weight:700;color:#276749;">400円/通<br><span style="font-size:11px;font-weight:400;color:#718096;">証紙</span></td>
+        </tr>
+      </tbody>
+    </table></div>
+    <div style="margin-top:20px;background:#f7fafc;border-radius:10px;padding:18px 20px;">
+      <div style="font-size:13px;font-weight:700;color:#4a5568;margin-bottom:8px;">▼ 沖縄県税事務所一覧</div>
+      <table style="width:100%;font-size:13px;border-collapse:collapse;margin-bottom:14px;">
+        <thead>
+          <tr>
+            <th style="background:#edf2f7;padding:7px 12px;text-align:left;font-weight:700;color:#4a5568;">事務所名</th>
+            <th style="background:#edf2f7;padding:7px 12px;text-align:left;font-weight:700;color:#4a5568;">所在地</th>
+            <th style="background:#edf2f7;padding:7px 12px;text-align:left;font-weight:700;color:#4a5568;">管轄</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:7px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;">那覇県税事務所</td>
+            <td style="padding:7px 12px;border-bottom:1px solid #e2e8f0;color:#4a5568;">那覇市旭町116-37<br><span style="font-size:12px;">南部合同庁舎</span></td>
+            <td style="padding:7px 12px;border-bottom:1px solid #e2e8f0;color:#4a5568;font-size:12px;">那覇市、豊見城市、糸満市、南城市、島尻郡</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;">コザ県税事務所</td>
+            <td style="padding:7px 12px;border-bottom:1px solid #e2e8f0;color:#4a5568;">沖縄市東2-1-1</td>
+            <td style="padding:7px 12px;border-bottom:1px solid #e2e8f0;color:#4a5568;font-size:12px;">沖縄市、うるま市、宜野湾市、北谷町、北中城村、中城村、嘉手納町、読谷村</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;">名護県税事務所</td>
+            <td style="padding:7px 12px;border-bottom:1px solid #e2e8f0;color:#4a5568;">名護市大南1-13-11<br><span style="font-size:12px;">北部合同庁舎</span></td>
+            <td style="padding:7px 12px;border-bottom:1px solid #e2e8f0;color:#4a5568;font-size:12px;">名護市、国頭郡、島尻郡（伊平屋村・伊是名村）</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 12px;border-bottom:1px solid #e2e8f0;white-space:nowrap;">宮古事務所 県税課</td>
+            <td style="padding:7px 12px;border-bottom:1px solid #e2e8f0;color:#4a5568;">宮古島市平良字西里1125<br><span style="font-size:12px;">宮古合同庁舎</span></td>
+            <td style="padding:7px 12px;border-bottom:1px solid #e2e8f0;color:#4a5568;font-size:12px;">宮古島市、多良間村</td>
+          </tr>
+          <tr>
+            <td style="padding:7px 12px;white-space:nowrap;">八重山事務所 県税課</td>
+            <td style="padding:7px 12px;color:#4a5568;">石垣市字真栄里438-1<br><span style="font-size:12px;">八重山合同庁舎</span></td>
+            <td style="padding:7px 12px;color:#4a5568;font-size:12px;">石垣市、竹富町、与那国町</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-bottom:14px;">
+        <a class="dl-btn" href="https://www.pref.okinawa.jp/_res/projects/default_project/_page_/001/015/187/20260319.pdf" target="_blank" style="font-size:13px;">📄 県証紙売りさばき所一覧</a>
+      </div>
+      <div style="font-size:13px;font-weight:700;color:#4a5568;margin-bottom:10px;">▼ 納税証明書交付申請書　様式ダウンロード</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+        <a class="dl-btn xlsx" href="https://www.pref.okinawa.jp/_res/projects/default_project/_page_/001/003/711/nouzeisyoumeisyokouhuseikyuusyo_innasi_1.xls" target="_blank">📥 Excel</a>
+        <a class="dl-btn" href="https://www.pref.okinawa.jp/_res/projects/default_project/_page_/001/003/711/nouzeisyoumeisyokouhuseikyuusyo_innasi_1.pdf" target="_blank">📥 PDF</a>
+      </div>
+      <div style="font-size:13px;font-weight:700;color:#4a5568;margin-bottom:10px;">▼ 記入例</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <a class="dl-btn" href="file:///Users/arainami/記入例.個人.pdf" target="_blank">📄 個人</a>
+        <a class="dl-btn" href="file:///Users/arainami/記入例.法人" target="_blank">📄 法人</a>
+      </div>
+    </div>
   </div>
 
   <!-- 補助金申請サイト -->
@@ -346,8 +464,7 @@
   </div>
 
   <footer>
-    申請方法：電子申請が基本（困難な場合は郵送可） ｜ 出典：<a href="https://shukuhakuzei-system.okinawa" target="_blank">shukuhakuzei-system.okinawa</a>
-  </footer>
+    申請方法：電子申請が基本（困難な場合は郵送可）  </footer>
 
 </div>
 </body>
