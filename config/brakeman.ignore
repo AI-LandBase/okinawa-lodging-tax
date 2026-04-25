@@ -1,10 +1,5 @@
 {
-  "ignored_warnings": [
-    {
-      "fingerprint": "1cd7056d187622b5f5323e2bdf8e829e3ecbc9bf069c1a8e064f8d17d503317a",
-      "note": "source_url は http/https スキーム制限済み（show.html.erb で match? による検証あり）"
-    }
-  ],
-  "updated": "2026-04-24",
+  "ignored_warnings": [],
+  "updated": "2026-04-25",
   "brakeman_version": "8.0.4"
 }

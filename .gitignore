@@ -50,9 +50,3 @@ backups/
 # LP
 lp/node_modules/
 lp/dist/
-
-# Sales CRM
-sales_crm/log/
-sales_crm/tmp/
-sales_crm/storage/
-sales_crm/config/*.key
