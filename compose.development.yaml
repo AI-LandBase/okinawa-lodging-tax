@@ -38,31 +38,6 @@ services:
     stdin_open: true
     tty: true
 
-  sales_crm:
-    build:
-      context: .
-      dockerfile: Dockerfile.sales_crm
-      target: development
-      args:
-        RUBY_VERSION: ${RUBY_VERSION}
-        RAILS_VERSION: ${RAILS_VERSION}
-        NODE_VERSION: ${NODE_VERSION}
-    command: bash -c "rm -f tmp/pids/server.pid && bin/setup && bin/dev"
-    volumes:
-      - ./sales_crm:/app
-      - crm_bundle_cache:/usr/local/bundle
-    ports:
-      - "3001:3001"
-    environment:
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgresdb:5432/${SALES_CRM_DB}
-      RAILS_ENV: development
-    depends_on:
-      postgresdb:
-        condition: service_healthy
-    stdin_open: true
-    tty: true
-
 volumes:
   postgres_data:
   bundle_cache:
-  crm_bundle_cache:
