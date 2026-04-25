@@ -70,8 +70,6 @@ gem "rails-i18n", "~> 8.1"
 gem "paper_trail", "~> 17.0"
 gem "prawn", "~> 2.5"
 gem "combine_pdf", "~> 1.0"
-gem "roo", "~> 2.10"
-gem "csv", "~> 3.3"
 
 gem "pry-rails", "~> 0.3.11", group: :development
 gem "bullet", "~> 8.1", group: :development
